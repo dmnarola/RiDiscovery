@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-
 import { Card, CardBody, Modal } from "reactstrap";
 
-const AddModal = (props) => {
+const DialogBox = (props) => {
   const [modal_standard, setmodal_standard] = useState(false);
 
   function tog_standard() {
@@ -71,4 +70,4 @@ const AddModal = (props) => {
   );
 };
 
-export default AddModal;
+export default DialogBox;

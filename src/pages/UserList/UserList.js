@@ -11,7 +11,7 @@ import {
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 import FeatherIcon from "feather-icons-react";
 import Table from "../../components/Tables/Table";
-import AddModal from "../../components/Modals/AddModal";
+import DialogBox from "../../components/Modals/DialogBox";
 
 const UserList = () => {
   document.title = "Role Management | Minia - React Admin & Dashboard Template";
@@ -78,7 +78,7 @@ const UserList = () => {
         <Container fluid>
           <Breadcrumbs title="Role Management" breadcrumbItem="User List" />
 
-          <AddModal>hhhhh</AddModal>
+          <DialogBox>hhhhh</DialogBox>
         </Container>
         <Card className="card-h-100">
           <CardBody>
