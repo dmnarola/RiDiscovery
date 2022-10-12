@@ -20,10 +20,12 @@ const RHFTextField = ({ isController = true, ...props }) => {
   if (!isController) {
     return (
       <Fragment>
-        <div className="mb-3">
-          <Label htmlFor="example-text-input" className="form-Label">
-            {label}
-          </Label>
+        <div className={label && "mb-3"}>
+          {label && (
+            <Label htmlFor="example-text-input" className="form-Label">
+              {label}
+            </Label>
+          )}
           <Input
             autoFocus={autoFocus}
             className="form-control"

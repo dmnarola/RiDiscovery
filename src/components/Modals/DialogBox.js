@@ -1,72 +1,48 @@
 import React, { useState } from "react";
 import { Card, CardBody, Modal } from "reactstrap";
+import RHFButton from "../form-controls/RHFButton";
 
 const DialogBox = (props) => {
-  const [modal_standard, setmodal_standard] = useState(false);
-
-  function tog_standard() {
-    setmodal_standard(!modal_standard);
-    removeBodyCss();
-  }
+  const {
+    setIsModelOpen,
+    isModelOpen,
+    handleToggle,
+    handleSubmit,
+    btnName,
+    title,
+    children,
+  } = props;
 
   return (
-    <Card>
-      <CardBody>
-        <div>
-          <button
-            type="button"
-            onClick={() => {
-              tog_standard();
-            }}
-            className="btn btn-primary "
-            data-toggle="modal"
-            data-target="#myModal"
-          >
-            Add
-          </button>
-
-          <Modal
-            isOpen={modal_standard}
-            toggle={() => {
-              tog_standard();
-            }}
-          >
-            <div className="modal-header">
-              <h5 className="modal-title mt-0" id="myModalLabel">
-                Modal Heading
-              </h5>
-              <button
-                type="button"
-                onClick={() => {
-                  setmodal_standard(false);
-                }}
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body">{props.children}</div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                onClick={() => {
-                  tog_standard();
-                }}
-                className="btn btn-secondary "
-                data-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" className="btn btn-primary ">
-                Save changes
-              </button>
-            </div>
-          </Modal>
-        </div>
-      </CardBody>
-    </Card>
+    <Modal
+      size="lg"
+      isOpen={isModelOpen}
+      toggle={() => {
+        handleToggle();
+      }}
+    >
+      <div className="modal-header">
+        <h5 className="modal-title mt-0" id="myModalLabel">
+          {title}
+        </h5>
+        <button
+          type="button"
+          onClick={() => {
+            setIsModelOpen(false);
+          }}
+          className="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div className="modal-body">{children}</div>
+      <div className="modal-footer">
+        <RHFButton btnName={btnName} onClick={handleSubmit} />
+        <RHFButton btnName="cancel" outline={true} onClick={handleToggle} />
+      </div>
+    </Modal>
   );
 };
 
