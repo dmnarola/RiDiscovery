@@ -7,6 +7,7 @@ import { Container } from "reactstrap";
 
 const Dashboard = () => {
   document.title = "Dashboard | Minia - React Admin & Dashboard Template";
+
   return (
     <React.Fragment>
       <div className="page-content">

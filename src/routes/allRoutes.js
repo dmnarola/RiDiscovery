@@ -14,6 +14,8 @@ import UserList from "../pages/UserList/UserList";
 import ProjectList from "../pages/ProjectList/ProjectList";
 import TemplatesList from "../pages/TemplatesList/TemplatesList";
 
+import dmControls from "../pages/Dashboard/dm-controls-usecases";
+
 const userRoutes = [
   //dashboard
   { path: "/dashboard", component: Dashboard },
@@ -23,6 +25,8 @@ const userRoutes = [
 
   //profile
   { path: "/profile", component: userProfile },
+
+  { path: "/dm-controls", component: dmControls },
 
   // this route should be at the end of all other routes
   { path: "/", exact: true, component: () => <Redirect to="/dashboard" /> },
