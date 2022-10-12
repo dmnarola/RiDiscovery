@@ -16,23 +16,25 @@ import RHFDatePicker from '../../components/form-controls/RHFDatePicker';
 import RHFSwitch from '../../components/form-controls/RHFSwitch';
 import RHFButton from '../../components/form-controls/RHFButton';
 import RHFFileUpload from '../../components/form-controls/RHFFileUpload';
+import RHFCheckbox from '../../components/form-controls/RHFCheckbox';
 
 const DmControl = () => {
     document.title = "Dm Control | Minia - React Admin & Dm Control Template";
 
     const [isActive, setIsActive] = useState(false);
+    const [isRemember, setIsRemember] = useState(false);
 
     const loginSchema = yup.object().shape({
         email: yup.string().email().max(150).required('Email is required'),
         colors: yup.object().shape({ label: yup.string(), value: yup.string() }).nullable().required('Select atleast one option'),
         date: yup.date().required('Date is required'),
-        userProfile: yup.mixed().required('Profile pic is required'),  // pass this when validation is required
+        userProfile: yup.mixed().required('Profile pic is required'),
+        isRemember: yup.bool().required('Field is required'),
     });
 
     const {
         handleSubmit,
         control,
-        register,
         setValue,
         formState: { errors }
     } = useForm({
@@ -50,9 +52,13 @@ const DmControl = () => {
     }
 
     const handleSwitchChange = (val) => {
-        console.log('Switch Val =>', val)
         setIsActive(val)
         setValue('isActive', val)
+    }
+
+    const handleCheckboxChange = (val) => {
+        setIsRemember(val)
+        setValue('isRemember', val)
     }
 
     const getFileData = (fileData) => {
@@ -117,6 +123,16 @@ const DmControl = () => {
                             errorObj={errors}
                             control={control}
                             onChange={handleSwitchChange}
+                        />
+
+                        <RHFCheckbox
+                            name="isRemember"
+                            label="Is Remember"
+                            checked={isRemember}
+                            isController={true}
+                            errorObj={errors}
+                            control={control}
+                            onChange={handleCheckboxChange}  // mostly useful when isController === false
                         />
 
                         <RHFFileUpload
