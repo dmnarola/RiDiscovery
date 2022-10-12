@@ -17,6 +17,7 @@ import RHFSwitch from '../../components/form-controls/RHFSwitch';
 import RHFButton from '../../components/form-controls/RHFButton';
 import RHFFileUpload from '../../components/form-controls/RHFFileUpload';
 import RHFCheckbox from '../../components/form-controls/RHFCheckbox';
+import DropdownButton from '../../components/form-controls/DropdownButton';
 
 const DmControl = () => {
     document.title = "Dm Control | Minia - React Admin & Dm Control Template";
@@ -147,6 +148,16 @@ const DmControl = () => {
                             btnName="Save"
                             type='submit'
                         />
+
+                        <br /><br />
+
+                        <DropdownButton
+                            heading='Dropdown'
+                            menuItems={['React', 'Vue', 'Angular']}
+                            handleClick={(item) => alert(item)}
+                        />
+
+                        <br /><br />
 
                     </form>
                 </Container>
