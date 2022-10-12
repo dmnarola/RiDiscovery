@@ -11,6 +11,7 @@ import Register from "../pages/Authentication/Register"
 import ForgetPwd from "../pages/Authentication/ForgetPassword"
 import userProfile from "../pages/Authentication/user-profile";
 
+import dmControls from "../pages/Dashboard/dm-controls-usecases";
 
 const userRoutes = [
 
@@ -19,6 +20,8 @@ const userRoutes = [
 
   //profile
   { path: "/profile", component: userProfile },
+
+  { path: "/dm-controls", component: dmControls },
 
   // this route should be at the end of all other routes
   { path: "/", exact: true, component: () => <Redirect to="/dashboard" /> },

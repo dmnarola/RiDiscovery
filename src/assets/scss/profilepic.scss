@@ -1,0 +1,53 @@
+.profile-container {
+    position: relative;
+
+    .profileCover {
+        width: 150px; //100%;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: fill;
+    }
+
+    .avatar-upload {
+        position: absolute;
+        z-index: 1;
+        top: 110px;
+        left: calc(9%);
+
+        input {
+            display: none;
+
+            +label {
+                display: inline-block;
+                width: 32px;
+                height: 32px;
+                margin-bottom: 0;
+                border-radius: 50%;
+                background: #FFFFFF;
+                border: 1px solid #d2d6de;
+                box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+                cursor: pointer;
+                transition: all .2s ease-in-out;
+
+                &:hover {
+                    background: #f1f1f1;
+                    border-color: #d6d6d6;
+                }
+
+                &:after {
+                    content: url(../images/Camera-Icon.svg);
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    text-align: center;
+                    margin: auto;
+                    top: 5px;
+                }
+            }
+        }
+    }
+
+    .invalid-feedback {
+        display: block !important;
+    }
+}
