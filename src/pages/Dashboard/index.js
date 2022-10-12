@@ -1,15 +1,12 @@
-import React from 'react';
+import React from "react";
 
 //import Breadcrumbs
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 
-import {
-    Container,
-} from "reactstrap";
+import { Container } from "reactstrap";
 
 const Dashboard = () => {
     document.title = "Dashboard | Minia - React Admin & Dashboard Template";
-
     return (
         <React.Fragment>
             <div className="page-content">

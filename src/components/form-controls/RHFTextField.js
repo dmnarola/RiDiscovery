@@ -1,26 +1,45 @@
-import React, { Fragment } from 'react';
-import { Controller } from 'react-hook-form';
-import { FormFeedback, Input, Label } from 'reactstrap';
+import React, { Fragment } from "react";
+import { Controller } from "react-hook-form";
+import { FormFeedback, Input, Label } from "reactstrap";
 
 const RHFTextField = ({ isController = true, ...props }) => {
-  const { name, label, errorObj, control, defaultValue, multiline, rows, onChange, autoFocus = false, bsSize = "md", ...extraProps } = props
+  const {
+    name,
+    label,
+    errorObj,
+    control,
+    defaultValue,
+    multiline,
+    rows,
+    onChange,
+    autoFocus = false,
+    bsSize = "md",
+    ...extraProps
+  } = props;
 
   if (!isController) {
     return (
       <Fragment>
         <div className="mb-3">
-          <Label htmlFor="example-text-input" className="form-Label">{label}</Label>
-          <Input autoFocus={autoFocus} className="form-control" type="text" {...props} />
+          <Label htmlFor="example-text-input" className="form-Label">
+            {label}
+          </Label>
+          <Input
+            autoFocus={autoFocus}
+            className="form-control"
+            type="text"
+            {...props}
+          />
         </div>
       </Fragment>
-    )
+    );
   }
 
   let isError = false;
-  let errorMessage = '';
+  let errorMessage = "";
   let disabled = false;
   let multilineDetails = {};
-  let someValue = '';
+  let someValue = "";
 
   if (errorObj && Object.prototype.hasOwnProperty.call(errorObj, name)) {
     isError = true;
@@ -31,7 +50,7 @@ const RHFTextField = ({ isController = true, ...props }) => {
     multilineDetails = { multiline: true, rows: `${rows}` };
   }
 
-  disabled = (props.disabled === undefined) ? false : props.disabled;
+  disabled = props.disabled === undefined ? false : props.disabled;
 
   if (defaultValue !== undefined) {
     someValue = defaultValue;
@@ -44,7 +63,9 @@ const RHFTextField = ({ isController = true, ...props }) => {
       defaultValue={someValue}
       render={({ field }) => (
         <Fragment>
-          <Label htmlFor="example-text-input" className="form-Label">{label}</Label>
+          <Label htmlFor="example-text-input" className="form-Label">
+            {label}
+          </Label>
           <Input
             autoComplete="off"
             {...field}
@@ -53,21 +74,23 @@ const RHFTextField = ({ isController = true, ...props }) => {
             bsSize={bsSize}
             invalid={isError}
             disabled={disabled}
-            onChange={(_,) => {
-              if (_?.target?.type === 'text') {
-                field.onChange(_.target.value)
+            onChange={(_) => {
+              if (_?.target?.type === "text") {
+                field.onChange(_.target.value);
                 return !onChange ? field.onChange(_.target.value) : onChange(_);
               }
-              field.onChange(_.target.value)
+              field.onChange(_.target.value);
               return !onChange ? field.onChange(_.target.value) : onChange(_);
             }}
             {...multilineDetails}
           />
-          {isError && <FormFeedback type="invalid">{errorMessage}</FormFeedback>}
+          {isError && (
+            <FormFeedback type="invalid">{errorMessage}</FormFeedback>
+          )}
         </Fragment>
       )}
     />
-  )
+  );
 };
 
 export default RHFTextField;
