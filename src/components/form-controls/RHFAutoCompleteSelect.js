@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react';
-import { FormFeedback, Label } from 'reactstrap';
-import Select from 'react-select'
-import { Controller } from 'react-hook-form';
-
+import React, { Fragment } from "react";
+import { FormFeedback, Label } from "reactstrap";
+import Select from "react-select";
+import { Controller } from "react-hook-form";
 
 const RHFAutoCompleteSelect = ({
   id,
@@ -25,14 +24,16 @@ const RHFAutoCompleteSelect = ({
   ...props
 }) => {
   let isError = false;
-  let errorMessage = '';
+  let errorMessage = "";
   let multiSelect = false;
-  if (typeof isMultiple === 'undefined' || isMultiple) {
+  if (typeof isMultiple === "undefined" || isMultiple) {
     multiSelect = true;
   }
   const disabled = isDisabled === undefined ? false : isDisabled;
 
   if (errorObj && errorObj[name]) {
+    console.log("isError :>> ", isError);
+    console.log("errorMessage :>> ", errorMessage);
     isError = true;
     errorMessage = errorObj[name].message;
   }
@@ -41,7 +42,9 @@ const RHFAutoCompleteSelect = ({
     return (
       <Fragment>
         <div className="mb-3">
-          <Label htmlFor="select-input" className="form-Label">{label}</Label>
+          <Label htmlFor="select-input" className="form-Label">
+            {label}
+          </Label>
           <Select
             {...props}
             className={multiSelect ? "basic-multi-select" : "basic-single"}
@@ -57,7 +60,10 @@ const RHFAutoCompleteSelect = ({
             classNamePrefix="select"
             onChange={(data) => {
               if (handleOnChange) {
-                handleOnChange(data, name); /* You must pass this function while isController is false -> else you will not get selected values */
+                handleOnChange(
+                  data,
+                  name
+                ); /* You must pass this function while isController is false -> else you will not get selected values */
               }
             }}
           />
@@ -73,11 +79,15 @@ const RHFAutoCompleteSelect = ({
           let filteredOptionList = [...options];
           if (multiSelect && field?.value?.length) {
             const selectedValueArr = field.value.map((result) => result.value);
-            filteredOptionList = filteredOptionList.filter((item) => selectedValueArr.indexOf(item.value) === -1)
+            filteredOptionList = filteredOptionList.filter(
+              (item) => selectedValueArr.indexOf(item.value) === -1
+            );
           }
           return (
             <Fragment>
-              <Label htmlFor="select-input" className="form-Label">{label}</Label>
+              <Label htmlFor="select-input" className="form-Label">
+                {label}
+              </Label>
               <Select
                 {...props}
                 id={id}
@@ -98,7 +108,7 @@ const RHFAutoCompleteSelect = ({
                 }}
               />
             </Fragment>
-          )
+          );
         }}
         // className={multiSelect ? "basic-multi-select" : "basic-single"}
         id={id || name}

@@ -10,11 +10,11 @@ import Logout from "../pages/Authentication/Logout";
 import Register from "../pages/Authentication/Register";
 import ForgetPwd from "../pages/Authentication/ForgetPassword";
 import userProfile from "../pages/Authentication/user-profile";
-
-import dmControls from "../pages/Dashboard/dm-controls-usecases";
 import UserList from "../pages/UserList/UserList";
 import ProjectList from "../pages/ProjectList/ProjectList";
 import TemplatesList from "../pages/TemplatesList/TemplatesList";
+
+import dmControls from "../pages/Dashboard/dm-controls-usecases";
 
 const userRoutes = [
   //dashboard

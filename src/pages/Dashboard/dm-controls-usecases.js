@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 //import Breadcrumbs
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 
-import {
-    Container,
-} from "reactstrap";
+import { Container } from "reactstrap";
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 
 const Table = ({ columns, data }) => {
-  console.log("columns :>> ", columns);
+  // console.log("columns :>> ", columns);
 
   const [tableData, setTableData] = useState();
 
@@ -10,15 +10,15 @@ const Table = ({ columns, data }) => {
     setTableData(data);
   }, []);
 
-  console.log("tableData :>> ", tableData);
+  // console.log("tableData :>> ", tableData);
 
   return (
     <DataTable
       columns={columns}
       data={tableData}
       highlightOnHover
-      //   pagination
-      //   paginationServer
+      pagination
+      paginationServer
       sortServer
     />
   );
