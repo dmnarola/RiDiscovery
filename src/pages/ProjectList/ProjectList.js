@@ -1,8 +1,9 @@
 import React from "react";
-import { Card, CardBody, Container } from "reactstrap";
+import { Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 import FeatherIcon from "feather-icons-react";
 import Table from "../../components/Tables/Table";
+import RHFTextField from "../../components/form-controls/RHFTextField";
 
 const ProjectList = () => {
   document.title = "Certificate| Minia - React Admin & Dashboard Template";
@@ -41,12 +42,26 @@ const ProjectList = () => {
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Certificate" breadcrumbItem="Project List" />
+          <Card>
+            <CardHeader>
+              <Row>
+                <Col md="3">
+                  <RHFTextField
+                    id="search"
+                    name="search"
+                    placeholder="Search here"
+                    // errorObj={errors}
+                    // control={control}
+                    isController={false}
+                  />
+                </Col>
+              </Row>
+            </CardHeader>
+            <CardBody>
+              <Table columns={columns} data={data} />
+            </CardBody>
+          </Card>
         </Container>
-        <Card className="card-h-100">
-          <CardBody>
-            <Table columns={columns} data={data} />
-          </CardBody>
-        </Card>
       </div>
     </React.Fragment>
   );

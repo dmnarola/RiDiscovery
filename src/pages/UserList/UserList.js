@@ -72,7 +72,8 @@ const UserList = () => {
     console.log("values =>", values);
   };
 
-  const handleSwitchChange = (value) => {
+  const handleSwitchChange = (_id, value) => {
+    console.log("_id :>> ", _id, value);
     console.log("isActive :>> ", isActive);
     setIsActive(!value);
     // setIsModelOpen(!isModelOpen);
@@ -126,7 +127,12 @@ const UserList = () => {
           checked={isActive}
           errorObj={errors}
           control={control}
-          onChange={handleSwitchChange}
+          // onChange={async () => {
+          //   const s_id = row["_id"];
+          //   await dispatch(handleActiveStatus(`/shop/deactive/${s_id}`));
+          //   await dispatch(handleDisplay());
+          // }}
+          onChange={handleSwitchChange(row["_id"])}
         />
       ),
     },
@@ -140,7 +146,7 @@ const UserList = () => {
       email: "a@gmail.com",
       startdate: "12/06/2000",
       enddate: "22/10/2021",
-      isActive: false,
+      isActive: isActive,
     },
     {
       _id: 2,
@@ -149,7 +155,7 @@ const UserList = () => {
       email: "x@gmail.com",
       startdate: "12/06/2000",
       enddate: "22/10/2021",
-      isActive: true,
+      isActive: isActive,
     },
   ];
 
@@ -194,7 +200,7 @@ const UserList = () => {
           <Card>
             <CardHeader>
               <Row>
-                <Col md="6">
+                <Col md="3">
                   <RHFTextField
                     id="search"
                     name="search"
