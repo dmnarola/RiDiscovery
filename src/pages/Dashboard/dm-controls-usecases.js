@@ -5,17 +5,17 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 import { Container } from "reactstrap";
 
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import RHFTextField from '../../components/form-controls/RHFTextField';
-import RHFAutoCompleteSelect from '../../components/form-controls/RHFAutoCompleteSelect';
-import RHFDatePicker from '../../components/form-controls/RHFDatePicker';
-import RHFSwitch from '../../components/form-controls/RHFSwitch';
-import RHFButton from '../../components/form-controls/RHFButton';
-import RHFFileUpload from '../../components/form-controls/RHFFileUpload';
-import RHFCheckbox from '../../components/form-controls/RHFCheckbox';
-import DropdownButton from '../../components/form-controls/DropdownButton';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import RHFTextField from "../../components/form-controls/RHFTextField";
+import RHFAutoCompleteSelect from "../../components/form-controls/RHFAutoCompleteSelect";
+import RHFDatePicker from "../../components/form-controls/RHFDatePicker";
+import RHFSwitch from "../../components/form-controls/RHFSwitch";
+import RHFButton from "../../components/form-controls/RHFButton";
+import RHFFileUpload from "../../components/form-controls/RHFFileUpload";
+import RHFCheckbox from "../../components/form-controls/RHFCheckbox";
+import DropdownButton from "../../components/form-controls/DropdownButton";
 
 const DmControl = () => {
     document.title = "Dm Control | Minia - React Admin & Dm Control Template";
@@ -24,45 +24,49 @@ const DmControl = () => {
     const [isRemember, setIsRemember] = useState(false);
 
     const loginSchema = yup.object().shape({
-        email: yup.string().email().max(150).required('Email is required'),
-        colors: yup.object().shape({ label: yup.string(), value: yup.string() }).nullable().required('Select atleast one option'),
-        date: yup.date().required('Date is required'),
-        userProfile: yup.mixed().required('Profile pic is required'),
-        isRemember: yup.bool().required('Field is required'),
+        email: yup.string().email().max(150).required("Email is required"),
+        colors: yup
+            .object()
+            .shape({ label: yup.string(), value: yup.string() })
+            .nullable()
+            .required("Select atleast one option"),
+        date: yup.date().required("Date is required"),
+        userProfile: yup.mixed().required("Profile pic is required"),
+        isRemember: yup.bool().required("Field is required"),
     });
 
     const {
         handleSubmit,
         control,
         setValue,
-        formState: { errors }
+        formState: { errors },
     } = useForm({
-        mode: 'onBlur',
+        mode: "onBlur",
         resolver: yupResolver(loginSchema),
     });
 
     const onLogin = (data) => {
-        console.log('Submitted Data->', data);
-    }
+        console.log("Submitted Data->", data);
+    };
 
     const handleOnChange = (data, name) => {
-        console.log(name, "--->", data)
-        setValue(name, data)
-    }
+        console.log(name, "--->", data);
+        setValue(name, data);
+    };
 
     const handleSwitchChange = (val) => {
-        setIsActive(val)
-        setValue('isActive', val)
-    }
+        setIsActive(val);
+        setValue("isActive", val);
+    };
 
     const handleCheckboxChange = (val) => {
-        setIsRemember(val)
-        setValue('isRemember', val)
-    }
+        setIsRemember(val);
+        setValue("isRemember", val);
+    };
 
     const getFileData = (fileData) => {
-        console.log({ fileData })
-    }
+        console.log({ fileData });
+    };
 
     return (
         <React.Fragment>
@@ -72,7 +76,6 @@ const DmControl = () => {
                     <Breadcrumbs title="Dm Control" breadcrumbItem="Dm Control" />
 
                     <form onSubmit={handleSubmit(onLogin)}>
-
                         <RHFTextField
                             id="email"
                             label="Email"
@@ -88,16 +91,16 @@ const DmControl = () => {
                             label="Colors"
                             name="colors"
                             options={[
-                                { value: 'ocean', label: 'Ocean', color: '#00B8D9' },
-                                { value: 'blue', label: 'Blue', color: '#0052CC' },
-                                { value: 'purple', label: 'Purple', color: '#5243AA' },
-                                { value: 'red', label: 'Red', color: '#FF5630', isFixed: true },
-                                { value: 'orange', label: 'Orange', color: '#FF8B00' },
-                                { value: 'yellow', label: 'Yellow', color: '#FFC400' },
-                                { value: 'green', label: 'Green', color: '#36B37E' },
-                                { value: 'forest', label: 'Forest', color: '#00875A' },
-                                { value: 'slate', label: 'Slate', color: '#253858' },
-                                { value: 'silver', label: 'Silver', color: '#666666' },
+                                { value: "ocean", label: "Ocean", color: "#00B8D9" },
+                                { value: "blue", label: "Blue", color: "#0052CC" },
+                                { value: "purple", label: "Purple", color: "#5243AA" },
+                                { value: "red", label: "Red", color: "#FF5630", isFixed: true },
+                                { value: "orange", label: "Orange", color: "#FF8B00" },
+                                { value: "yellow", label: "Yellow", color: "#FFC400" },
+                                { value: "green", label: "Green", color: "#36B37E" },
+                                { value: "forest", label: "Forest", color: "#00875A" },
+                                { value: "slate", label: "Slate", color: "#253858" },
+                                { value: "silver", label: "Silver", color: "#666666" },
                             ]}
                             isMultiple={false}
                             errorObj={errors}
@@ -131,7 +134,7 @@ const DmControl = () => {
                             isController={true}
                             errorObj={errors}
                             control={control}
-                            onChange={handleCheckboxChange}  // mostly useful when isController === false
+                            onChange={handleCheckboxChange} // mostly useful when isController === false
                         />
 
                         <RHFFileUpload
@@ -142,21 +145,19 @@ const DmControl = () => {
                             isValidate={true}
                         />
 
-                        <RHFButton
-                            btnName="Save"
-                            type='submit'
-                        />
+                        <RHFButton btnName="Save" type="submit" />
 
-                        <br /><br />
+                        <br />
+                        <br />
 
                         <DropdownButton
-                            heading='Dropdown'
-                            menuItems={['React', 'Vue', 'Angular']}
+                            heading="Dropdown"
+                            menuItems={["React", "Vue", "Angular"]}
                             handleClick={(item) => alert(item)}
                         />
 
-                        <br /><br />
-
+                        <br />
+                        <br />
                     </form>
                 </Container>
             </div>
