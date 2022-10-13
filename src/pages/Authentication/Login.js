@@ -1,55 +1,54 @@
-import PropTypes from "prop-types"
-import React, { useState } from "react"
+import PropTypes from "prop-types";
+import React, { useState } from "react";
 
 import { Row, Col, Container, Form } from "reactstrap";
 //redux
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux";
 
-import { withRouter, Link } from "react-router-dom"
+import { withRouter, Link } from "react-router-dom";
 
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 //Social Media Imports
-import { GoogleLogin } from "react-google-login"
+import { GoogleLogin } from "react-google-login";
 // import TwitterLogin from "react-twitter-auth"
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props"
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
 // actions
-import { loginUser, socialLogin } from "../../store/actions"
+import { loginUser, socialLogin } from "../../store/actions";
 
 // import images
-import logo from "../../assets/images/logo-sm.svg"
+import logo from "../../assets/images/logo-sm.svg";
 
 //Import config
-import { facebook, google } from "../../config"
-import CarouselPage from "../Authentication/CarouselPage"
+import { facebook, google } from "../../config";
+import CarouselPage from "../Authentication/CarouselPage";
 import RHFTextField from "components/form-controls/RHFTextField";
 import RHFButton from "components/form-controls/RHFButton";
 import RHFCheckbox from "components/form-controls/RHFCheckbox";
 
-const Login = props => {
+const Login = (props) => {
   const [isRemember, setIsRemember] = useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const { error } = useSelector(state => ({
+  const { error } = useSelector((state) => ({
     error: state.Login.error,
-  }))
+  }));
 
   const loginSchema = yup.object().shape({
-    email: yup.string().email().max(150).required('Email is required'),
-    password: yup.string().required('Password is required'),
+    email: yup.string().email().max(150).required("Email is required"),
+    password: yup.string().required("Password is required"),
   });
 
   const {
     handleSubmit,
     control,
     setValue,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
-    mode: 'onBlur',
+    mode: "onBlur",
     resolver: yupResolver(loginSchema),
   });
 
@@ -60,38 +59,38 @@ const Login = props => {
         email: res.profileObj.email,
         token: res.tokenObj.access_token,
         idToken: res.tokenId,
-      }
-      dispatch(socialLogin(postData, props.history, type))
+      };
+      dispatch(socialLogin(postData, props.history, type));
     } else if (type === "facebook" && res) {
       const postData = {
         name: res.name,
         email: res.email,
         token: res.accessToken,
         idToken: res.tokenId,
-      }
-      dispatch(socialLogin(postData, props.history, type))
+      };
+      dispatch(socialLogin(postData, props.history, type));
     }
-  }
+  };
 
   const handleCheckboxChange = (val) => {
-    setIsRemember(val)
-    setValue('isRemember', val)
-  }
+    setIsRemember(val);
+    setValue("isRemember", val);
+  };
 
   const onLogin = (values) => {
-    const payload = { ...values, isRemember }
+    const payload = { ...values, isRemember };
     dispatch(loginUser(payload, props.history));
-  }
+  };
 
   //handleGoogleLoginResponse
-  const googleResponse = response => {
-    signIn(response, "google")
-  }
+  const googleResponse = (response) => {
+    signIn(response, "google");
+  };
 
   //handleFacebookLoginResponse
-  const facebookResponse = response => {
-    signIn(response, "facebook")
-  }
+  const facebookResponse = (response) => {
+    signIn(response, "facebook");
+  };
 
   document.title = "Login | Minia - React Admin & Dashboard Template";
 
@@ -106,13 +105,16 @@ const Login = props => {
                   <div className="d-flex flex-column h-100">
                     <div className="mb-4 mb-md-5 text-center">
                       <Link to="/dashboard" className="d-block auth-logo">
-                        <img src={logo} alt="" height="28" /> <span className="logo-txt">Minia</span>
+                        <img src={logo} alt="" height="28" />{" "}
+                        <span className="logo-txt">Minia</span>
                       </Link>
                     </div>
                     <div className="auth-content my-auto">
                       <div className="text-center">
                         <h5 className="mb-0">Welcome Back !</h5>
-                        <p className="text-muted mt-2">Sign in to continue to Minia.</p>
+                        <p className="text-muted mt-2">
+                          Sign in to continue to Minia.
+                        </p>
                       </div>
                       <Form
                         className="custom-form mt-4 pt-2"
@@ -150,15 +152,12 @@ const Login = props => {
                                 label="Remember me"
                                 checked={isRemember}
                                 isController={false}
-                                onChange={handleCheckboxChange}  // mostly useful when isController === false
+                                onChange={handleCheckboxChange} // mostly useful when isController === false
                               />
                             </div>
 
                             <div className="mt-3 d-grid">
-                              <RHFButton
-                                btnName="Log In"
-                                type='submit'
-                              />
+                              <RHFButton btnName="Log In" type="submit" />
                             </div>
                           </div>
                         </div>
@@ -173,7 +172,7 @@ const Login = props => {
                               appId={facebook.APP_ID}
                               autoLoad={false}
                               callback={facebookResponse}
-                              render={renderProps => (
+                              render={(renderProps) => (
                                 <Link
                                   to="#"
                                   className="social-list-item bg-primary text-white border-primary"
@@ -184,11 +183,11 @@ const Login = props => {
                               )}
                             />
                           </li>
-                          {google.CLIENT_ID &&
+                          {google.CLIENT_ID && (
                             <li className="list-inline-item">
                               <GoogleLogin
                                 clientId={google.CLIENT_ID}
-                                render={renderProps => (
+                                render={(renderProps) => (
                                   <Link
                                     to="#"
                                     className="social-list-item bg-danger text-white border-danger"
@@ -198,20 +197,32 @@ const Login = props => {
                                   </Link>
                                 )}
                                 onSuccess={googleResponse}
-                                onFailure={() => { }}
+                                onFailure={() => {}}
                               />
                             </li>
-                          }
+                          )}
                         </ul>
                       </div>
 
                       <div className="mt-5 text-center">
-                        <p className="text-muted mb-0">Don't have an account ? <Link to="/register"
-                          className="text-primary fw-semibold"> Signup now </Link> </p>
+                        <p className="text-muted mb-0">
+                          Don't have an account ?{" "}
+                          <Link
+                            to="/register"
+                            className="text-primary fw-semibold"
+                          >
+                            {" "}
+                            Signup now{" "}
+                          </Link>{" "}
+                        </p>
                       </div>
                     </div>
                     <div className="mt-4 mt-md-5 text-center">
-                      <p className="mb-0">© {new Date().getFullYear()} Minia . Crafted with <i className="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                      <p className="mb-0">
+                        © {new Date().getFullYear()} Minia . Crafted with{" "}
+                        <i className="mdi mdi-heart text-danger"></i> by
+                        Themesbrand
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -222,11 +233,11 @@ const Login = props => {
         </Container>
       </div>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default withRouter(Login)
+export default withRouter(Login);
 
 Login.propTypes = {
   history: PropTypes.object,
-}
+};

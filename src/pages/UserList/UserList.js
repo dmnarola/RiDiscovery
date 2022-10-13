@@ -72,11 +72,11 @@ const UserList = () => {
     console.log("values =>", values);
   };
 
-  const handleSwitchChange = (_id, value) => {
-    console.log("_id :>> ", _id, value);
-    console.log("isActive :>> ", isActive);
-    setIsActive(!value);
-    // setIsModelOpen(!isModelOpen);
+  const handleSwitchChange = (value) => {
+    // console.log("_id :>> ", _id, value);
+    // console.log("isActive :>> ", isActive);
+    // setIsActive(!value);
+    // // setIsModelOpen(!isModelOpen);
 
     setValue("isActive", value);
   };
@@ -132,7 +132,7 @@ const UserList = () => {
           //   await dispatch(handleActiveStatus(`/shop/deactive/${s_id}`));
           //   await dispatch(handleDisplay());
           // }}
-          onChange={handleSwitchChange(row["_id"])}
+          onChange={handleSwitchChange}
         />
       ),
     },
