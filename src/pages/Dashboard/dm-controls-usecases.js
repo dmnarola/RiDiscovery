@@ -16,6 +16,7 @@ import RHFButton from "../../components/form-controls/RHFButton";
 import RHFFileUpload from "../../components/form-controls/RHFFileUpload";
 import RHFCheckbox from "../../components/form-controls/RHFCheckbox";
 import DropdownButton from "../../components/form-controls/DropdownButton";
+import { Toast } from "components/Common/Toaster";
 
 const DmControl = () => {
     document.title = "Dm Control | Minia - React Admin & Dm Control Template";
@@ -67,6 +68,7 @@ const DmControl = () => {
     const getFileData = (fileData) => {
         console.log({ fileData });
     };
+
 
     return (
         <React.Fragment>
@@ -145,7 +147,16 @@ const DmControl = () => {
                             isValidate={true}
                         />
 
+
+                        <br />
+                        <br />
+
                         <RHFButton btnName="Save" type="submit" />
+
+                        <br />
+                        <br />
+
+                        <RHFButton btnName="Toaster" onClick={() => Toast.success('Hello bhai')} />
 
                         <br />
                         <br />

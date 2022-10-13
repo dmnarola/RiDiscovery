@@ -11,6 +11,7 @@ import {
   postJwtLogin,
   postSocialLogin,
 } from "../../../helpers/fakebackend_helper";
+import { Toast } from "components/Common/Toaster";
 
 const fireBaseBackend = getFirebaseBackend();
 
@@ -35,6 +36,7 @@ function* loginUser({ payload: { user, history } }) {
         email: user.email,
         password: user.password,
       });
+      Toast.success('You are logged in')
       localStorage.setItem("authUser", JSON.stringify(response));
       yield put(loginSuccess(response));
     }
