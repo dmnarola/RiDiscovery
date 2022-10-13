@@ -39,7 +39,11 @@ const DialogBox = (props) => {
       </div>
       <div className="modal-body">{children}</div>
       <div className="modal-footer">
-        <RHFButton btnName={btnName} onClick={handleSubmit} />
+        <RHFButton
+          btnName={btnName}
+          onClick={props.handleSubmitMethod}
+          type="submit"
+        />
         <RHFButton btnName="cancel" outline={true} onClick={handleToggle} />
       </div>
     </Modal>

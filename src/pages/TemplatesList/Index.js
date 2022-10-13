@@ -11,7 +11,7 @@ const TemplatesList = () => {
   const columns = [
     {
       name: "Template Name",
-      selector: (row) => row["templatename"],
+      selector: (row) => row?.templatename,
       sortable: true,
     },
     {
