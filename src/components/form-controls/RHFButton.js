@@ -10,7 +10,7 @@ const RHFButton = (props) => {
         icon = "",
         outline = false,
         onClick = () => { },
-        className = { className }
+        className
     } = props;
 
     return (
