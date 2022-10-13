@@ -1,15 +1,16 @@
 import PropTypes from "prop-types"
-import React from "react"
+import React, { useState } from "react"
 
-import { Row, Col, Alert, Container, Form, Input, FormFeedback, Label } from "reactstrap";
+import { Row, Col, Container, Form } from "reactstrap";
 //redux
 import { useSelector, useDispatch } from "react-redux"
 
 import { withRouter, Link } from "react-router-dom"
 
-// Formik validation
-import * as Yup from "yup";
-import { useFormik } from "formik";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
 
 //Social Media Imports
 import { GoogleLogin } from "react-google-login"
@@ -25,30 +26,31 @@ import logo from "../../assets/images/logo-sm.svg"
 //Import config
 import { facebook, google } from "../../config"
 import CarouselPage from "../Authentication/CarouselPage"
+import RHFTextField from "components/form-controls/RHFTextField";
+import RHFButton from "components/form-controls/RHFButton";
+import RHFCheckbox from "components/form-controls/RHFCheckbox";
 
 const Login = props => {
-
+  const [isRemember, setIsRemember] = useState(false);
   const dispatch = useDispatch()
 
   const { error } = useSelector(state => ({
     error: state.Login.error,
   }))
 
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
+  const loginSchema = yup.object().shape({
+    email: yup.string().email().max(150).required('Email is required'),
+    password: yup.string().required('Password is required'),
+  });
 
-    initialValues: {
-      email: "admin@themesbrand.com" || '',
-      password: "123456" || '',
-    },
-    validationSchema: Yup.object({
-      email: Yup.string().required("Please Enter Your Email"),
-      password: Yup.string().required("Please Enter Your Password"),
-    }),
-    onSubmit: (values) => {
-      dispatch(loginUser(values, props.history));
-    }
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: yupResolver(loginSchema),
   });
 
   const signIn = (res, type) => {
@@ -71,6 +73,16 @@ const Login = props => {
     }
   }
 
+  const handleCheckboxChange = (val) => {
+    setIsRemember(val)
+    setValue('isRemember', val)
+  }
+
+  const onLogin = (values) => {
+    const payload = { ...values, isRemember }
+    dispatch(loginUser(payload, props.history));
+  }
+
   //handleGoogleLoginResponse
   const googleResponse = response => {
     signIn(response, "google")
@@ -81,7 +93,7 @@ const Login = props => {
     signIn(response, "facebook")
   }
 
-  document.title= "Login | Minia - React Admin & Dashboard Template";
+  document.title = "Login | Minia - React Admin & Dashboard Template";
 
   return (
     <React.Fragment>
@@ -102,75 +114,51 @@ const Login = props => {
                         <h5 className="mb-0">Welcome Back !</h5>
                         <p className="text-muted mt-2">Sign in to continue to Minia.</p>
                       </div>
-                     <Form
+                      <Form
                         className="custom-form mt-4 pt-2"
-                        onSubmit={(e) => {
-                          e.preventDefault();
-                          validation.handleSubmit();
-                          return false;
-                        }}
+                        onSubmit={handleSubmit(onLogin)}
                       >
-                        {error ? <Alert color="danger">{error}</Alert> : null}
                         <div className="mb-3">
-                          <Label className="form-label">Email</Label>
-                          <Input
+                          <RHFTextField
+                            id="email"
+                            label="Email"
                             name="email"
-                            className="form-control"
-                            placeholder="Enter email"
-                            type="email"
-                            onChange={validation.handleChange}
-                            onBlur={validation.handleBlur}
-                            value={validation.values.email || ""}
-                            invalid={
-                              validation.touched.email && validation.errors.email ? true : false
-                            }
+                            placeholder="Enter valid email"
+                            errorObj={errors}
+                            control={control}
+                            isController={true}
                           />
-                          {validation.touched.email && validation.errors.email ? (
-                            <FormFeedback type="invalid">{validation.errors.email}</FormFeedback>
-                          ) : null}
                         </div>
-
                         <div className="mb-3">
-                          <Label className="form-label">Password</Label>
-                          <Input
+                          <RHFTextField
+                            id="password"
+                            label="Password"
                             name="password"
-                            value={validation.values.password || ""}
                             type="password"
-                            placeholder="Enter Password"
-                            onChange={validation.handleChange}
-                            onBlur={validation.handleBlur}
-                            invalid={
-                              validation.touched.password && validation.errors.password ? true : false
-                            }
+                            placeholder="Enter password"
+                            errorObj={errors}
+                            control={control}
+                            isController={true}
                           />
-                          {validation.touched.password && validation.errors.password ? (
-                            <FormFeedback type="invalid">{validation.errors.password}</FormFeedback>
-                          ) : null}
                         </div>
 
                         <div className="row mb-4">
                           <div className="col">
                             <div className="form-check">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="remember-check"
+                              <RHFCheckbox
+                                name="isRemember"
+                                label="Remember me"
+                                checked={isRemember}
+                                isController={false}
+                                onChange={handleCheckboxChange}  // mostly useful when isController === false
                               />
-                              <label
-                                className="form-check-label"
-                                htmlFor="remember-check"
-                              >
-                                Remember me
-                              </label>
                             </div>
 
                             <div className="mt-3 d-grid">
-                              <button
-                                className="btn btn-primary btn-block"
-                                type="submit"
-                              >
-                                Log In
-                              </button>
+                              <RHFButton
+                                btnName="Log In"
+                                type='submit'
+                              />
                             </div>
                           </div>
                         </div>
@@ -197,22 +185,22 @@ const Login = props => {
                             />
                           </li>
                           {google.CLIENT_ID &&
-                          <li className="list-inline-item">
-                            <GoogleLogin
-                              clientId={google.CLIENT_ID}
-                              render={renderProps => (
-                                <Link
-                                  to="#"
-                                  className="social-list-item bg-danger text-white border-danger"
-                                  onClick={renderProps.onClick}
-                                >
-                                  <i className="mdi mdi-google" />
-                                </Link>
-                              )}
-                              onSuccess={googleResponse}
-                              onFailure={() => { }}
-                            />
-                          </li>
+                            <li className="list-inline-item">
+                              <GoogleLogin
+                                clientId={google.CLIENT_ID}
+                                render={renderProps => (
+                                  <Link
+                                    to="#"
+                                    className="social-list-item bg-danger text-white border-danger"
+                                    onClick={renderProps.onClick}
+                                  >
+                                    <i className="mdi mdi-google" />
+                                  </Link>
+                                )}
+                                onSuccess={googleResponse}
+                                onFailure={() => { }}
+                              />
+                            </li>
                           }
                         </ul>
                       </div>

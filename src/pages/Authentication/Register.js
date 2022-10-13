@@ -1,9 +1,10 @@
 import React, { useEffect } from "react"
-import { Row, Col, Alert, Container, Input, Label, Form, FormFeedback  } from "reactstrap"
+import { Row, Col, Alert, Container, Input, Label, Form, FormFeedback } from "reactstrap"
 
 // Formik Validation
-import * as Yup from "yup";
-import { useFormik } from "formik";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 // action
 import { registerUser, apiError } from "../../store/actions";
@@ -16,6 +17,9 @@ import { Link } from "react-router-dom"
 // import images
 import logo from "../../assets/images/logo-sm.svg"
 import CarouselPage from "../Authentication/CarouselPage"
+import RHFTextField from "components/form-controls/RHFTextField";
+import RHFButton from "components/form-controls/RHFButton";
+
 
 const Register = props => {
 
@@ -30,24 +34,30 @@ const Register = props => {
     loading: state.Account.loading,
   }))
 
-  const validation = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
-    enableReinitialize: true,
 
-    initialValues: {
-      email: '',
-      username: '',
-      password: '',
-    },
-    validationSchema: Yup.object({
-      email: Yup.string().required("Please Enter Your Email"),
-      username: Yup.string().required("Please Enter Your Username"),
-      password: Yup.string().required("Please Enter Your Password"),
-    }),
-    onSubmit: (values) => {
-      dispatch(registerUser(values));
-    }
+  const registerSchema = yup.object().shape({
+    email: yup.string().email().max(150).required('Email is required'),
+    username: yup.string().required('Username is required'),
+    password: yup.string().required('Password is required'),
   });
+
+
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    resolver: yupResolver(registerSchema),
+  });
+
+
+  const onRegister = (values) => {
+    console.log({ values })
+    reset();
+    dispatch(registerUser(values));
+  }
 
   useEffect(() => {
     dispatch(apiError(""))
@@ -75,11 +85,7 @@ const Register = props => {
 
                       <Form
                         className="needs-validation custom-form mt-4 pt-2"
-                        onSubmit={(e) => {
-                          e.preventDefault();
-                          validation.handleSubmit();
-                          return false;
-                        }}
+                        onSubmit={handleSubmit(onRegister)}
                       >
                         {user && user ? (
                           <Alert color="success">
@@ -92,61 +98,41 @@ const Register = props => {
                         ) : null}
 
                         <div className="mb-3">
-                          <Label className="form-label">Email</Label>
-                          <Input
+                          <RHFTextField
                             id="email"
+                            label="Email"
                             name="email"
-                            className="form-control"
-                            placeholder="Enter email"
-                            type="email"
-                            onChange={validation.handleChange}
-                            onBlur={validation.handleBlur}
-                            value={validation.values.email || ""}
-                            invalid={
-                              validation.touched.email && validation.errors.email ? true : false
-                            }
+                            placeholder="Enter valid email"
+                            errorObj={errors}
+                            control={control}
+                            isController={true}
                           />
-                          {validation.touched.email && validation.errors.email ? (
-                            <FormFeedback type="invalid">{validation.errors.email}</FormFeedback>
-                          ) : null}
                         </div>
 
-
                         <div className="mb-3">
-                          <Label className="form-label">Username</Label>
-                          <Input
+                          <RHFTextField
+                            id="username"
+                            label="Username"
                             name="username"
-                            type="text"
                             placeholder="Enter username"
-                            onChange={validation.handleChange}
-                            onBlur={validation.handleBlur}
-                            value={validation.values.username || ""}
-                            invalid={
-                              validation.touched.username && validation.errors.username ? true : false
-                            }
+                            errorObj={errors}
+                            control={control}
+                            isController={true}
                           />
-                          {validation.touched.username && validation.errors.username ? (
-                            <FormFeedback type="invalid">{validation.errors.username}</FormFeedback>
-                          ) : null}
                         </div>
                         <div className="mb-3">
-                          <Label className="form-label">Password</Label>
-                          <Input
+                          <RHFTextField
+                            id="password"
+                            label="Password"
                             name="password"
                             type="password"
-                            placeholder="Enter Password"
-                            onChange={validation.handleChange}
-                            onBlur={validation.handleBlur}
-                            value={validation.values.password || ""}
-                            invalid={
-                              validation.touched.password && validation.errors.password ? true : false
-                            }
+                            placeholder="Enter password"
+                            errorObj={errors}
+                            control={control}
+                            isController={true}
                           />
-                          {validation.touched.password && validation.errors.password ? (
-                            <FormFeedback type="invalid">{validation.errors.password}</FormFeedback>
-                          ) : null}
                         </div>
-                        
+
                         <div className="mb-4">
                           <p className="mb-0">
                             By registering you agree to the Minia{" "}
@@ -156,12 +142,11 @@ const Register = props => {
                           </p>
                         </div>
                         <div className="mb-3">
-                          <button
+                          <RHFButton
                             className="btn btn-primary w-100 waves-effect waves-light"
-                            type="submit"
-                          >
-                            Register
-                          </button>
+                            btnName="Register"
+                            type='submit'
+                          />
                         </div>
                       </Form>
 

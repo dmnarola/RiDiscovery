@@ -14,6 +14,7 @@ const RHFTextField = ({ isController = true, ...props }) => {
     onChange,
     autoFocus = false,
     bsSize = "md",
+    type = "text",
     ...extraProps
   } = props;
 
@@ -27,7 +28,7 @@ const RHFTextField = ({ isController = true, ...props }) => {
           <Input
             autoFocus={autoFocus}
             className="form-control"
-            type="text"
+            type={type}
             {...props}
           />
         </div>
@@ -72,6 +73,7 @@ const RHFTextField = ({ isController = true, ...props }) => {
             {...extraProps}
             autoFocus={autoFocus}
             bsSize={bsSize}
+            type={type}
             invalid={isError}
             disabled={disabled}
             onChange={(_) => {

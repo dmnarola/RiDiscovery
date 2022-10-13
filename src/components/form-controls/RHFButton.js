@@ -8,12 +8,13 @@ const RHFButton = (props) => {
         btnName = "Submit",
         color = "primary",
         icon = "",
+        className,
         outline = false,
         onClick = () => { },
     } = props;
 
     return (
-        <Button color={color} outline={outline} type={type} onClick={onClick}>
+        <Button color={color} outline={outline} type={type} onClick={onClick} className={className}>
             {icon && <><FeatherIcon icon={icon} size="22" />{' '}</>}
             {btnName}
         </Button>
