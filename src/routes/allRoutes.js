@@ -18,6 +18,7 @@ import dmControls from "../pages/Dashboard/dm-controls-usecases";
 const userRoutes = [
   //dashboard
   { path: "/dashboard", component: Dashboard },
+
   { path: "/user-list", component: UserList },
   { path: "/project-list", component: ProjectList },
   { path: "/templates-list", component: TemplatesList },
