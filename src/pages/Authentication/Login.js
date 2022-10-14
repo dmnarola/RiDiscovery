@@ -126,7 +126,7 @@ const Login = (props) => {
                             label="Email"
                             name="email"
                             placeholder="Enter valid email"
-                            errorObj={errors}
+                            errorobj={errors}
                             control={control}
                             isController={true}
                           />
@@ -138,7 +138,7 @@ const Login = (props) => {
                             name="password"
                             type="password"
                             placeholder="Enter password"
-                            errorObj={errors}
+                            errorobj={errors}
                             control={control}
                             isController={true}
                           />
@@ -197,7 +197,7 @@ const Login = (props) => {
                                   </Link>
                                 )}
                                 onSuccess={googleResponse}
-                                onFailure={() => {}}
+                                onFailure={() => { }}
                               />
                             </li>
                           )}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AccordionHeader,
   Card,
@@ -29,7 +29,7 @@ const UserList = () => {
 
   const [checkIsSubmit, setCheckIsSubmit] = useState(false);
 
-  const [formData, setFormData] = useState();
+  const [formData, setFormData] = useState(null);
 
   // console.log("editUserData :>> ", editUserData);
   const {
@@ -53,15 +53,11 @@ const UserList = () => {
     setValue("isActive", value);
   };
 
-  const onSubmit = (data) => {
-    console.log("Get All Data=>", data);
-  };
-  // const handleGetSubmit = (submit) => {
-  //   // submit(onSubmit);
-  //   console.log("fun =>");
-  // };
-
-  // console.log("formData :>> ", formData);
+  useEffect(() => {
+    if (formData !== null) {
+      alert("Get the user's data successfully!")
+    }
+  }, [formData])
 
   const columns = [
     {
@@ -87,12 +83,12 @@ const UserList = () => {
     },
     {
       name: "Start Date",
-      selector: (row) => row?.startdate,
+      selector: (row) => row?.startDate,
       sortable: true,
     },
     {
       name: "End Date",
-      selector: (row) => row?.enddate,
+      selector: (row) => row?.endDate,
       sortable: true,
     },
     {
@@ -116,13 +112,8 @@ const UserList = () => {
           label="Is Active"
           isController={true}
           checked={isActive}
-          errorObj={errors}
+          errorobj={errors}
           control={control}
-          // onChange={async () => {
-          //   const s_id = row["_id"];
-          //   await dispatch(handleActiveStatus(`/shop/deactive/${s_id}`));
-          //   await dispatch(handleDisplay());
-          // }}
           onChange={handleSwitchChange}
         />
       ),
@@ -166,7 +157,9 @@ const UserList = () => {
     setCheckIsSubmit(true);
   };
 
-  const callAPIFunction = () => {};
+  console.log(' checkIsSubmit:>> ', checkIsSubmit);
+
+  const callAPIFunction = () => { };
   return (
     <React.Fragment>
       <div className="page-content">
@@ -180,7 +173,7 @@ const UserList = () => {
                     id="search"
                     name="search"
                     placeholder="Search here"
-                    errorObj={errors}
+                    errorobj={errors}
                     control={control}
                     isController={false}
                   />
@@ -207,8 +200,8 @@ const UserList = () => {
                         editUserData={editUserData}
                         checkIsSubmit={checkIsSubmit}
                         // onSubmit={onSubmit}
-                        onFormSubmit={setFormData}
-                        // getSubmit={handleSubmit(onSubmit)}
+                        setFormData={setFormData}
+                      // getSubmit={handleSubmit(onSubmit)}
                       />
                     </DialogBox>
                   </div>

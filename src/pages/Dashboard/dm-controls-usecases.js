@@ -81,7 +81,7 @@ const DmControl = () => {
                             label="Email"
                             name="email"
                             placeholder="Enter valid email"
-                            errorObj={errors}
+                            errorobj={errors}
                             control={control}
                             isController={true}
                         />
@@ -103,7 +103,7 @@ const DmControl = () => {
                                 { value: "silver", label: "Silver", color: "#666666" },
                             ]}
                             isMultiple={false}
-                            errorObj={errors}
+                            errorobj={errors}
                             control={control}
                             isController={true}
                         // handleOnChange={handleOnChange} // when isController === false
@@ -112,7 +112,7 @@ const DmControl = () => {
                         <RHFDatePicker
                             name="date"
                             label="Date"
-                            errorObj={errors}
+                            errorobj={errors}
                             control={control}
                             isController={true}
                         />
@@ -122,7 +122,7 @@ const DmControl = () => {
                             label="Is Active"
                             isController={true}
                             checked={isActive}
-                            errorObj={errors}
+                            errorobj={errors}
                             control={control}
                             onChange={handleSwitchChange}
                         />
@@ -132,7 +132,7 @@ const DmControl = () => {
                             label="Is Remember"
                             checked={isRemember}
                             isController={true}
-                            errorObj={errors}
+                            errorobj={errors}
                             control={control}
                             onChange={handleCheckboxChange} // mostly useful when isController === false
                         />
@@ -141,7 +141,7 @@ const DmControl = () => {
                             name="userProfile"
                             getFileData={getFileData}
                             setValue={setValue}
-                            errorObj={errors}
+                            errorobj={errors}
                             isValidate={true}
                         />
 

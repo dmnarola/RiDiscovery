@@ -5,7 +5,7 @@ import { FormFeedback } from 'reactstrap';
 
 
 const RHFSwitch = (props) => {
-    const { isController = false, name, label, checked = false, errorObj, control, defaultValue, onChange, ...extraProps } = props;
+    const { isController = false, name, label, checked = false, errorobj, control, defaultValue, onChange, ...extraProps } = props;
 
     let isError = false;
     let errorMessage = '';
@@ -35,9 +35,9 @@ const RHFSwitch = (props) => {
         )
     }
 
-    if (errorObj && Object.prototype.hasOwnProperty.call(errorObj, name)) {
+    if (errorobj && Object.prototype.hasOwnProperty.call(errorobj, name)) {
         isError = true;
-        errorMessage = errorObj[name].message;
+        errorMessage = errorobj[name].message;
     }
 
     disabled = (props.disabled === undefined) ? false : props.disabled;

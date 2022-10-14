@@ -12,7 +12,7 @@ const RHFAutoCompleteSelect = ({
   control,
   defaultValue = null,
   options,
-  errorObj,
+  errorobj,
   onChange,
   handleOnChange,
   isClearable = true,
@@ -31,11 +31,11 @@ const RHFAutoCompleteSelect = ({
   }
   const disabled = isDisabled === undefined ? false : isDisabled;
 
-  if (errorObj && errorObj[name]) {
-    console.log("isError :>> ", isError);
-    console.log("errorMessage :>> ", errorMessage);
+  if (errorobj && errorobj[name]) {
+    // console.log("isError :>> ", isError);
+    // console.log("errorMessage :>> ", errorMessage);
     isError = true;
-    errorMessage = errorObj[name].message;
+    errorMessage = errorobj[name].message;
   }
 
   if (!isController) {

@@ -6,7 +6,7 @@ const RHFTextField = ({ isController = true, ...props }) => {
   const {
     name,
     label,
-    errorObj,
+    errorobj,
     control,
     defaultValue,
     multiline,
@@ -44,9 +44,9 @@ const RHFTextField = ({ isController = true, ...props }) => {
   let multilineDetails = {};
   let someValue = "";
 
-  if (errorObj && Object.prototype.hasOwnProperty.call(errorObj, name)) {
+  if (errorobj && Object.prototype.hasOwnProperty.call(errorobj, name)) {
     isError = true;
-    errorMessage = errorObj[name]?.message;
+    errorMessage = errorobj[name]?.message;
   }
 
   if (multiline && rows) {

@@ -7,7 +7,7 @@ const RHFDatePicker = ({ isController = false, ...props }) => {
     name,
     label,
     value = null,
-    errorObj,
+    errorobj,
     control,
     defaultValue = null,
     disabled = false,
@@ -29,9 +29,9 @@ const RHFDatePicker = ({ isController = false, ...props }) => {
   let isError = false;
   let errorMessage = '';
   let someValue = '';
-  if (errorObj && Object.prototype.hasOwnProperty.call(errorObj, name)) {
+  if (errorobj && Object.prototype.hasOwnProperty.call(errorobj, name)) {
     isError = true;
-    errorMessage = errorObj[name].message;
+    errorMessage = errorobj[name].message;
   }
   if (defaultValue !== undefined) {
     someValue = defaultValue;

@@ -4,15 +4,15 @@ import userimg from '../../assets/images/users/avatar-1.jpg'
 import '../../assets/scss/profilepic.scss';
 
 
-const RHFFileUpload = ({ name, errorObj, getFileData, defaultImage, setValue, isValidate = false }) => {
+const RHFFileUpload = ({ name, errorobj, getFileData, defaultImage, setValue, isValidate = false }) => {
     const [userImage, setUserImage] = useState(defaultImage || userimg);
 
     let isError = false;
     let errorMessage = '';
 
-    if (errorObj && Object.prototype.hasOwnProperty.call(errorObj, name)) {
+    if (errorobj && Object.prototype.hasOwnProperty.call(errorobj, name)) {
         isError = true;
-        errorMessage = errorObj[name]?.message;
+        errorMessage = errorobj[name]?.message;
     }
 
     const onFileSelectHandler = async (e) => {
