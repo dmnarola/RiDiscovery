@@ -31,7 +31,7 @@ const RHFTextField = ({ isController = true, ...props }) => {
           <Input
             autoFocus={autoFocus}
             className="form-control"
-            style={backgroundColor && { background: backgroundColor, color: '#fff' }}
+            style={backgroundColor ? { background: backgroundColor, color: '#fff' } : null}
             type={type}
             {...props}
           />
