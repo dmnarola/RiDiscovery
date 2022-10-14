@@ -9,8 +9,9 @@ import { useForm } from "react-hook-form";
 import RHFButton from "../../components/form-controls/RHFButton";
 
 const UserAddEdit = (props) => {
-  const { editUserData, onFormSubmit, checkIsSubmit } = props;
-  console.log("CHECK IS SUBMIT ==> ", checkIsSubmit);
+  const { editUserData, setFormData, checkIsSubmit } = props;
+
+  console.log("checkIsSubmit ==> ", checkIsSubmit);
 
   const userSchema = yup.object().shape({
     internal: yup
@@ -55,6 +56,7 @@ const UserAddEdit = (props) => {
     mode: "onBlur",
     resolver: yupResolver(userSchema),
   });
+
   useEffect(() => {
     if (editUserData !== null) {
       const formFields = Object.keys(editUserData);
@@ -101,6 +103,40 @@ const UserAddEdit = (props) => {
     },
   ];
 
+  const InternalData = [{
+    value: "SA",
+    label: "SA",
+  }, {
+    value: "DA",
+    label: "DA",
+  }]
+
+  const RoleData = [{
+    value: "OMA-Owner Admin",
+    label: "OMA-Owner Admin",
+  }, {
+    value: "CSM-Company Senior Manager",
+    label: "CSM-Company Senior Manager",
+  }, {
+    value: "DAPM-DA Project Manager",
+    label: "DAPM-DA Project Manager",
+  }, {
+    value: "SAPM-SA Project Manager",
+    label: "SAPM-SA Project Manager",
+  }, {
+    value: "DATM-DA Team Member",
+    label: "DATM-DA Team Member",
+  }, {
+    value: "SAPM-SA Pentester Member",
+    label: "SAPM-SA Pentester Member",
+  }, {
+    value: "SATL-SA Team Lead",
+    label: "SATL-SA Team Lead",
+  }, {
+    value: "Executive",
+    label: "Executive",
+  }]
+
   const submitRef = useRef(null);
 
   useEffect(() => {
@@ -112,23 +148,26 @@ const UserAddEdit = (props) => {
 
   const onSubmit = (data) => {
     console.log(" form data :>> ", data);
-    onFormSubmit(data);
+    if (checkIsSubmit) {
+      setFormData(data);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Row className="col d-flex justify-content-end align-items-end">
+      <Row className="mb-3 col d-flex justify-content-end align-items-end">
         <Col sm="4">
           <RHFAutoCompleteSelect
             id="internal"
             label="Internal"
             name="internal"
-            options={DropDownData}
+            options={InternalData}
+            setValue={setValue}
             isMultiple={false}
-            errorObj={errors}
+            errorobj={errors}
             control={control}
             isController={true}
-            // handleOnChange={handleOnChange} // when isController === false
+          // handleOnChange={handleOnChange} // when isController === false
           />
         </Col>
       </Row>
@@ -140,7 +179,7 @@ const UserAddEdit = (props) => {
             label="First Name"
             name="firstName"
             placeholder="Enter valid First Name"
-            errorObj={errors}
+            errorobj={errors}
             control={control}
             isController={true}
           />
@@ -151,7 +190,7 @@ const UserAddEdit = (props) => {
             label="Last Name"
             name="lastName"
             placeholder="Enter valid Last Name"
-            errorObj={errors}
+            errorobj={errors}
             control={control}
             isController={true}
           />
@@ -166,10 +205,10 @@ const UserAddEdit = (props) => {
             name="companyName"
             options={DropDownData}
             isMultiple={false}
-            errorObj={errors}
+            errorobj={errors}
             control={control}
             isController={true}
-            // handleOnChange={handleOnChange} // when isController === false
+          // handleOnChange={handleOnChange} // when isController === false
           />
         </Col>
       </Row>
@@ -181,7 +220,7 @@ const UserAddEdit = (props) => {
             label="Mobile Number"
             name="mobileNumber"
             placeholder="Enter valid Mobile Number"
-            errorObj={errors}
+            errorobj={errors}
             control={control}
             isController={true}
           />
@@ -194,12 +233,12 @@ const UserAddEdit = (props) => {
             id="role"
             label="Role"
             name="role"
-            options={DropDownData}
+            options={RoleData}
             isMultiple={false}
-            errorObj={errors}
+            errorobj={errors}
             control={control}
             isController={true}
-            // handleOnChange={handleOnChange} // when isController === false
+          // handleOnChange={handleOnChange} // when isController === false
           />
         </Col>
         <Col sm="6">
@@ -208,7 +247,7 @@ const UserAddEdit = (props) => {
             label="Domain Name"
             name="domainName"
             placeholder="Enter valid Domain Name"
-            errorObj={errors}
+            errorobj={errors}
             control={control}
             isController={true}
           />
@@ -222,7 +261,7 @@ const UserAddEdit = (props) => {
             label="Email"
             name="email"
             placeholder="Enter valid email"
-            errorObj={errors}
+            errorobj={errors}
             control={control}
             isController={true}
           />
@@ -234,7 +273,7 @@ const UserAddEdit = (props) => {
           <RHFDatePicker
             name="startDate"
             label="Start Date"
-            errorObj={errors}
+            errorobj={errors}
             control={control}
             isController={true}
           />
@@ -243,7 +282,7 @@ const UserAddEdit = (props) => {
           <RHFDatePicker
             name="endDate"
             label="End Date"
-            errorObj={errors}
+            errorobj={errors}
             control={control}
             isController={true}
           />

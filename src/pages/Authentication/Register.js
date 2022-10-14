@@ -103,7 +103,7 @@ const Register = props => {
                             label="Email"
                             name="email"
                             placeholder="Enter valid email"
-                            errorObj={errors}
+                            errorobj={errors}
                             control={control}
                             isController={true}
                           />
@@ -115,7 +115,7 @@ const Register = props => {
                             label="Username"
                             name="username"
                             placeholder="Enter username"
-                            errorObj={errors}
+                            errorobj={errors}
                             control={control}
                             isController={true}
                           />
@@ -127,7 +127,7 @@ const Register = props => {
                             name="password"
                             type="password"
                             placeholder="Enter password"
-                            errorObj={errors}
+                            errorobj={errors}
                             control={control}
                             isController={true}
                           />

@@ -19,6 +19,7 @@ const DialogBox = (props) => {
       isOpen={isModelOpen}
       toggle={() => {
         handleToggle();
+        props.handleSubmitMethod
       }}
     >
       <div className="modal-header">

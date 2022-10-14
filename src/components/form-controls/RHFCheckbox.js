@@ -6,7 +6,7 @@ const RHFCheckbox = ({ isController = false, ...props }) => {
   const {
     name,
     label,
-    errorObj,
+    errorobj,
     control,
     checked = false,
     disabled = false,
@@ -27,9 +27,9 @@ const RHFCheckbox = ({ isController = false, ...props }) => {
   let isError = false;
   let errorMessage = '';
 
-  if (errorObj && Object.prototype.hasOwnProperty.call(errorObj, name)) {
+  if (errorobj && Object.prototype.hasOwnProperty.call(errorobj, name)) {
     isError = true;
-    errorMessage = errorObj[name].message;
+    errorMessage = errorobj[name].message;
   }
 
   return <Controller

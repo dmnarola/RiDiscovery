@@ -50,7 +50,7 @@ const ProjectList = () => {
                     id="search"
                     name="search"
                     placeholder="Search here"
-                    // errorObj={errors}
+                    // errorobj={errors}
                     // control={control}
                     isController={false}
                   />
