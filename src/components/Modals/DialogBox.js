@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Card, CardBody, Modal } from "reactstrap";
+import React from "react";
+import { Modal } from "reactstrap";
 import RHFButton from "../form-controls/RHFButton";
 
 const DialogBox = (props) => {
@@ -7,19 +7,20 @@ const DialogBox = (props) => {
     setIsModelOpen,
     isModelOpen,
     handleToggle,
-    handleSubmit,
+    handleOnSubmit,
     btnName,
     title,
     children,
+    modelSize
   } = props;
 
   return (
     <Modal
-      size="lg"
+      size={modelSize}
       isOpen={isModelOpen}
       toggle={() => {
         handleToggle();
-        props.handleSubmitMethod
+        handleOnSubmit
       }}
     >
       <div className="modal-header">
@@ -42,8 +43,7 @@ const DialogBox = (props) => {
       <div className="modal-footer">
         <RHFButton
           btnName={btnName}
-          onClick={props.handleSubmitMethod}
-          type="submit"
+          onClick={handleOnSubmit}
         />
         <RHFButton btnName="cancel" outline={true} onClick={handleToggle} />
       </div>

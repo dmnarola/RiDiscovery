@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  AccordionHeader,
   Card,
   CardBody,
   CardHeader,
@@ -16,8 +15,6 @@ import RHFButton from "../../components/form-controls/RHFButton";
 import RHFTextField from "../../components/form-controls/RHFTextField";
 import RHFSwitch from "../../components/form-controls/RHFSwitch";
 import UserAddEdit from "./UserAddEdit";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useForm } from "react-hook-form";
 
 const UserList = () => {
@@ -26,36 +23,30 @@ const UserList = () => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [editUserData, setEditUserData] = useState(null);
-
   const [checkIsSubmit, setCheckIsSubmit] = useState(false);
-
   const [formData, setFormData] = useState(null);
 
-  // console.log("editUserData :>> ", editUserData);
   const {
     handleSubmit,
     control,
     setValue,
+    setError,
     formState: { errors },
   } = useForm({
     mode: "onBlur",
-    // resolver: yupResolver(userSchema),
   });
 
   const handleToggle = () => {
     setIsModelOpen(!isModelOpen);
-    // removeBodyCss();
   };
-
-  console.log("formData :>> ", formData);
 
   const handleSwitchChange = (value) => {
     setValue("isActive", value);
   };
 
   useEffect(() => {
-    if (formData !== null) {
-      alert("Get the user's data successfully!")
+    if (formData) {
+      console.log('formData :>> ', formData);
     }
   }, [formData])
 
@@ -96,9 +87,9 @@ const UserList = () => {
       selector: (row) => (
         <FeatherIcon
           icon="edit"
+          size="18"
           onClick={(e) => {
             handleToggle();
-            console.log("edit row => ", row);
             setEditUserData(row);
           }}
         />
@@ -132,8 +123,8 @@ const UserList = () => {
       domainName: "dadada",
       mobileNumber: 9849375666,
       role: "Slate",
-      startDate: "12/06/2000",
-      endDate: "22/10/2021",
+      startDate: "2000-06-12",
+      endDate: "2021-10-22",
       isActive: isActive,
     },
     {
@@ -147,19 +138,16 @@ const UserList = () => {
       domainName: "fsdfe",
       mobileNumber: 9849375666,
       role: "Slate",
-      startDate: "12/06/2000",
-      endDate: "22/10/2021",
+      startDate: "2000-06-12",
+      endDate: "2021-10-22",
       isActive: isActive,
     },
   ];
 
-  const handleSubmitMethod = () => {
+  const handleOnSubmit = () => {
     setCheckIsSubmit(true);
   };
 
-  console.log(' checkIsSubmit:>> ', checkIsSubmit);
-
-  const callAPIFunction = () => { };
   return (
     <React.Fragment>
       <div className="page-content">
@@ -183,25 +171,26 @@ const UserList = () => {
                     <RHFButton
                       btnName="Add User"
                       icon="plus"
-                      onClick={handleToggle}
+                      onClick={() => {
+                        handleToggle()
+                        setEditUserData(null)
+                        setFormData(null)
+                      }}
                     />
                     <DialogBox
                       isModelOpen={isModelOpen}
                       setIsModelOpen={setIsModelOpen}
                       handleToggle={handleToggle}
-                      // handleSubmit={handleSubmit(onSubmit)}
-                      // handleSubmit={handleGetSubmit(onSubmit)}
-                      // handleSubmit={() => alert("hi")}
                       btnName="Submit"
+                      modelSize="lg"
                       title={editUserData === null ? "New User" : "Edit User"}
-                      handleSubmitMethod={handleSubmitMethod}
+                      handleOnSubmit={handleOnSubmit}
                     >
                       <UserAddEdit
                         editUserData={editUserData}
                         checkIsSubmit={checkIsSubmit}
-                        // onSubmit={onSubmit}
                         setFormData={setFormData}
-                      // getSubmit={handleSubmit(onSubmit)}
+                        setCheckIsSubmit={setCheckIsSubmit}
                       />
                     </DialogBox>
                   </div>
