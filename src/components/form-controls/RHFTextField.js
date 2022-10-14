@@ -12,6 +12,7 @@ const RHFTextField = ({ isController = true, ...props }) => {
     multiline,
     rows,
     onChange,
+    backgroundColor = false,
     autoFocus = false,
     bsSize = "md",
     type = "text",
@@ -30,6 +31,7 @@ const RHFTextField = ({ isController = true, ...props }) => {
           <Input
             autoFocus={autoFocus}
             className="form-control"
+            style={backgroundColor && { background: backgroundColor, color: '#fff' }}
             type={type}
             {...props}
           />

@@ -1,0 +1,23 @@
+.avatars {
+    .avatar {
+        margin-left: -10px;
+
+        .user-add {
+            padding: 5px;
+            border: 1px dashed;
+        }
+
+        img:hover {
+            z-index: 1;
+            position: relative;
+            height: 35px;
+            width: 35px;
+            box-shadow: 0 2px 6px 0 #5156be80;
+        }
+    }
+
+    .user-list {
+        height: 150px;
+        overflow: auto;
+    }
+}
