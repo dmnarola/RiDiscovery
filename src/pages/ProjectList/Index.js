@@ -11,12 +11,12 @@ const ProjectList = () => {
   const columns = [
     {
       name: "Project Name",
-      selector: (row) => row["projectname"],
+      selector: (row) => row?.projectname,
       sortable: true,
     },
     {
       name: "Pen ID",
-      selector: (row) => row["penid"],
+      selector: (row) => row?.penid,
       sortable: true,
     },
     {
