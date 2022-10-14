@@ -158,7 +158,7 @@ const UserAddEdit = (props) => {
       onSubmit={handleSubmit(onSubmit)}
 
     >
-      {isEditMode ? null : <Row className="mb-3 col d-flex justify-content-end align-items-end">
+      {!isEditMode && <Row className="mb-3 col d-flex justify-content-end align-items-end">
         <Col sm="4">
           <RHFAutoCompleteSelect
             id="internal"
@@ -216,7 +216,7 @@ const UserAddEdit = (props) => {
         </Col>
       </Row>}
 
-      {isEditMode ? null : <Row className="mb-3">
+      {!isEditMode && <Row className="mb-3">
         <Col sm="12">
           <RHFTextField
             id="mobileNumber"
@@ -230,7 +230,7 @@ const UserAddEdit = (props) => {
         </Col>
       </Row>}
 
-      {isEditMode ? null : <Row className="mb-3">
+      {!isEditMode && <Row className="mb-3">
         <Col sm="6">
           <RHFAutoCompleteSelect
             id="role"

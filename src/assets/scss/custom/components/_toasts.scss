@@ -3,12 +3,18 @@
 //
 
 body[data-layout-mode="dark"] {
-    .toast, .toast-header{
+
+    .toast,
+    .toast-header {
         background-color: rgba($gray-dark-300, 0.85);
         color: $gray-dark-400;
     }
 
-    .toast-header{
+    .toast-header {
         color: $gray-dark-500;
     }
+}
+
+.Toastify__close-button {
+    align-self: center !important;
 }

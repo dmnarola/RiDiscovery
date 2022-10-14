@@ -16,12 +16,23 @@ import RHFButton from "../../components/form-controls/RHFButton";
 import RHFFileUpload from "../../components/form-controls/RHFFileUpload";
 import RHFCheckbox from "../../components/form-controls/RHFCheckbox";
 import DropdownButton from "../../components/form-controls/DropdownButton";
+import { Toast } from "components/Common/Toaster";
+import AvtarGroup from "components/form-controls/AvtarGroup";
+import { avatar1, avatar2, avatar3, avatar4, avatar5 } from "assets/images";
 
 const DmControl = () => {
     document.title = "Dm Control | Minia - React Admin & Dm Control Template";
 
     const [isActive, setIsActive] = useState(false);
     const [isRemember, setIsRemember] = useState(false);
+
+    const users = [
+        { id: 1, name: 'Dipesh Mali', image: avatar1 },
+        { id: 2, name: 'Mahesh', image: avatar2 },
+        { id: 3, name: 'Foram', image: avatar3 },
+        { id: 4, name: 'Pratik', image: avatar4 },
+        { id: 5, name: 'Priyal', image: avatar5 },
+    ]
 
     const loginSchema = yup.object().shape({
         email: yup.string().email().max(150).required("Email is required"),
@@ -67,6 +78,7 @@ const DmControl = () => {
     const getFileData = (fileData) => {
         console.log({ fileData });
     };
+
 
     return (
         <React.Fragment>
@@ -145,7 +157,26 @@ const DmControl = () => {
                             isValidate={true}
                         />
 
+
+
+                        <br />
+                        <br />
+
                         <RHFButton btnName="Save" type="submit" />
+
+                        <br />
+                        <br />
+
+                        <AvtarGroup
+                            users={users}
+                            max={4}
+                        />
+
+
+                        <br />
+                        <br />
+
+                        <RHFButton btnName="Toaster" onClick={() => Toast.success('Hello bhai')} />
 
                         <br />
                         <br />
@@ -158,6 +189,8 @@ const DmControl = () => {
 
                         <br />
                         <br />
+
+
                     </form>
                 </Container>
             </div>
