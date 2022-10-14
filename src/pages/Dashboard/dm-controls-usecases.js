@@ -19,12 +19,19 @@ import DropdownButton from "../../components/form-controls/DropdownButton";
 import { Toast } from "components/Common/Toaster";
 import AvtarGroup from "components/form-controls/AvtarGroup";
 import { avatar1, avatar2, avatar3, avatar4, avatar5 } from "assets/images";
+import DialogBox from "components/Modals/DialogBox";
 
 const DmControl = () => {
     document.title = "Dm Control | Minia - React Admin & Dm Control Template";
 
     const [isActive, setIsActive] = useState(false);
     const [isRemember, setIsRemember] = useState(false);
+
+    const [isModelOpen, setIsModelOpen] = useState(false);
+
+    const handleToggle = () => {
+        setIsModelOpen(!isModelOpen);
+    };
 
     const [avtarUsers, setAvtarUsers] = useState([
         { id: 1, name: 'Dipesh Mali', image: avatar1 },
@@ -190,6 +197,35 @@ const DmControl = () => {
 
                         <br />
                         <br />
+
+                        <RHFButton
+                            btnName='Model'
+                            onClick={() => handleToggle()}
+                        />
+
+                        <DialogBox
+                            isModelOpen={isModelOpen}
+                            handleToggle={handleToggle}
+                            modelSize="lg"
+                            title="Test Model"
+                            actions={
+                                <>
+                                    <RHFButton
+                                        // btnName='Submit'
+                                        onClick={handleToggle}
+                                    />
+                                    <RHFButton
+                                        btnName="cancel"
+                                        outline={true}
+                                        onClick={handleToggle}
+                                    />
+                                </>
+                            }
+                        >
+                            This is Sample Model
+                        </DialogBox>
+
+                        <br /><br />
 
 
                     </form>

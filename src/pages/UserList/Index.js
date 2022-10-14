@@ -23,7 +23,6 @@ const UserList = () => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [editUserData, setEditUserData] = useState(null);
-  const [checkIsSubmit, setCheckIsSubmit] = useState(false);
   const [formData, setFormData] = useState(null);
 
   const {
@@ -144,10 +143,6 @@ const UserList = () => {
     },
   ];
 
-  const handleOnSubmit = () => {
-    setCheckIsSubmit(true);
-  };
-
   return (
     <React.Fragment>
       <div className="page-content">
@@ -179,18 +174,15 @@ const UserList = () => {
                     />
                     <DialogBox
                       isModelOpen={isModelOpen}
-                      setIsModelOpen={setIsModelOpen}
                       handleToggle={handleToggle}
-                      btnName="Submit"
                       modelSize="lg"
                       title={editUserData === null ? "New User" : "Edit User"}
-                      handleOnSubmit={handleOnSubmit}
+                      actions={null}
                     >
                       <UserAddEdit
                         editUserData={editUserData}
-                        checkIsSubmit={checkIsSubmit}
                         setFormData={setFormData}
-                        setCheckIsSubmit={setCheckIsSubmit}
+                        handleToggle={handleToggle}
                       />
                     </DialogBox>
                   </div>
