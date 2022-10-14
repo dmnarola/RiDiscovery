@@ -6,6 +6,7 @@ import RHFTextField from "../../components/form-controls/RHFTextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
+import RHFButton from "components/form-controls/RHFButton";
 
 
 const DropDownData = [
@@ -77,11 +78,11 @@ const RoleData = [{
 }]
 
 const UserAddEdit = (props) => {
-  const { editUserData, setFormData, checkIsSubmit, setCheckIsSubmit } = props;
-  const isEditMode = editUserData !== null
+  const { editUserData, setFormData, handleToggle } = props;
+  const isEditMode = editUserData ? true : false;
 
   const userSchema = yup.object().shape({
-    internal: yup
+    internal: !isEditMode && yup
       .object()
       .shape({ label: yup.string(), value: yup.string() })
       .nullable()
@@ -89,25 +90,24 @@ const UserAddEdit = (props) => {
 
     firstName: yup.string().required("firstName is required"),
     lastName: yup.string().required("lastName is required"),
-    companyName: yup
+    companyName: !isEditMode && yup
       .object()
       .shape({ label: yup.string(), value: yup.string() })
       .nullable()
       .required("Select atleast one option"),
 
-    mobileNumber: yup
+    mobileNumber: !isEditMode && yup
       .string()
       .matches(
         /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
         "mobile number is not valid"
       ).required("mobile no. is required"),
-    role: yup
+    role: !isEditMode && yup
       .object()
       .shape({ label: yup.string(), value: yup.string() })
       .nullable()
       .required("Select atleast one option"),
-    domainName: yup.string().required("Domain Name is required"),
-
+    domainName: !isEditMode && yup.string().required("Domain Name is required"),
     email: yup.string().email().max(150).required("Email is required"),
     startDate: yup.date().required("Date is required"),
     endDate: yup.date().required("Date is required"),
@@ -117,7 +117,6 @@ const UserAddEdit = (props) => {
     handleSubmit,
     control,
     setValue,
-    getValues,
     formState: { errors },
   } = useForm({
     mode: "onBlur",
@@ -127,7 +126,7 @@ const UserAddEdit = (props) => {
   useEffect(() => {
     if (isEditMode) {
       const formFields = Object.keys(editUserData);
-      formFields.forEach((field, index) => {
+      formFields.forEach((field) => {
         setValue(field, editUserData[field]);
       });
     }
@@ -136,168 +135,169 @@ const UserAddEdit = (props) => {
     }
   }, [editUserData]);
 
-  const submitRef = useRef(null);
-
-  useEffect(() => {
-    if (checkIsSubmit && !!submitRef.current) {
-      console.log('submitRef :>> ', submitRef);
-      submitRef.current.click();
-    }
-    setCheckIsSubmit(false)
-  }, [checkIsSubmit, submitRef]);
-
   const onSubmit = (data) => {
-    const val = getValues()
-    console.log('val :>> ', val);
-    console.log('data :>> ', data);
     setFormData(data);
   };
 
   return (
+<<<<<<< HEAD
     <form
       onSubmit={handleSubmit(onSubmit)}
 
     >
-      {!isEditMode && <Row className="mb-3 col d-flex justify-content-end align-items-end">
-        <Col sm="4">
-          <RHFAutoCompleteSelect
-            id="internal"
-            label="Internal"
-            name="internal"
-            options={InternalData}
-            setValue={setValue}
-            isMultiple={false}
-            errorobj={errors}
-            control={control}
-            isController={true}
-          // handleOnChange={handleOnChange} // when isController === false
-          />
-        </Col>
-      </Row>}
+=======
+    <form onSubmit={handleSubmit(onSubmit)}>
+>>>>>>> f0ad6acbd200ccb078cd33cca597053526d173fb
+        {!isEditMode && <Row className="mb-3 col d-flex justify-content-end align-items-end">
+          <Col sm="4">
+            <RHFAutoCompleteSelect
+              id="internal"
+              label="Internal"
+              name="internal"
+              options={InternalData}
+              setValue={setValue}
+              isMultiple={false}
+              errorobj={errors}
+              control={control}
+              isController={true}
+            />
+          </Col>
+        </Row>
+        }
 
-      <Row className="mb-3">
-        <Col sm="6">
-          <RHFTextField
-            id="firstName"
-            label="First Name"
-            name="firstName"
-            placeholder="Enter valid First Name"
-            errorobj={errors}
-            control={control}
-            isController={true}
-          />
-        </Col>
-        <Col sm="6">
-          <RHFTextField
-            id="lastName"
-            label="Last Name"
-            name="lastName"
-            placeholder="Enter valid Last Name"
-            errorobj={errors}
-            control={control}
-            isController={true}
-          />
-        </Col>
-      </Row>
+        <Row className="mb-3">
+          <Col sm="6">
+            <RHFTextField
+              id="firstName"
+              label="First Name"
+              name="firstName"
+              placeholder="Enter valid First Name"
+              errorobj={errors}
+              control={control}
+              isController={true}
+            />
+          </Col>
+          <Col sm="6">
+            <RHFTextField
+              id="lastName"
+              label="Last Name"
+              name="lastName"
+              placeholder="Enter valid Last Name"
+              errorobj={errors}
+              control={control}
+              isController={true}
+            />
+          </Col>
+        </Row>
 
-      {!isEditMode && <Row className="mb-3">
-        <Col sm="12">
-          <RHFAutoCompleteSelect
-            id="companyName"
-            label="Company Name"
-            name="companyName"
-            options={DropDownData}
-            isMultiple={false}
-            errorobj={errors}
-            control={control}
-            isController={true}
-          // handleOnChange={handleOnChange} // when isController === false
-          />
-        </Col>
-      </Row>}
+        {!isEditMode && <Row className="mb-3">
+          <Col sm="12">
+            <RHFAutoCompleteSelect
+              id="companyName"
+              label="Company Name"
+              name="companyName"
+              options={DropDownData}
+              isMultiple={false}
+              errorobj={errors}
+              control={control}
+              isController={true}
+            />
+          </Col>
+        </Row>
+        }
 
-      {!isEditMode && <Row className="mb-3">
-        <Col sm="12">
-          <RHFTextField
-            id="mobileNumber"
-            label="Mobile Number"
-            name="mobileNumber"
-            placeholder="Enter valid Mobile Number"
-            errorobj={errors}
-            control={control}
-            isController={true}
-          />
-        </Col>
-      </Row>}
+        {!isEditMode && <Row className="mb-3">
+          <Col sm="12">
+            <RHFTextField
+              id="mobileNumber"
+              label="Mobile Number"
+              name="mobileNumber"
+              placeholder="Enter valid Mobile Number"
+              errorobj={errors}
+              control={control}
+              isController={true}
+            />
+          </Col>
+        </Row>
+        }
 
-      {!isEditMode && <Row className="mb-3">
-        <Col sm="6">
-          <RHFAutoCompleteSelect
-            id="role"
-            label="Role"
-            name="role"
-            options={RoleData}
-            isMultiple={false}
-            errorobj={errors}
-            control={control}
-            isController={true}
-          // handleOnChange={handleOnChange} // when isController === false
-          />
-        </Col>
-        <Col sm="6">
-          <RHFTextField
-            id="domainName"
-            label="Domain Name"
-            name="domainName"
-            placeholder="Enter valid Domain Name"
-            errorobj={errors}
-            control={control}
-            isController={true}
-          />
-        </Col>
-      </Row>}
+        {!isEditMode && <Row className="mb-3">
+          <Col sm="6">
+            <RHFAutoCompleteSelect
+              id="role"
+              label="Role"
+              name="role"
+              options={RoleData}
+              isMultiple={false}
+              errorobj={errors}
+              control={control}
+              isController={true}
+            />
+          </Col>
+          <Col sm="6">
+            <RHFTextField
+              id="domainName"
+              label="Domain Name"
+              name="domainName"
+              placeholder="Enter valid Domain Name"
+              errorobj={errors}
+              control={control}
+              isController={true}
+            />
+          </Col>
+        </Row>
+        }
 
-      <Row className="mb-3">
-        <Col sm="12">
-          <RHFTextField
-            id="email"
-            label="Email"
-            name="email"
-            placeholder="Enter valid email"
-            errorobj={errors}
-            control={control}
-            isController={true}
-          />
-        </Col>
-      </Row>
+        <Row className="mb-3">
+          <Col sm="12">
+            <RHFTextField
+              id="email"
+              label="Email"
+              name="email"
+              placeholder="Enter valid email"
+              errorobj={errors}
+              control={control}
+              isController={true}
+            />
+          </Col>
+        </Row>
 
-      <Row className="mb-3">
-        <Col sm="6">
-          <RHFDatePicker
-            name="startDate"
-            label="Start Date"
-            errorobj={errors}
-            control={control}
-            isController={true}
-          />
-        </Col>
-        <Col sm="6">
-          <RHFDatePicker
-            name="endDate"
-            label="End Date"
-            errorobj={errors}
-            control={control}
-            isController={true}
-          />
-        </Col>
-      </Row>
-      <button
-        type="submit"
-        ref={submitRef}
-        className="d-none"
-      ></button>
-    </form>
-  );
+        <Row className="mb-3">
+          <Col sm="6">
+            <RHFDatePicker
+              name="startDate"
+              label="Start Date"
+              errorobj={errors}
+              control={control}
+              isController={true}
+            />
+          </Col>
+          <Col sm="6">
+            <RHFDatePicker
+              name="endDate"
+              label="End Date"
+              errorobj={errors}
+              control={control}
+              isController={true}
+            />
+          </Col>
+        </Row>
+
+        <Row>
+          <div className="modal-footer">
+            <RHFButton
+              btnName="Submit"
+              type="submit"
+            />
+            <RHFButton
+              btnName="Cancel"
+              outline={true}
+              onClick={handleToggle}
+            />
+          </div>
+        </Row>
+      </form>
+      );
 };
 
-export default UserAddEdit;
+      export default UserAddEdit;

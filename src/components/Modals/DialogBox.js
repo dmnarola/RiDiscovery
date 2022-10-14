@@ -1,16 +1,13 @@
 import React from "react";
 import { Modal } from "reactstrap";
-import RHFButton from "../form-controls/RHFButton";
 
 const DialogBox = (props) => {
   const {
-    setIsModelOpen,
-    isModelOpen,
     handleToggle,
-    handleOnSubmit,
-    btnName,
+    isModelOpen,
     title,
     children,
+    actions,
     modelSize
   } = props;
 
@@ -18,10 +15,7 @@ const DialogBox = (props) => {
     <Modal
       size={modelSize}
       isOpen={isModelOpen}
-      toggle={() => {
-        handleToggle();
-        handleOnSubmit
-      }}
+      toggle={handleToggle}
     >
       <div className="modal-header">
         <h5 className="modal-title mt-0" id="myModalLabel">
@@ -29,9 +23,7 @@ const DialogBox = (props) => {
         </h5>
         <button
           type="button"
-          onClick={() => {
-            setIsModelOpen(false);
-          }}
+          onClick={handleToggle}
           className="close"
           data-dismiss="modal"
           aria-label="Close"
@@ -40,13 +32,7 @@ const DialogBox = (props) => {
         </button>
       </div>
       <div className="modal-body">{children}</div>
-      <div className="modal-footer">
-        <RHFButton
-          btnName={btnName}
-          onClick={handleOnSubmit}
-        />
-        <RHFButton btnName="cancel" outline={true} onClick={handleToggle} />
-      </div>
+      {actions && <div className="modal-footer">{actions}</div>}
     </Modal>
   );
 };
