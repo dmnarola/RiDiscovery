@@ -1,13 +1,30 @@
 import React, { useState } from 'react';
 import FeatherIcon from "feather-icons-react";
-import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap';
+import { Dropdown, DropdownItem, DropdownMenu } from 'reactstrap';
 import RHFTextField from 'components/form-controls/RHFTextField';
 import './AvtarGroup.scss';
 
+/**
+    Logic for assign & remove user is remain bcz its depend on what data i will get from API. so please look into that later on.
+    below logic might be change as per need .
+**/
+
 const AvtarGroup = (props) => {
-    const { users = [], max = 3 } = props;
+    const { users: avtars = [], max = 3 } = props;
+
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const toggle = () => setDropdownOpen((prevState) => !prevState);
+
+    const toggle = () => {
+        setDropdownOpen((prevState) => !prevState);
+        setAvtarUsers(avtars)
+    };
+
+    const [avtarUsers, setAvtarUsers] = useState(avtars);
+
+
+    const handleSearch = (val) => {
+        setAvtarUsers(avtars.filter(o => o?.name.toLowerCase()?.indexOf(val.toLowerCase()) > -1))
+    }
 
     return (
         <div className="avatars d-flex flex-row-reverse justify-content-end">
@@ -22,10 +39,11 @@ const AvtarGroup = (props) => {
                         name="Search"
                         placeholder="Search"
                         backgroundColor="#5156be"
+                        onChange={(e) => handleSearch(e.target.value)}
                     />
-                    {users?.map(user => {
+                    {avtarUsers?.map(user => {
                         return (
-                            <DropdownItem key={user?.id}>
+                            <DropdownItem key={user?.id} onMouseOver={() => console.log('hi')}>
                                 <div>
                                     <img
                                         src={user?.image}
@@ -42,7 +60,7 @@ const AvtarGroup = (props) => {
                 </DropdownMenu>
             </Dropdown>
 
-            {users?.slice(0, max)?.map((avtar, index) => {
+            {avtars?.slice(0, max)?.map((avtar, index) => {
                 return (
                     <div key={avtar?.id} className="avatar">
                         <img src={avtar?.image} alt="assigned-users" className="rounded-circle avatar-sm" />

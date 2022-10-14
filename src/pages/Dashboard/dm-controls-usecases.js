@@ -26,13 +26,14 @@ const DmControl = () => {
     const [isActive, setIsActive] = useState(false);
     const [isRemember, setIsRemember] = useState(false);
 
-    const users = [
+    const [avtarUsers, setAvtarUsers] = useState([
         { id: 1, name: 'Dipesh Mali', image: avatar1 },
         { id: 2, name: 'Mahesh', image: avatar2 },
         { id: 3, name: 'Foram', image: avatar3 },
         { id: 4, name: 'Pratik', image: avatar4 },
         { id: 5, name: 'Priyal', image: avatar5 },
-    ]
+    ])
+
 
     const loginSchema = yup.object().shape({
         email: yup.string().email().max(150).required("Email is required"),
@@ -168,7 +169,7 @@ const DmControl = () => {
                         <br />
 
                         <AvtarGroup
-                            users={users}
+                            users={avtarUsers}
                             max={4}
                         />
 
