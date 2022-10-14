@@ -97,6 +97,8 @@ const UserProfile = props => {
                 <CardBody>
                   <div className="d-flex">
                     <div className="ms-3">
+
+
                       <img
                         src={avatar}
                         alt=""
@@ -156,7 +158,7 @@ const UserProfile = props => {
               </Form>
             </CardBody>
           </Card>
-          
+
         </Container>
       </div>
     </React.Fragment>
