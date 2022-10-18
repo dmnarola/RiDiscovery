@@ -19,7 +19,6 @@ import user1 from "../../../assets/images/users/avatar-1.jpg";
 const ProfileMenu = props => {
   // Declare a new state variable, which we'll call "menu"
   const [menu, setMenu] = useState(false);
-
   const [username, setusername] = useState("Admin");
 
   useEffect(() => {
@@ -58,11 +57,12 @@ const ProfileMenu = props => {
           <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-end">
-          <DropdownItem tag="a" href="/profile">
-            {" "}
-            <i className="bx bx-user font-size-16 align-middle me-1" />
-            {props.t("Profile")}{" "}
-          </DropdownItem>
+          <Link to="/profile">
+            <DropdownItem tag="a">
+              <i className="bx bx-user font-size-16 align-middle me-1" />
+              {props.t("Profile")}
+            </DropdownItem>
+          </Link>
           <DropdownItem tag="a" href="/profile">
             <span className="badge bg-success float-end">11</span>
             <i className="bx bx-wrench font-size-16 align-middle me-1" />
@@ -93,6 +93,6 @@ const mapStatetoProps = state => {
   return { error, success };
 };
 
-export default 
+export default
   connect(mapStatetoProps, {})(withTranslation()(ProfileMenu)
-);
+  );

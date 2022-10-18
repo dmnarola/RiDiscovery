@@ -61,7 +61,7 @@ const UserList = () => {
             height="35px"
             alt="logo"
           />{" "}
-          <span className="m-3">{row?.fullname}</span>
+          <span className="m-3">{row?.firstName} {row?.lastName}</span>
         </div>
       ),
 
