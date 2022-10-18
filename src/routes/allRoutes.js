@@ -16,6 +16,7 @@ import UserList from "../pages/UserList/Index";
 import ProjectList from "../pages/ProjectList/Index";
 import TemplatesList from "../pages/TemplatesList/Index";
 import dmControls from "../pages/Dashboard/dm-controls-usecases";
+import ApplicationNetwork from "pages/ApplicationNetwork";
 
 const userRoutes = [
   //dashboard
@@ -30,6 +31,7 @@ const userRoutes = [
 
   //profile
   { path: "/profile", component: userProfile },
+  { path: "/applications", component: ApplicationNetwork },
 
   // this route should be at the end of all other routes
   { path: "/", exact: true, component: () => <Redirect to="/dashboard" /> },

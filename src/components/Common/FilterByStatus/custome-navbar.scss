@@ -1,0 +1,15 @@
+.custome-navbar {
+    list-style-type: none;
+    margin-bottom: 0px;
+    cursor: pointer;
+
+    li {
+        &.active {
+            color: #5156be;
+        }
+    }
+
+    &:nth-child(1) {
+        padding-left: 0px;
+    }
+}

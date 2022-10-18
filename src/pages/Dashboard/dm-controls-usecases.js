@@ -177,7 +177,7 @@ const DmControl = () => {
 
                         <AvtarGroup
                             users={avtarUsers}
-                            max={4}
+                            max={2}
                         />
 
 
