@@ -66,9 +66,10 @@ const AvtarGroup = (props) => {
                         <img src={avtar?.image} alt="assigned-users" className="rounded-circle avatar-sm" />
                     </div>
                 )
-            })}
+            })
+            }
 
-        </div>
+        </div >
     )
 }
 

@@ -8,8 +8,10 @@ const DialogBox = (props) => {
     title,
     children,
     actions,
-    modelSize
+    modelSize,
   } = props;
+
+
 
   return (
     <Modal
