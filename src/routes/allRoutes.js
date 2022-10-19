@@ -13,6 +13,7 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 //
 import userProfile from "../pages/Authentication/user-profile";
 import UserList from "../pages/UserList/Index";
+import UserDetails from "pages/UserList/UserDetails";
 import ProjectList from "../pages/ProjectList/Index";
 import TemplatesList from "../pages/TemplatesList/Index";
 import dmControls from "../pages/Dashboard/dm-controls-usecases";
@@ -23,6 +24,7 @@ const userRoutes = [
 
   //
   { path: "/user-list", component: UserList },
+  { path: "/user-list/user/:id", component: UserDetails },
   { path: "/project-list", component: ProjectList },
   { path: "/templates-list", component: TemplatesList },
 
