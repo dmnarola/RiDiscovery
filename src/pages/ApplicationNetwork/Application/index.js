@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Card, CardBody, CardHeader, CardText, CardTitle, Col, Container, Nav, NavItem, Row, TabContent, TabPane } from 'reactstrap';
 import Breadcrumb from 'components/Common/Breadcrumb';
 import Table from 'components/Tables/Table';
@@ -9,6 +9,7 @@ import ActionButtons from 'components/form-controls/ActionButtons';
 import FilterByStatus from 'components/Common/FilterByStatus';
 import RHFButton from 'components/form-controls/RHFButton';
 import DropdownButton from 'components/form-controls/DropdownButton';
+import ManageColumns from 'components/Common/ManageColumns';
 
 
 const usersList = [
@@ -47,6 +48,25 @@ const Application = () => {
 
     const [customActiveTab, setcustomActiveTab] = useState(1);
 
+    const [filterColumns, setFilterColumns] = useState([]);
+    const [columnOptions, setColumnOption] = useState([]);
+
+
+    useEffect(() => {
+        const columnFilter = [...columns];
+        setColumnOption([...columns]);
+        setFilterColumns(columnFilter.filter(o => o.isVisible && o));
+    }, [])
+
+    const getFilteredValues = (cols) => {
+        setColumnOption(cols);
+        setFilterColumns(cols.filter(o => o.isVisible && o));
+    }
+
+    const getCols = (cols) => {
+        setColumnOption(cols);
+    }
+
     const toggleCustom = (tab) => {
         if (customActiveTab !== tab) {
             setcustomActiveTab(tab);
@@ -83,25 +103,32 @@ const Application = () => {
         }
     };
 
-
     const columns = [
         {
+            id: 'penId', //  @DM  - its required when sorting is true @DM
             name: "Pen Id",
             selector: (row) => row?.penId,
             sortable: true,
+            isVisible: true,
         },
         {
+            id: 'name',
             name: "Application Name",
             selector: (row) => row?.name,
+            isVisible: true,
         },
         {
+            id: 'score',
             name: "Score",
             selector: (row) => <span className='badge-soft-danger badge fs-6'>{row?.score}</span>,
             sortable: true,
+            isVisible: true,
         },
         {
+            id: 'assignedPentester',
             name: "Assign Pentester",
             minWidth: "130px",
+            isVisible: false,
             selector: (row) => {
                 return (
                     <AvtarGroup
@@ -112,8 +139,10 @@ const Application = () => {
             }
         },
         {
+            id: 'assignedDeveloper',
             name: "Assign Developer",
             minWidth: "130px",
+            isVisible: false,
             selector: (row) => {
                 return (
                     <AvtarGroup
@@ -124,8 +153,10 @@ const Application = () => {
             }
         },
         {
+            id: 'securityManager',
             name: "Security Manager",
             minWidth: "130px",
+            isVisible: false,
             selector: (row) => {
                 return (
                     <AvtarGroup
@@ -136,8 +167,10 @@ const Application = () => {
             }
         },
         {
+            id: 'projectManager',
             name: "Project Manager",
             minWidth: "130px",
+            isVisible: false,
             selector: (row) => {
                 return (
                     <AvtarGroup
@@ -151,6 +184,7 @@ const Application = () => {
         {
             name: "Actions",
             minWidth: "150px",
+            isVisible: true,
             selector: (row) => {
                 return (
                     <ActionButtons
@@ -172,7 +206,6 @@ const Application = () => {
             },
         }
     ];
-
 
     return (
         <Container fluid>
@@ -196,15 +229,18 @@ const Application = () => {
                 <Col lg={4} xs={12}>
                     <div className='d-flex justify-content-end'>
                         <div className='me-2'>
+                            <ManageColumns
+                                // allColumns={columns}
+                                allColumns={columnOptions}
+                                getCols={getCols}
+                                getFilteredValues={getFilteredValues}
+                            />
+                        </div>
+                        <div className='me-2'>
                             <DropdownButton
                                 heading="Select BU"
                                 menuItems={["Surat", "Baroda"]}
                                 handleClick={(item) => alert(item)}
-                            />
-                        </div>
-                        <div className='me-2'>
-                            <RHFButton
-                                btnName="Custom Column"
                             />
                         </div>
                     </div>
@@ -232,7 +268,7 @@ const Application = () => {
                     </Row>
                 </CardHeader>
                 <CardBody>
-                    <Table columns={columns} data={data} />
+                    <Table columns={filterColumns} data={data} />
                 </CardBody>
             </Card>
         </Container >

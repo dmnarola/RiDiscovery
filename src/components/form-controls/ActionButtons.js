@@ -17,6 +17,7 @@ const ActionButtons = (props) => {
             <div key={index} onClick={handlePreview} title={previewTooltip}>
                 <FeatherIcon
                     icon="file-text"
+                    size="22"
                 // className="ms-2"
                 />
             </div>
@@ -27,6 +28,7 @@ const ActionButtons = (props) => {
             <div key={index} onClick={handleAdd} title={addTooltip}>
                 <FeatherIcon
                     icon="file-plus"
+                    size="22"
                     className="ms-2"
                 />
             </div>
@@ -37,6 +39,7 @@ const ActionButtons = (props) => {
             <div key={index} onClick={handleEdit} title={editTooltip}>
                 <FeatherIcon
                     icon="edit-3"
+                    size="22"
                     className="ms-2"
                 />
             </div>
@@ -47,6 +50,7 @@ const ActionButtons = (props) => {
             <div key={index} onClick={handleDelete} title={deleteTooltip}>
                 <FeatherIcon
                     icon="trash-2"
+                    size="22"
                     className="ms-2"
                 />
             </div>
