@@ -20,6 +20,14 @@ const usersList = [
     { id: 5, name: 'Priyal', image: avatar5 },
 ]
 
+const menuItems = [
+    { id: 1, name: 'Surat' },
+    { id: 2, name: 'Baroda' },
+    { id: 3, name: 'Mumbai' },
+    { id: 4, name: 'Pune' },
+    { id: 5, name: 'Nashik' }
+]
+
 const data = [
     {
         id: 1,
@@ -40,8 +48,7 @@ const data = [
         assigneDeveloper: [],
         securityManager: [],
         projectManager: []
-    }
-
+    },
 ];
 
 const Application = () => {
@@ -128,7 +135,7 @@ const Application = () => {
             id: 'assignedPentester',
             name: "Assign Pentester",
             minWidth: "130px",
-            isVisible: false,
+            isVisible: true,
             selector: (row) => {
                 return (
                     <AvtarGroup
@@ -239,9 +246,9 @@ const Application = () => {
                         <div className='me-2'>
                             <DropdownButton
                                 heading="Select BU"
-                                menuItems={["Surat", "Baroda"]}
-                                handleClick={(item) => alert(item)}
-                            />
+                                isSearchable={true}
+                                menuItems={menuItems}
+                                handleClick={(item) => alert(JSON.stringify(item))} />
                         </div>
                     </div>
                 </Col>

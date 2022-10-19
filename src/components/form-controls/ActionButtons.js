@@ -18,7 +18,7 @@ const ActionButtons = (props) => {
                 <FeatherIcon
                     icon="file-text"
                     size="22"
-                // className="ms-2"
+                    className="actionBtn"
                 />
             </div>
         )
@@ -29,7 +29,7 @@ const ActionButtons = (props) => {
                 <FeatherIcon
                     icon="file-plus"
                     size="22"
-                    className="ms-2"
+                    className="actionBtn ms-2"
                 />
             </div>
         )
@@ -40,7 +40,7 @@ const ActionButtons = (props) => {
                 <FeatherIcon
                     icon="edit-3"
                     size="22"
-                    className="ms-2"
+                    className="actionBtn ms-2"
                 />
             </div>
         )
@@ -51,7 +51,7 @@ const ActionButtons = (props) => {
                 <FeatherIcon
                     icon="trash-2"
                     size="22"
-                    className="ms-2"
+                    className="actionBtn ms-2"
                 />
             </div>
         )

@@ -34,6 +34,14 @@ const DmControl = () => {
         { id: 5, name: 'Priyal', image: avatar5 },
     ]
 
+    const menuItems = [
+        { id: 1, name: 'Surat' },
+        { id: 2, name: 'Baroda' },
+        { id: 3, name: 'Mumbai' },
+        { id: 4, name: 'Pune' },
+        { id: 5, name: 'Nashik' }
+    ]
+
     const loginSchema = yup.object().shape({
         email: yup.string().email().max(150).required("Email is required"),
         colors: yup
@@ -183,7 +191,7 @@ const DmControl = () => {
 
                         <DropdownButton
                             heading="Dropdown"
-                            menuItems={["React", "Vue", "Angular"]}
+                            menuItems={menuItems}
                             handleClick={(item) => alert(item)}
                         />
 
