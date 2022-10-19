@@ -31,7 +31,6 @@ import TwoFactorVerification from "./Profile/TwoFactorVerification";
 import AuthenticationVerified from "./Profile/AuthenticationVerified";
 
 const UserProfile = props => {
-
   //meta title
   document.title = "Profile | Minia - React Admin & Dashboard Template";
 

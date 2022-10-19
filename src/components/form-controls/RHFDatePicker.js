@@ -9,6 +9,7 @@ const RHFDatePicker = ({ isController = false, ...props }) => {
     value = null,
     errorobj,
     control,
+    handleOnChange,
     defaultValue = null,
     disabled = false,
     onChange,
@@ -21,7 +22,22 @@ const RHFDatePicker = ({ isController = false, ...props }) => {
       <Fragment>
         <div className="mb-3">
           <Label htmlFor="example-date-input" className="form-Label">{label}</Label>
-          <Input className="form-control" type="date" defaultValue={defaultValue} id="example-date-input" />
+          <Input
+            className="form-control"
+            id="example-date-input"
+            type="date"
+            {...extraProps}
+            disabled={disabled}
+            defaultValue={defaultValue}
+            onChange={(data) => {
+              if (handleOnChange) {
+                handleOnChange(
+                  data.target.value,
+                  name
+                ); /* You must pass this function while isController is false -> else you will not get selected values */
+              }
+            }}
+          />
         </div>
       </Fragment>
     );

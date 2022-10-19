@@ -58,7 +58,7 @@ const ProfileMenu = props => {
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-end">
           <Link to="/profile">
-            <DropdownItem tag="a">
+            <DropdownItem>
               <i className="bx bx-user font-size-16 align-middle me-1" />
               {props.t("Profile")}
             </DropdownItem>

@@ -61,7 +61,7 @@ const RHFAutoCompleteSelect = ({
             onChange={(data) => {
               if (handleOnChange) {
                 handleOnChange(
-                  data,
+                  data?.value,
                   name
                 ); /* You must pass this function while isController is false -> else you will not get selected values */
               }

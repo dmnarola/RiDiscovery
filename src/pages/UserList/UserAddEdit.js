@@ -8,7 +8,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import RHFButton from "components/form-controls/RHFButton";
 
-
+//constant for dropdown
 const DropDownData = [
   {
     value: "red",
