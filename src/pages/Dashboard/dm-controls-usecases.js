@@ -19,6 +19,7 @@ import DropdownButton from "../../components/form-controls/DropdownButton";
 import { Toast } from "components/Common/Toaster";
 import AvtarGroup from "components/form-controls/AvtarGroup";
 import { avatar1, avatar2, avatar3, avatar4, avatar5 } from "assets/images";
+import TextChip from "components/Common/TextChip";
 
 const DmControl = () => {
     document.title = "Dm Control | Minia - React Admin & Dm Control Template";
@@ -179,7 +180,10 @@ const DmControl = () => {
                             users={users}
                             max={4}
                         />
+                        <br />
+                        <br />
 
+                        <TextChip text="Text Chip" />
 
                         <br />
                         <br />

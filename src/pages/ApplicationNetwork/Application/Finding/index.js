@@ -9,7 +9,7 @@ import ActionButtons from 'components/form-controls/ActionButtons';
 import RHFButton from 'components/form-controls/RHFButton';
 
 import ManageColumns from 'components/Common/ManageColumns';
-import Breadcrumb from 'components/Common/Breadcrumb';
+import TextChip from 'components/Common/TextChip';
 
 
 const usersList = [
@@ -115,7 +115,7 @@ const Finding = () => {
         {
             id: 'severity',
             name: "Severity",
-            selector: (row) => <span className='badge-soft-danger badge fs-6'>{row?.severity}</span>,
+            selector: (row) => <TextChip text={row?.severity} />,
             sortable: true,
             isVisible: true,
         },
