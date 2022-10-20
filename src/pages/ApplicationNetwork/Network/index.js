@@ -103,8 +103,8 @@ const Network = () => {
 
 
     return (
-        <Container fluid>
-            <Breadcrumb title="Network" breadcrumbItem="Network" />
+        <React.Fragment>
+            <Breadcrumb title="Network" breadcrumbItem="Network List" />
             <Row>
                 <Col lg={8} xs={12}>
                     <FilterByStatus
@@ -147,7 +147,7 @@ const Network = () => {
                     <Table columns={columns} data={data} />
                 </CardBody>
             </Card>
-        </Container>
+        </React.Fragment>
     )
 }
 

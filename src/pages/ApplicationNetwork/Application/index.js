@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Card, CardBody, CardHeader, CardText, CardTitle, Col, Container, Nav, NavItem, Row, TabContent, TabPane } from 'reactstrap';
+import { useHistory } from "react-router-dom";
+import { Card, CardBody, CardHeader, Col, Row } from 'reactstrap';
 import Breadcrumb from 'components/Common/Breadcrumb';
 import Table from 'components/Tables/Table';
 import RHFTextField from 'components/form-controls/RHFTextField';
@@ -32,6 +33,7 @@ const data = [
     {
         id: 1,
         penId: 'AIL-1234',
+        status: 'Pending',
         name: 'ABC',
         score: '1.1',
         assignePentester: [],
@@ -42,6 +44,7 @@ const data = [
     {
         id: 2,
         penId: 'AIL-2365',
+        status: 'Completed',
         name: 'XYZ',
         score: '1.5',
         assignePentester: [],
@@ -57,6 +60,8 @@ const Application = () => {
 
     const [filterColumns, setFilterColumns] = useState([]);
     const [columnOptions, setColumnOption] = useState([]);
+
+    const history = useHistory();
 
 
     useEffect(() => {
@@ -82,6 +87,7 @@ const Application = () => {
 
     const previewHandler = (obj) => {
         console.log({ obj })
+        history.push(`/application/${obj?.id}/overview`)
     };
 
     const addeHandler = (obj) => {
@@ -187,7 +193,12 @@ const Application = () => {
                 )
             }
         },
-
+        {
+            id: 'status',
+            name: "Status",
+            selector: (row) => row?.status,
+            isVisible: false,
+        },
         {
             name: "Actions",
             minWidth: "150px",
@@ -215,8 +226,8 @@ const Application = () => {
     ];
 
     return (
-        <Container fluid>
-            <Breadcrumb title="Application" breadcrumbItem="Application" />
+        <React.Fragment>
+            <Breadcrumb title="Application" breadcrumbItem="Application List" />
             <Row>
                 <Col lg={8} xs={12}>
                     <FilterByStatus
@@ -278,7 +289,7 @@ const Application = () => {
                     <Table columns={filterColumns} data={data} />
                 </CardBody>
             </Card>
-        </Container >
+        </React.Fragment>
     )
 }
 
