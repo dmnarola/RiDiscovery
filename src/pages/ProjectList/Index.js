@@ -36,6 +36,10 @@ const ProjectList = () => {
     },
   ];
 
+  const handleOnChange = (data, name) => {
+    console.log({ data, name });
+  }
+
   return (
     <React.Fragment>
       <div className="page-content">
@@ -50,9 +54,8 @@ const ProjectList = () => {
                     id="search"
                     name="search"
                     placeholder="Search here"
-                    // errorobj={errors}
-                    // control={control}
                     isController={false}
+                    handleOnChange={handleOnChange}
                   />
                 </Col>
               </Row>

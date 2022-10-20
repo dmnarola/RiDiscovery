@@ -12,6 +12,7 @@ const RHFTextField = ({ isController = true, ...props }) => {
     multiline,
     rows,
     onChange,
+    handleOnChange,
     backgroundColor = false,
     autoFocus = false,
     bsSize = "md",
@@ -34,6 +35,14 @@ const RHFTextField = ({ isController = true, ...props }) => {
             style={backgroundColor ? { background: backgroundColor, color: '#fff' } : null}
             type={type}
             {...props}
+            onChange={(data) => {
+              if (handleOnChange) {
+                handleOnChange(
+                  data?.target?.value,
+                  name
+                ); /* You must pass this function while isController is false -> else you will not get selected values */
+              }
+            }}
           />
         </div>
       </Fragment>
