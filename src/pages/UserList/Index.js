@@ -17,6 +17,7 @@ import UserAddEdit from "./UserAddEdit";
 import { useForm } from "react-hook-form";
 import RHFAutoCompleteSelect from "components/form-controls/RHFAutoCompleteSelect";
 import RHFDatePicker from "components/form-controls/RHFDatePicker";
+import { useHistory } from "react-router-dom";
 
 // constant for dropdown
 const StatusData = [
@@ -52,6 +53,41 @@ const RoleData = [{
   label: "Executive",
 }]
 
+export const tabledata = [
+  {
+    _id: 1,
+    internal: "Red",
+    image: "/images/bg-1.jpg",
+    firstName: "ABC",
+    lastName: "vdgs",
+    email: "a@gmail.com",
+    companyName: "Narola",
+    domainName: "dadada",
+    mobileNumber: 9849375666,
+    role: "Slate",
+    startDate: "2000-06-12",
+    endDate: "2021-10-22",
+    isActive: true,
+    category: "Security Agency"
+  },
+  {
+    _id: 2,
+    internal: "Orange",
+    image: "/images/bg-3.jpg",
+    firstName: "XYZ",
+    lastName: "vdgs",
+    email: "x@gmail.com",
+    companyName: "Narola",
+    domainName: "fsdfe",
+    mobileNumber: 9849375666,
+    role: "Slate",
+    startDate: "2000-06-12",
+    endDate: "2021-10-22",
+    isActive: false,
+    category: "Application Agency"
+  },
+];
+
 const UserList = () => {
   document.title = "Role Management | Minia - React Admin & Dashboard Template";
 
@@ -61,7 +97,7 @@ const UserList = () => {
   const [formData, setFormData] = useState(null);
   const [isFilterModelOpen, setIsFilterModelOpen] = useState(false)
   const [dropdownData, setDropdownData] = useState()
-
+  let history = useHistory();
   const {
     handleSubmit,
     control,
@@ -107,8 +143,7 @@ const UserList = () => {
             onClick={(e) => {
               e.preventDefault()
               const _id = row['_id']
-              console.log(_id)
-              // navigate(`/user-list/user/${_id}`)
+              history.push(`/user-list/user/${_id}`)
             }}
           >
             {row?.firstName} {row?.lastName}</span>
@@ -160,40 +195,7 @@ const UserList = () => {
     },
   ];
 
-  const data = [
-    {
-      _id: 1,
-      internal: "Red",
-      image: "images/bg-1.jpg",
-      firstName: "ABC",
-      lastName: "vdgs",
-      email: "a@gmail.com",
-      companyName: "Narola",
-      domainName: "dadada",
-      mobileNumber: 9849375666,
-      role: "Slate",
-      startDate: "2000-06-12",
-      endDate: "2021-10-22",
-      isActive: isActive,
-      category: "Security Agency"
-    },
-    {
-      _id: 2,
-      internal: "Orange",
-      image: "images/bg-3.jpg",
-      firstName: "XYZ",
-      lastName: "vdgs",
-      email: "x@gmail.com",
-      companyName: "Narola",
-      domainName: "fsdfe",
-      mobileNumber: 9849375666,
-      role: "Slate",
-      startDate: "2000-06-12",
-      endDate: "2021-10-22",
-      isActive: isActive,
-      category: "Application Agency"
-    },
-  ];
+
 
   const handleOnChange = (data, name) => {
     const value = data
@@ -298,7 +300,7 @@ const UserList = () => {
               </Row>
             </CardHeader>
             <CardBody>
-              <Table columns={columns} data={data} />
+              <Table columns={columns} data={tabledata} />
             </CardBody>
           </Card>
         </Container>

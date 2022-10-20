@@ -1,8 +1,10 @@
 import React from "react";
-import { Card, CardBody, Container } from "reactstrap";
+import { Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
 import Table from "../../components/Tables/Table";
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 import FeatherIcon from "feather-icons-react";
+import RHFTextField from "components/form-controls/RHFTextField";
+import RHFButton from "components/form-controls/RHFButton";
 
 const TemplatesList = () => {
   document.title =
@@ -27,6 +29,12 @@ const TemplatesList = () => {
       templatename: "ABC Template",
     },
   ];
+
+
+  const handleOnChange = (data, name) => {
+    console.log({ data, name });
+  }
+
   return (
     <React.Fragment>
       <div className="page-content">
@@ -36,12 +44,36 @@ const TemplatesList = () => {
             title="Reporting Template"
             breadcrumbItem="Templates List"
           />
+
+          <Card className="card-h-100">
+            <CardHeader>
+              <Row>
+                <Col md="3">
+                  <RHFTextField
+                    id="search"
+                    name="search"
+                    placeholder="Search here"
+                    isController={false}
+                    handleOnChange={handleOnChange}
+                  />
+                </Col>
+                <Col>
+                  <div className="col d-flex justify-content-end align-items-end">
+                    <div className="me-2">
+                    </div>
+                    <RHFButton
+                      btnName="Add Template"
+                      icon="plus"
+                    />
+                  </div>
+                </Col>
+              </Row>
+            </CardHeader>
+            <CardBody>
+              <Table columns={columns} data={data} />
+            </CardBody>
+          </Card>
         </Container>
-        <Card className="card-h-100">
-          <CardBody>
-            <Table columns={columns} data={data} />
-          </CardBody>
-        </Card>
       </div>
     </React.Fragment>
   );

@@ -32,8 +32,6 @@ const RHFAutoCompleteSelect = ({
   const disabled = isDisabled === undefined ? false : isDisabled;
 
   if (errorobj && errorobj[name]) {
-    // console.log("isError :>> ", isError);
-    // console.log("errorMessage :>> ", errorMessage);
     isError = true;
     errorMessage = errorobj[name].message;
   }
