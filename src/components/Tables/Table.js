@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 
 const Table = ({ columns, data }) => {
-  // console.log("columns :>> ", columns);
 
   const [tableData, setTableData] = useState();
 
@@ -10,12 +9,20 @@ const Table = ({ columns, data }) => {
     setTableData(data);
   }, []);
 
-  // console.log("tableData :>> ", tableData);
+
+  const customStyles = {
+    headCells: {
+      style: {
+        backgroundColor: "#e9e9ef"
+      },
+    },
+  };
 
   return (
     <DataTable
       columns={columns}
       data={tableData}
+      customStyles={customStyles}
       highlightOnHover
       pagination
       paginationServer

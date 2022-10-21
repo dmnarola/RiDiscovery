@@ -107,7 +107,7 @@ const SidebarContent = (props) => {
             </li>
             <li>
               <Link to="/applications" className="">
-                <FeatherIcon icon="home" />
+                <FeatherIcon icon="grid" />
                 <span>{props.t("Application")}</span>
               </Link>
             </li>

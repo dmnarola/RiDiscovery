@@ -76,6 +76,9 @@ const Finding = () => {
         console.log({ obj })
     };
 
+    const handleOnChange = (data, name) => {
+        console.log({ data, name });
+    }
 
     const handleActionClick = (payload, actionType) => {
         const actionMapper = {
@@ -171,6 +174,7 @@ const Finding = () => {
                                 name="search"
                                 placeholder="Search here"
                                 isController={false}
+                                handleOnChange={handleOnChange}
                             />
                         </Col>
                         <Col xs={6} lg={9}>

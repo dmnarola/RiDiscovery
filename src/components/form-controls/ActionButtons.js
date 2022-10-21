@@ -9,6 +9,7 @@ const ActionButtons = (props) => {
         add: { handleClick: handleAdd, tooltip: addTooltip = 'Add' } = {},
         edit: { handleClick: handleEdit, tooltip: editTooltip = 'Edit' } = {},
         delete: { handleClick: handleDelete, tooltip: deleteTooltip = 'Delete' } = {},
+        download: { handleClick: handleDownload, tooltip: downloadTooltip = 'Download' } = {}
     } = props;
 
 
@@ -56,6 +57,17 @@ const ActionButtons = (props) => {
             </div>
         )
     }
+    const loadDownloadAction = (index) => {
+        return (
+            <div key={index} onClick={handleDownload} title={downloadTooltip}>
+                <FeatherIcon
+                    icon="download"
+                    size="22"
+                    className="actionBtn ms-2"
+                />
+            </div>
+        )
+    }
 
 
     const actionMapper = {
@@ -63,6 +75,7 @@ const ActionButtons = (props) => {
         'add': loadAddAction,
         'edit': loadEditAction,
         'delete': loadDeleteAction,
+        'download': loadDownloadAction
     }
 
     return <div className='d-flex justify-content-between'>
@@ -75,6 +88,7 @@ ActionButtons.propTypes = {
     add: PropTypes.object,
     edit: PropTypes.object,
     delete: PropTypes.object,
+    download: PropTypes.object
 };
 
 export default ActionButtons;
