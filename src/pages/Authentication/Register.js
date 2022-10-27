@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Row, Col, Alert, Container, Input, Label, Form, FormFeedback } from "reactstrap"
+import { Row, Col, Container, Form } from "reactstrap"
 
 // Formik Validation
 import { useForm } from 'react-hook-form';
@@ -36,11 +36,11 @@ const Register = props => {
 
 
   const registerSchema = yup.object().shape({
+    firstName: yup.string().required('First name is required'),
+    lastName: yup.string().required('Last name is required'),
     email: yup.string().email().max(150).required('Email is required'),
-    username: yup.string().required('Username is required'),
-    password: yup.string().required('Password is required'),
+    phoneNo: yup.string().required('phone Number is required'),
   });
-
 
   const {
     handleSubmit,
@@ -52,11 +52,9 @@ const Register = props => {
     resolver: yupResolver(registerSchema),
   });
 
-
   const onRegister = (values) => {
-    console.log({ values })
-    reset();
     dispatch(registerUser(values));
+    reset();
   }
 
   useEffect(() => {
@@ -87,7 +85,7 @@ const Register = props => {
                         className="needs-validation custom-form mt-4 pt-2"
                         onSubmit={handleSubmit(onRegister)}
                       >
-                        {user && user ? (
+                        {/* {user && user ? (
                           <Alert color="success">
                             Register User Successfully
                           </Alert>
@@ -95,14 +93,36 @@ const Register = props => {
 
                         {registrationError && registrationError ? (
                           <Alert color="danger">{registrationError}</Alert>
-                        ) : null}
+                        ) : null} */}
 
+                        <div className="mb-3">
+                          <RHFTextField
+                            id="firstName"
+                            label="First Name"
+                            name="firstName"
+                            placeholder="Enter First Name"
+                            errorobj={errors}
+                            control={control}
+                            isController={true}
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <RHFTextField
+                            id="lastName"
+                            label="Last Name"
+                            name="lastName"
+                            placeholder="Enter Last Name"
+                            errorobj={errors}
+                            control={control}
+                            isController={true}
+                          />
+                        </div>
                         <div className="mb-3">
                           <RHFTextField
                             id="email"
                             label="Email"
                             name="email"
-                            placeholder="Enter valid email"
+                            placeholder="Enter Valid Email"
                             errorobj={errors}
                             control={control}
                             isController={true}
@@ -111,22 +131,10 @@ const Register = props => {
 
                         <div className="mb-3">
                           <RHFTextField
-                            id="username"
-                            label="Username"
-                            name="username"
-                            placeholder="Enter username"
-                            errorobj={errors}
-                            control={control}
-                            isController={true}
-                          />
-                        </div>
-                        <div className="mb-3">
-                          <RHFTextField
-                            id="password"
-                            label="Password"
-                            name="password"
-                            type="password"
-                            placeholder="Enter password"
+                            id="phoneNo"
+                            label="Phone No"
+                            name="phoneNo"
+                            placeholder="Enter Phone Number"
                             errorobj={errors}
                             control={control}
                             isController={true}

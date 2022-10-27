@@ -4,6 +4,7 @@ import { all, fork } from "redux-saga/effects"
 import AccountSaga from "./auth/register/saga"
 import AuthSaga from "./auth/login/saga"
 import ForgetSaga from "./auth/forgetpwd/saga"
+import ResetPasswordSaga from "./auth/resetPassword/saga"
 import ProfileSaga from "./auth/profile/saga"
 import LayoutSaga from "./layout/saga"
 import calendarSaga from "./calendar/saga"
@@ -17,6 +18,7 @@ export default function* rootSaga() {
     fork(AccountSaga),
     fork(AuthSaga),
     fork(ForgetSaga),
+    fork(ResetPasswordSaga),
     fork(ProfileSaga),
     fork(LayoutSaga),
     fork(calendarSaga),

@@ -1,35 +1,38 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
 import { Row, Col, Container, Form } from "reactstrap";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 // Formik Validation
 import * as yup from "yup";
 
 // import images
 import logo from "../../assets/images/logo-sm.svg";
-import CarouselPage from "../Authentication/CarouselPage";
+import CarouselPage from "./CarouselPage";
 import RHFTextField from "components/form-controls/RHFTextField";
 import RHFButton from "components/form-controls/RHFButton";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { resetPassword } from "store/auth/resetPassword/actions";
 import { useForm } from "react-hook-form";
-import { userForgetPassword } from "store/actions";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-const ForgetPasswordPage = () => {
+const ResetPasswordPage = () => {
 
   //meta title
   document.title = "Forget Password | Minia - React Admin & Dashboard Template";
 
   const dispatch = useDispatch()
+  const { token } = useParams();
 
-  const { isLoading } = useSelector(state => state?.ForgetPassword);
 
-  const ForgetPasswordSchema = yup.object().shape({
-    email: yup.string().email().max(150).required('Email is required')
+  const { isLoading, message } = useSelector(state => state?.ResetPassword);
+
+  const ResetPasswordSchema = yup.object().shape({
+    password: yup.string().required("Password is required"),
+    confirmPassword: yup.string().required("Confirm Password is required").oneOf([yup.ref('password'), null], 'Password and Confirm Password must match'),
   });
 
   const {
@@ -39,16 +42,14 @@ const ForgetPasswordPage = () => {
     formState: { errors },
   } = useForm({
     mode: "onBlur",
-    resolver: yupResolver(ForgetPasswordSchema)
+    resolver: yupResolver(ResetPasswordSchema)
   });
 
-
-  const handleForgetPassword = (values) => {
-    const payload = { email: values?.email };
-    dispatch(userForgetPassword(payload));
+  const resetPasswordd = (values) => {
+    const payload = { token: token, password: values?.password };
+    dispatch(resetPassword(payload));
     reset();
   };
-
 
   return (
     <React.Fragment>
@@ -66,20 +67,34 @@ const ForgetPasswordPage = () => {
                     </div>
                     <div className="auth-content my-auto">
                       <div className="text-center">
-                        <h5 className="mb-0">Forget Password</h5>
-                        <p className="text-muted mt-2">Forget Password with Minia.</p>
+                        <h5 className="mb-0">Reset Password</h5>
+                        <p className="text-muted mt-2">Reset Password with Minia.</p>
                       </div>
+
 
                       <Form
                         className="custom-form mt-4"
-                        onSubmit={handleSubmit(handleForgetPassword)}
+                        onSubmit={handleSubmit(resetPasswordd)}
                       >
                         <div className="mb-3">
                           <RHFTextField
-                            id="email"
-                            label="Email"
-                            name="email"
-                            placeholder="Enter valid email"
+                            id="password"
+                            label="Password"
+                            name="password"
+                            type="password"
+                            placeholder="Enter password"
+                            errorobj={errors}
+                            control={control}
+                            isController={true}
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <RHFTextField
+                            id="confirmPassword"
+                            label="Confirm Password"
+                            name="confirmPassword"
+                            type="password"
+                            placeholder="Enter confirm password"
                             errorobj={errors}
                             control={control}
                             isController={true}
@@ -89,7 +104,7 @@ const ForgetPasswordPage = () => {
                         <Row className="mb-3">
                           <Col>
                             <div className="mt-3 d-grid">
-                              <RHFButton btnName="Forget Password" type="submit" />
+                              <RHFButton btnName="Reset Password" type="submit" />
                             </div>
                           </Col>
                         </Row>
@@ -114,8 +129,8 @@ const ForgetPasswordPage = () => {
   )
 }
 
-ForgetPasswordPage.propTypes = {
+ResetPasswordPage.propTypes = {
   history: PropTypes.object,
 }
 
-export default ForgetPasswordPage;
+export default ResetPasswordPage;

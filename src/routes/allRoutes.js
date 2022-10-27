@@ -19,6 +19,8 @@ import TemplatesList from "../pages/TemplatesList/Index";
 import dmControls from "../pages/Dashboard/dm-controls-usecases";
 import ApplicationNetwork from "pages/ApplicationNetwork";
 import Overview from "pages/ApplicationNetwork/Application/Overview";
+import EmailVerification from "pages/Authentication/EmailVerification";
+import ResetPassword from "pages/Authentication/ResetPassword";
 
 const userRoutes = [
   //dashboard
@@ -46,7 +48,9 @@ const authRoutes = [
   { path: "/logout", component: Logout },
   { path: "/login", component: Login },
   { path: "/forgot-password", component: ForgetPwd },
+  { path: "/reset-password/:token", component: ResetPassword },
   { path: "/register", component: Register },
+  { path: "/email-verification/:token", component: EmailVerification },
 ];
 
 export { userRoutes, authRoutes };

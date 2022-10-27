@@ -4,23 +4,23 @@ import {
   FORGET_PASSWORD_ERROR,
 } from "./actionTypes"
 
-export const userForgetPassword = (user, history) => {
+export const userForgetPassword = (payload) => {
   return {
     type: FORGET_PASSWORD,
-    payload: { user, history },
+    payload
   }
 }
 
-export const userForgetPasswordSuccess = message => {
+export const userForgetPasswordSuccess = data => {
   return {
     type: FORGET_PASSWORD_SUCCESS,
-    payload: message,
+    payload: data,
   }
 }
 
-export const userForgetPasswordError = message => {
+export const userForgetPasswordError = data => {
   return {
     type: FORGET_PASSWORD_ERROR,
-    payload: message,
+    payload: data,
   }
 }

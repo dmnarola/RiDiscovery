@@ -277,6 +277,16 @@ const onAddComment = (productId, commentText) => {
   })
 }
 
+
+/** DM  API Execution*/
+
+export const registerNewUser = user => post(url.RIGISTER_NEW_USER, user);
+export const verifyUserEmail = (token) => post(url.VERIFY_USER_EMAIL, token);
+export const resetPassword = (data) => post(url.RESET_PASSWORD, data);
+export const forgetPassword = (data) => post(url.FORGET_PASSWORD, data);
+export const signIn = (data) => post(url.USER_LOGIN, data);
+
+
 export {
   getLoggedInUser,
   isUserAuthenticated,

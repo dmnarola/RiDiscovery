@@ -1,49 +1,54 @@
 import { takeEvery, fork, put, all, call } from "redux-saga/effects"
 
 //Account Redux states
-import { REGISTER_USER } from "./actionTypes"
-import { registerUserSuccessful, registerUserFailed } from "./actions"
+import { EMAIL_VERIFY, REGISTER_USER } from "./actionTypes"
+import { registerUserSuccessful, registerUserFailed, emailVerifySuccessful, emailVerifyFailed } from "./actions"
 
 //Include Both Helper File with needed methods
 import { getFirebaseBackend } from "../../../helpers/firebase_helper"
 import {
   postFakeRegister,
   postJwtRegister,
+  registerNewUser,
+  verifyUserEmail,
 } from "../../../helpers/fakebackend_helper"
 import { Toast } from "components/Common/Toaster"
+import { RESET_PASSWORD } from "helpers/url_helper"
 
 // initialize relavant method of both Auth
 const fireBaseBackend = getFirebaseBackend()
 
 // Is user register successfull then direct plot user in redux.
-function* registerUser({ payload: { user } }) {
+function* registerUser({ payload }) {
   try {
-    if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-      const response = yield call(
-        fireBaseBackend.registerUser,
-        user.email,
-        user.password
-      )
-      yield put(registerUserSuccessful(response))
-    } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
-      const response = yield call(postJwtRegister, "/post-jwt-register", user)
-      yield put(registerUserSuccessful(response))
-    } else if (process.env.REACT_APP_DEFAULTAUTH === "fake") {
-      const response = yield call(postFakeRegister, user)
-      Toast.success('You are registered now')
-      yield put(registerUserSuccessful(response))
-    }
+    const response = yield call(registerNewUser, payload)
+    yield put(registerUserSuccessful(response))
   } catch (error) {
     yield put(registerUserFailed(error))
   }
 }
 
+/* Email Verification */
+function* verifyEmail({ payload }) {
+  try {
+    const response = yield call(verifyUserEmail, payload)
+    yield put(emailVerifySuccessful(response))
+
+  } catch (error) {
+    yield put(emailVerifyFailed(error))
+  }
+}
+
 export function* watchUserRegister() {
   yield takeEvery(REGISTER_USER, registerUser)
+  yield takeEvery(EMAIL_VERIFY, verifyEmail)
 }
 
 function* accountSaga() {
-  yield all([fork(watchUserRegister)])
+  yield all([fork(
+    watchUserRegister,
+    verifyEmail
+  )])
 }
 
 export default accountSaga
