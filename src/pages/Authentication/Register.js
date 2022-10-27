@@ -2,38 +2,35 @@ import React, { useEffect } from "react"
 import { Row, Col, Container, Form } from "reactstrap"
 
 // Formik Validation
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
 
 // action
-import { registerUser, apiError } from "../../store/actions";
+import { apiError, registerUser } from "../../store/actions";
 
 //redux
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 // import images
-import logo from "../../assets/images/logo-sm.svg"
-import CarouselPage from "../Authentication/CarouselPage"
-import RHFTextField from "components/form-controls/RHFTextField";
 import RHFButton from "components/form-controls/RHFButton";
+import RHFTextField from "components/form-controls/RHFTextField";
+import logo from "../../assets/images/logo-sm-ri.svg";
+import CarouselPage from "../Authentication/CarouselPage";
 
-
-const Register = props => {
-
+const Register = (props) => {
   //meta title
-  document.title = "Register | Minia - React Admin & Dashboard Template";
+  document.title = "Register | RiDiscovery";
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const { user, registrationError } = useSelector(state => ({
+  const { user, registrationError } = useSelector((state) => ({
     user: state.Account.user,
     registrationError: state.Account.registrationError,
     loading: state.Account.loading,
-  }))
-
+  }));
 
   const registerSchema = yup.object().shape({
     firstName: yup.string().required('First name is required'),
@@ -46,9 +43,9 @@ const Register = props => {
     handleSubmit,
     control,
     reset,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
-    mode: 'onBlur',
+    mode: "onBlur",
     resolver: yupResolver(registerSchema),
   });
 
@@ -58,8 +55,8 @@ const Register = props => {
   }
 
   useEffect(() => {
-    dispatch(apiError(""))
-  }, [dispatch])
+    dispatch(apiError(""));
+  }, [dispatch]);
 
   return (
     <React.Fragment>
@@ -72,29 +69,24 @@ const Register = props => {
                   <div className="d-flex flex-column h-100">
                     <div className="mb-4 mb-md-5 text-center">
                       <Link to="/dashboard" className="d-block auth-logo">
-                        <img src={logo} alt="" height="28" /> <span className="logo-txt">Minia</span>
+                        <img src={logo} alt="" height="35" />{" "}
+                        {/* <span className="logo-txt">RiDiscovery</span>  */}
+                        {/*@mmp -
+                        for future use if logo and text would be separate*/}
                       </Link>
                     </div>
                     <div className="auth-content my-auto">
                       <div className="text-center">
                         <h5 className="mb-0">Register Account</h5>
-                        <p className="text-muted mt-2">Get your free Minia account now.</p>
+                        <p className="text-muted mt-2">
+                          Get your free RiDiscovery account now.
+                        </p>
                       </div>
 
                       <Form
                         className="needs-validation custom-form mt-4 pt-2"
                         onSubmit={handleSubmit(onRegister)}
                       >
-                        {/* {user && user ? (
-                          <Alert color="success">
-                            Register User Successfully
-                          </Alert>
-                        ) : null}
-
-                        {registrationError && registrationError ? (
-                          <Alert color="danger">{registrationError}</Alert>
-                        ) : null} */}
-
                         <div className="mb-3">
                           <RHFTextField
                             id="firstName"
@@ -143,7 +135,7 @@ const Register = props => {
 
                         <div className="mb-4">
                           <p className="mb-0">
-                            By registering you agree to the Minia{" "}
+                            By registering you agree to the RiDiscovery{" "}
                             <Link to="#" className="text-primary">
                               Terms of Use
                             </Link>
@@ -153,18 +145,23 @@ const Register = props => {
                           <RHFButton
                             className="btn btn-primary w-100 waves-effect waves-light"
                             btnName="Register"
-                            type='submit'
+                            type="submit"
                           />
                         </div>
                       </Form>
 
                       <div className="mt-5 text-center">
-                        <p className="text-muted mb-0">Already have an account ? <Link to="/login"
-                          className="text-primary fw-semibold"> Login </Link> </p>
+                        <p className="text-muted mb-0">
+                          Already have an account ?{" "}
+                          <Link
+                            to="/login"
+                            className="text-primary fw-semibold"
+                          >
+                            {" "}
+                            Login{" "}
+                          </Link>{" "}
+                        </p>
                       </div>
-                    </div>
-                    <div className="mt-4 mt-md-5 text-center">
-                      <p className="mb-0">© {new Date().getFullYear()} Minia . Crafted with <i className="mdi mdi-heart text-danger"></i> by Themesbrand</p>
                     </div>
                   </div>
                 </div>
@@ -175,7 +172,7 @@ const Register = props => {
         </Container>
       </div>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

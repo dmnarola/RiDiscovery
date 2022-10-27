@@ -6,7 +6,7 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 import { Container } from "reactstrap";
 
 const Dashboard = () => {
-  document.title = "Dashboard | Minia - React Admin & Dashboard Template";
+  document.title = "Dashboard | RiDiscovery";
 
   return (
     <React.Fragment>

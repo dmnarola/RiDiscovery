@@ -1,19 +1,17 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 
 //Import Icons
 import FeatherIcon from "feather-icons-react";
 
 //Import images
-import giftBox from "../../assets/images/giftbox.png";
 
 // //Import Scrollbar
 import SimpleBar from "simplebar-react";
 
 // MetisMenu
 import MetisMenu from "metismenujs";
-import { withRouter } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 //i18n
 import { withTranslation } from "react-i18next";
@@ -127,7 +125,7 @@ const SidebarContent = (props) => {
             </li>
 
             <li>
-              <Link to="/#">
+              <Link to="/company">
                 <FeatherIcon icon="home" />
                 <span>{props.t("Company")}</span>
               </Link>
@@ -140,23 +138,6 @@ const SidebarContent = (props) => {
               </Link>
             </li>
           </ul>
-          <div className="card sidebar-alert border-0 text-center mx-4 mb-0 mt-5">
-            <div className="card-body">
-              <img src={giftBox} alt="" />
-              <div className="mt-4">
-                <h5 className="alertcard-title font-size-16">
-                  Unlimited Access
-                </h5>
-                <p className="font-size-13">
-                  Upgrade your plan from a Free trial, to select ‘Business
-                  Plan’.
-                </p>
-                <a href="#!" className="btn btn-primary mt-2">
-                  Upgrade Now
-                </a>
-              </div>
-            </div>
-          </div>
         </div>
       </SimpleBar>
     </React.Fragment>

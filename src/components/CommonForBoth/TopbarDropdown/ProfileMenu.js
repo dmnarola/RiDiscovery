@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 import {
   Dropdown,
-  DropdownToggle,
-  DropdownMenu,
   DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
 } from "reactstrap";
 
 //i18n
@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 // users
 import user1 from "../../../assets/images/users/avatar-1.jpg";
 
-const ProfileMenu = props => {
+const ProfileMenu = (props) => {
   // Declare a new state variable, which we'll call "menu"
   const [menu, setMenu] = useState(false);
   const [username, setusername] = useState("Admin");
@@ -63,15 +63,6 @@ const ProfileMenu = props => {
               {props.t("Profile")}
             </DropdownItem>
           </Link>
-          <DropdownItem tag="a" href="/profile">
-            <span className="badge bg-success float-end">11</span>
-            <i className="bx bx-wrench font-size-16 align-middle me-1" />
-            {props.t("Settings")}
-          </DropdownItem>
-          <DropdownItem tag="a" href="/page-lock-screen">
-            <i className="bx bx-lock-open font-size-16 align-middle me-1" />
-            {props.t("Lock screen")}
-          </DropdownItem>
           <div className="dropdown-divider" />
           <Link to="/logout" className="dropdown-item">
             <i className="bx bx-power-off font-size-16 align-middle me-1 text-danger" />
@@ -85,14 +76,12 @@ const ProfileMenu = props => {
 
 ProfileMenu.propTypes = {
   success: PropTypes.any,
-  t: PropTypes.any
+  t: PropTypes.any,
 };
 
-const mapStatetoProps = state => {
+const mapStatetoProps = (state) => {
   const { error, success } = state.Profile;
   return { error, success };
 };
 
-export default
-  connect(mapStatetoProps, {})(withTranslation()(ProfileMenu)
-  );
+export default connect(mapStatetoProps, {})(withTranslation()(ProfileMenu));
