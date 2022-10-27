@@ -16,55 +16,22 @@ import {
 const fireBaseBackend = getFirebaseBackend();
 
 function* loginUser({ payload: { user, history } }) {
-  console.log({ user, history })
   try {
-    // if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-    //   const response = yield call(
-    //     fireBaseBackend.loginUser,
-    //     user.email,
-    //     user.password
-    //   );
-    //   yield put(loginSuccess(response));
-    // } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
-    //   const response = yield call(postJwtLogin, {
-    //     email: user.email,
-    //     password: user.password,
-    //   });
-    //   localStorage.setItem("authUser", JSON.stringify(response));
-    //   yield put(loginSuccess(response));
-    // } else if (process.env.REACT_APP_DEFAULTAUTH === "fake") {
-    //   const response = yield call(postFakeLogin, {
-    //     email: user.email,
-    //     password: user.password,
-    //   });
-    //   localStorage.setItem("authUser", JSON.stringify(response));
-    //   yield put(loginSuccess(response));
-    // }
-
-    try {
-      const response = yield call(signIn, user);
-      if (response?.status) {
-        localStorage.setItem('authUser', response?.user?.token);
-        history.push("/dashboard")
-      }
-      yield put(loginSuccess(response))
-    } catch (error) {
-      yield put(loginFail(error))
+    const response = yield call(signIn, user);
+    if (response?.status) {
+      localStorage.setItem('authUser', response?.user?.token);
+      history.push("/dashboard")
     }
-
+    yield put(loginSuccess(response))
   } catch (error) {
-    yield put(apiError(error));
+    yield put(loginFail(error))
   }
+
 }
 
 function* logoutUser({ payload: { history } }) {
   try {
     localStorage.removeItem("authUser");
-
-    // if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-    //   const response = yield call(fireBaseBackend.logout);
-    //   yield put(logoutUserSuccess(response));
-    // }
     history.push("/login")
   } catch (error) {
     yield put(apiError(error));
