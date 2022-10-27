@@ -11,13 +11,13 @@ import { emailVerify } from "store/actions";
 
 
 // import images
-import logo from "../../assets/images/logo-sm.svg";
+import logo from "../../assets/images/logo-sm-ri.svg";
 import CarouselPage from "./CarouselPage";
 
 const EmailVerification = () => {
 
   //meta title
-  document.title = "Forget Password | Minia - React Admin & Dashboard Template";
+  document.title = "Email Verification |RiDiscovery";
 
   const dispatch = useDispatch()
 
@@ -50,7 +50,8 @@ const EmailVerification = () => {
                   <div className="d-flex flex-column h-100">
                     <div className="mb-4 mb-md-5 text-center">
                       <Link to="/dashboard" className="d-block auth-logo">
-                        <img src={logo} alt="" height="28" /> <span className="logo-txt">Minia</span>
+                        <img src={logo} alt="" height="28" />
+                        {/* <span className="logo-txt">Minia</span> */}
                       </Link>
                     </div>
                     <div className="auth-content my-auto">

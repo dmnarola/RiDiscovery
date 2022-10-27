@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import * as yup from "yup";
 
 // import images
-import logo from "../../assets/images/logo-sm.svg";
+import logo from "../../assets/images/logo-sm-ri.svg";
 import CarouselPage from "../Authentication/CarouselPage";
 import RHFTextField from "components/form-controls/RHFTextField";
 import RHFButton from "components/form-controls/RHFButton";
@@ -22,7 +22,7 @@ import { userForgetPassword } from "store/actions";
 const ForgetPasswordPage = () => {
 
   //meta title
-  document.title = "Forget Password | Minia - React Admin & Dashboard Template";
+  document.title = "Forget Password | RiDiscovery ";
 
   const dispatch = useDispatch()
 
@@ -61,13 +61,14 @@ const ForgetPasswordPage = () => {
                   <div className="d-flex flex-column h-100">
                     <div className="mb-4 mb-md-5 text-center">
                       <Link to="/dashboard" className="d-block auth-logo">
-                        <img src={logo} alt="" height="28" /> <span className="logo-txt">Minia</span>
+                        <img src={logo} alt="" height="28" />
+                        {/* <span className="logo-txt">Minia</span> */}
                       </Link>
                     </div>
                     <div className="auth-content my-auto">
                       <div className="text-center">
                         <h5 className="mb-0">Forget Password</h5>
-                        <p className="text-muted mt-2">Forget Password with Minia.</p>
+                        <p className="text-muted mt-2">Forget Password with RiDiscovery.</p>
                       </div>
 
                       <Form
