@@ -1,24 +1,24 @@
-import React from "react";
 import { Redirect } from "react-router-dom";
 
 //Dashboard
 import Dashboard from "../pages/Dashboard/index";
 
 // Authentication related pages
+import ForgetPwd from "../pages/Authentication/ForgetPassword";
 import Login from "../pages/Authentication/Login";
 import Logout from "../pages/Authentication/Logout";
 import Register from "../pages/Authentication/Register";
-import ForgetPwd from "../pages/Authentication/ForgetPassword";
 
 //
-import userProfile from "../pages/Authentication/user-profile";
-import UserList from "../pages/UserList/Index";
-import UserDetails from "pages/UserList/UserDetails";
-import ProjectList from "../pages/ProjectList/Index";
-import TemplatesList from "../pages/TemplatesList/Index";
-import dmControls from "../pages/Dashboard/dm-controls-usecases";
 import ApplicationNetwork from "pages/ApplicationNetwork";
 import Overview from "pages/ApplicationNetwork/Application/Overview";
+import CompanyHierarchy from "pages/Company";
+import UserDetails from "pages/UserList/UserDetails";
+import userProfile from "../pages/Authentication/user-profile";
+import dmControls from "../pages/Dashboard/dm-controls-usecases";
+import ProjectList from "../pages/ProjectList/Index";
+import TemplatesList from "../pages/TemplatesList/Index";
+import UserList from "../pages/UserList/Index";
 
 const userRoutes = [
   //dashboard
@@ -36,6 +36,9 @@ const userRoutes = [
   { path: "/profile", component: userProfile },
   { path: "/applications", component: ApplicationNetwork },
   { path: "/application/:applicationId/overview", component: Overview },
+
+  //Company
+  { path: "/company", component: CompanyHierarchy },
 
   // this route should be at the end of all other routes
   { path: "/", exact: true, component: () => <Redirect to="/dashboard" /> },

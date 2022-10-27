@@ -1,57 +1,59 @@
-import React, { useEffect, useState } from "react";
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Col,
-  Container,
-  Row,
-} from "reactstrap";
-import Breadcrumbs from "../../components/Common/Breadcrumb";
-import FeatherIcon from "feather-icons-react";
-import Table from "../../components/Tables/Table";
-import DialogBox from "../../components/Modals/DialogBox";
-import RHFButton from "../../components/form-controls/RHFButton";
-import RHFSwitch from "../../components/form-controls/RHFSwitch";
-import UserAddEdit from "./UserAddEdit";
-import { useForm } from "react-hook-form";
 import RHFAutoCompleteSelect from "components/form-controls/RHFAutoCompleteSelect";
 import RHFDatePicker from "components/form-controls/RHFDatePicker";
+import FeatherIcon from "feather-icons-react";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import { Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
+import Breadcrumbs from "../../components/Common/Breadcrumb";
+import RHFButton from "../../components/form-controls/RHFButton";
+import RHFSwitch from "../../components/form-controls/RHFSwitch";
+import DialogBox from "../../components/Modals/DialogBox";
+import Table from "../../components/Tables/Table";
+import UserAddEdit from "./UserAddEdit";
 
 // constant for dropdown
 const StatusData = [
   {
     value: true,
-    label: 'Active',
+    label: "Active",
   },
-  { value: false, label: 'Deactive' },
-]
-const RoleData = [{
-  value: "OMA-Owner Admin",
-  label: "OMA-Owner Admin",
-}, {
-  value: "CSM-Company Senior Manager",
-  label: "CSM-Company Senior Manager",
-}, {
-  value: "DAPM-DA Project Manager",
-  label: "DAPM-DA Project Manager",
-}, {
-  value: "SAPM-SA Project Manager",
-  label: "SAPM-SA Project Manager",
-}, {
-  value: "DATM-DA Team Member",
-  label: "DATM-DA Team Member",
-}, {
-  value: "SAPM-SA Pentester Member",
-  label: "SAPM-SA Pentester Member",
-}, {
-  value: "SATL-SA Team Lead",
-  label: "SATL-SA Team Lead",
-}, {
-  value: "Executive",
-  label: "Executive",
-}]
+  { value: false, label: "Deactive" },
+];
+const RoleData = [
+  {
+    value: "OMA-Owner Admin",
+    label: "OMA-Owner Admin",
+  },
+  {
+    value: "CSM-Company Senior Manager",
+    label: "CSM-Company Senior Manager",
+  },
+  {
+    value: "DAPM-DA Project Manager",
+    label: "DAPM-DA Project Manager",
+  },
+  {
+    value: "SAPM-SA Project Manager",
+    label: "SAPM-SA Project Manager",
+  },
+  {
+    value: "DATM-DA Team Member",
+    label: "DATM-DA Team Member",
+  },
+  {
+    value: "SAPM-SA Pentester Member",
+    label: "SAPM-SA Pentester Member",
+  },
+  {
+    value: "SATL-SA Team Lead",
+    label: "SATL-SA Team Lead",
+  },
+  {
+    value: "Executive",
+    label: "Executive",
+  },
+];
 
 export const tabledata = [
   {
@@ -68,7 +70,7 @@ export const tabledata = [
     startDate: "2000-06-12",
     endDate: "2021-10-22",
     isActive: true,
-    category: "Security Agency"
+    category: "Security Agency",
   },
   {
     _id: 2,
@@ -84,19 +86,19 @@ export const tabledata = [
     startDate: "2000-06-12",
     endDate: "2021-10-22",
     isActive: false,
-    category: "Application Agency"
+    category: "Application Agency",
   },
 ];
 
 const UserList = () => {
-  document.title = "Role Management | Minia - React Admin & Dashboard Template";
+  document.title = "Role Management | RiDiscovery";
 
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [editUserData, setEditUserData] = useState(null);
   const [formData, setFormData] = useState(null);
-  const [isFilterModelOpen, setIsFilterModelOpen] = useState(false)
-  const [dropdownData, setDropdownData] = useState()
+  const [isFilterModelOpen, setIsFilterModelOpen] = useState(false);
+  const [dropdownData, setDropdownData] = useState();
   let history = useHistory();
   const {
     handleSubmit,
@@ -113,8 +115,8 @@ const UserList = () => {
   };
 
   const handleFilterToggle = () => {
-    setIsFilterModelOpen(!isFilterModelOpen)
-  }
+    setIsFilterModelOpen(!isFilterModelOpen);
+  };
 
   const handleSwitchChange = (value) => {
     setValue("isActive", value);
@@ -122,9 +124,9 @@ const UserList = () => {
 
   useEffect(() => {
     if (formData) {
-      console.log('formData :>> ', formData);
+      console.log("formData :>> ", formData);
     }
-  }, [formData])
+  }, [formData]);
 
   const columns = [
     {
@@ -138,15 +140,17 @@ const UserList = () => {
             height="35px"
             alt="logo"
           />
-          <span className="m-3"
+          <span
+            className="m-3"
             style={{ cursor: "pointer" }}
             onClick={(e) => {
-              e.preventDefault()
-              const _id = row['_id']
-              history.push(`/user-list/user/${_id}`)
+              e.preventDefault();
+              const _id = row["_id"];
+              history.push(`/user-list/user/${_id}`);
             }}
           >
-            {row?.firstName} {row?.lastName}</span>
+            {row?.firstName} {row?.lastName}
+          </span>
         </div>
       ),
 
@@ -195,23 +199,20 @@ const UserList = () => {
     },
   ];
 
-
-
   const handleOnChange = (data, name) => {
-    const value = data
+    const value = data;
     setDropdownData((prevValue) => {
       const prev = {
         ...prevValue,
-      }
+      };
       if (value === undefined || value === "") {
-        delete prev[name]
+        delete prev[name];
+      } else {
+        prev[name] = value;
       }
-      else {
-        prev[name] = value
-      }
-      return prev
-    })
-  }
+      return prev;
+    });
+  };
 
   return (
     <React.Fragment>
@@ -221,7 +222,7 @@ const UserList = () => {
           <Card>
             <CardHeader>
               <Row>
-                {isFilterModelOpen &&
+                {isFilterModelOpen && (
                   <>
                     <Col md="2">
                       <RHFAutoCompleteSelect
@@ -262,7 +263,7 @@ const UserList = () => {
                       />
                     </Col>
                   </>
-                }
+                )}
                 <Col>
                   <div className="col d-flex justify-content-end align-items-end">
                     <div className="me-2">
@@ -270,16 +271,17 @@ const UserList = () => {
                         btnName="Filter"
                         icon="filter"
                         onClick={() => {
-                          handleFilterToggle()
+                          handleFilterToggle();
                         }}
-                      /></div>
+                      />
+                    </div>
                     <RHFButton
                       btnName="Add User"
                       icon="plus"
                       onClick={() => {
-                        handleToggle()
-                        setEditUserData(null)
-                        setFormData(null)
+                        handleToggle();
+                        setEditUserData(null);
+                        setFormData(null);
                       }}
                     />
                     <DialogBox

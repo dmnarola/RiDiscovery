@@ -1,12 +1,12 @@
+import FeatherIcon from "feather-icons-react";
 import React from "react";
 import { Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
 import Breadcrumbs from "../../components/Common/Breadcrumb";
-import FeatherIcon from "feather-icons-react";
-import Table from "../../components/Tables/Table";
 import RHFTextField from "../../components/form-controls/RHFTextField";
+import Table from "../../components/Tables/Table";
 
 const ProjectList = () => {
-  document.title = "Certificate| Minia - React Admin & Dashboard Template";
+  document.title = "Certificate| RiDiscovery";
 
   const columns = [
     {
@@ -38,7 +38,7 @@ const ProjectList = () => {
 
   const handleOnChange = (data, name) => {
     console.log({ data, name });
-  }
+  };
 
   return (
     <React.Fragment>

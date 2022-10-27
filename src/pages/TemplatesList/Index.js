@@ -1,14 +1,13 @@
+import RHFButton from "components/form-controls/RHFButton";
+import RHFTextField from "components/form-controls/RHFTextField";
+import FeatherIcon from "feather-icons-react";
 import React from "react";
 import { Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
-import Table from "../../components/Tables/Table";
 import Breadcrumbs from "../../components/Common/Breadcrumb";
-import FeatherIcon from "feather-icons-react";
-import RHFTextField from "components/form-controls/RHFTextField";
-import RHFButton from "components/form-controls/RHFButton";
+import Table from "../../components/Tables/Table";
 
 const TemplatesList = () => {
-  document.title =
-    "Reporting Template | Minia - React Admin & Dashboard Template";
+  document.title = "Reporting Template | RiDiscovery";
 
   const columns = [
     {
@@ -30,10 +29,9 @@ const TemplatesList = () => {
     },
   ];
 
-
   const handleOnChange = (data, name) => {
     console.log({ data, name });
-  }
+  };
 
   return (
     <React.Fragment>
@@ -59,12 +57,8 @@ const TemplatesList = () => {
                 </Col>
                 <Col>
                   <div className="col d-flex justify-content-end align-items-end">
-                    <div className="me-2">
-                    </div>
-                    <RHFButton
-                      btnName="Add Template"
-                      icon="plus"
-                    />
+                    <div className="me-2"></div>
+                    <RHFButton btnName="Add Template" icon="plus" />
                   </div>
                 </Col>
               </Row>
