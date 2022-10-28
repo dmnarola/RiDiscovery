@@ -23,6 +23,8 @@ import EmailVerification from "pages/Authentication/EmailVerification";
 import ResetPassword from "pages/Authentication/ResetPassword";
 import UserList from "../pages/UserList/Index";
 import FindingAddEdit from "pages/ApplicationNetwork/Application/Finding/FindingAddEdit";
+import SetPassword from 'pages/Authentication/SetPassword';
+import VerifyOTP from 'pages/Authentication/VerifyOTP';
 
 const userRoutes = [
   //dashboard
@@ -61,6 +63,8 @@ const authRoutes = [
   { path: "/logout", component: Logout },
   { path: "/login", component: Login },
   { path: "/forgot-password", component: ForgetPwd },
+  { path: "/verify-otp", component: VerifyOTP },
+  { path: "/set-password/:token", component: SetPassword },
   { path: "/reset-password/:token", component: ResetPassword },
   { path: "/register", component: Register },
   { path: "/email-verification/:token", component: EmailVerification },

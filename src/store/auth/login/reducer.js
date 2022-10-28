@@ -26,7 +26,7 @@ const login = (state = initialState, action) => {
       state = {
         ...state,
         loading: false,
-        user: action?.payload?.user
+        user: action?.payload
       };
       break;
     case LOGIN_FAIL:
