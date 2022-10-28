@@ -22,10 +22,8 @@ const RHFUpload = ({ inputRef, name, id, label, errorobj, getFileData, setValue,
         const objectUrl = URL.createObjectURL(e?.target?.files[0]);
         getFileData({ file: e?.target?.files[0], base64: objectUrl })
         setValue(name, e?.target?.files[0])
-
     }
-    console.log('isError :>> ', isError);
-    console.log('errorobj :>> ', errorobj);
+
 
     return (
         <>

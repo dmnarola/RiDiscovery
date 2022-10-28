@@ -315,8 +315,8 @@ const UserList = () => {
                 </Col>
               </Row>
             </CardHeader>
-            <CardBody>
-              <Table columns={columns} data={tabledata} />
+            <CardBody className="table-responsive">
+              <Table columns={columns} data={tabledata} className="table mb-0" />
             </CardBody>
           </Card>
         </Container>

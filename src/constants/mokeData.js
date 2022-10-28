@@ -71,3 +71,26 @@ export const statusApp = [{
     value: "Deactive",
     label: "Deactive",
 }]
+
+
+//add finding 
+
+
+export const statusFinding = [{
+    value: "Open",
+    label: "Open",
+}, {
+    value: "Close",
+    label: "Close",
+}]
+
+export const severityFinding = [{
+    value: "Critical",
+    label: "Critical"
+}, {
+    value: "High",
+    label: "High"
+}, {
+    value: "Medium",
+    label: "Medium"
+}]

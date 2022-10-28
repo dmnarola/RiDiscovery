@@ -19,23 +19,32 @@ import TemplatesList from "../pages/TemplatesList/Index";
 import dmControls from "../pages/Dashboard/dm-controls-usecases";
 import ApplicationNetwork from "pages/ApplicationNetwork";
 import Overview from "pages/ApplicationNetwork/Application/Overview";
+import FindingAddEdit from "pages/ApplicationNetwork/Application/Finding/FindingAddEdit";
 
 const userRoutes = [
   //dashboard
   { path: "/dashboard", component: Dashboard },
 
-  //
-  { path: "/user-list", component: UserList },
-  { path: "/user-list/user/:id", component: UserDetails },
-  { path: "/project-list", component: ProjectList },
-  { path: "/templates-list", component: TemplatesList },
+  //application/Network
+  { path: "/applications", component: ApplicationNetwork },
+  { path: "/application/:applicationId/overview", component: Overview },
+  { path: "/:applicationId/add-finding", component: FindingAddEdit },
 
-  { path: "/dm-controls", component: dmControls },
+  //user
+  { path: "/user-list", component: UserList },
+  { path: "/user-list/user/:userId", component: UserDetails },
+
+  //project
+  { path: "/project-list", component: ProjectList },
+
+  // template
+  { path: "/templates-list", component: TemplatesList },
 
   //profile
   { path: "/profile", component: userProfile },
-  { path: "/applications", component: ApplicationNetwork },
-  { path: "/application/:applicationId/overview", component: Overview },
+
+
+  { path: "/dm-controls", component: dmControls },
 
   // this route should be at the end of all other routes
   { path: "/", exact: true, component: () => <Redirect to="/dashboard" /> },

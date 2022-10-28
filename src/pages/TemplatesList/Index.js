@@ -5,10 +5,28 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 import FeatherIcon from "feather-icons-react";
 import RHFTextField from "components/form-controls/RHFTextField";
 import RHFButton from "components/form-controls/RHFButton";
+import ActionButtons from "components/form-controls/ActionButtons";
 
 const TemplatesList = () => {
   document.title =
     "Reporting Template | Minia - React Admin & Dashboard Template";
+
+
+  const editHandler = (obj) => {
+    console.log({ obj })
+    handleToggle();
+  };
+
+
+  const handleActionClick = (payload, actionType) => {
+    const actionMapper = {
+      edit: editHandler,
+    };
+    if (actionMapper[actionType]) {
+      actionMapper[actionType](payload);
+    }
+  };
+
 
   const columns = [
     {
@@ -17,8 +35,18 @@ const TemplatesList = () => {
       sortable: true,
     },
     {
-      name: "Edit",
-      selector: (row) => <FeatherIcon icon="edit" />,
+      name: "Actions",
+      minWidth: "150px",
+      isVisible: true,
+      selector: (row) => {
+        return (
+          <ActionButtons
+            edit={{
+              handleClick: () => handleActionClick(row, 'edit'),
+            }}
+          />
+        );
+      },
     },
   ];
   const data = [

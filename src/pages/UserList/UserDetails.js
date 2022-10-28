@@ -30,13 +30,13 @@ const navLinkData = [
 ] // @Foram >> We can add other tabs in future
 
 const UserDetails = () => {
-    const { id } = useParams()
+    const { userId } = useParams()
 
     const [userDetails, setUserDetails] = useState([])
 
     useState(() => {
         setUserDetails(tabledata.find(obj => {
-            return obj._id == id;
+            return obj._id == userId;
         }))
     }, [])
 
