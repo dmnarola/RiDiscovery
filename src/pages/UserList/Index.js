@@ -11,6 +11,7 @@ import RHFSwitch from "../../components/form-controls/RHFSwitch";
 import DialogBox from "../../components/Modals/DialogBox";
 import Table from "../../components/Tables/Table";
 import UserAddEdit from "./UserAddEdit";
+import ActionButtons from "components/form-controls/ActionButtons";
 
 // constant for dropdown
 const StatusData = [
@@ -122,6 +123,21 @@ const UserList = () => {
     setValue("isActive", value);
   };
 
+  const editHandler = (obj) => {
+    console.log({ obj })
+    handleToggle();
+    setEditUserData(obj);
+  };
+
+  const handleActionClick = (payload, actionType) => {
+    const actionMapper = {
+      edit: editHandler,
+    };
+    if (actionMapper[actionType]) {
+      actionMapper[actionType](payload);
+    }
+  };
+
   useEffect(() => {
     if (formData) {
       console.log("formData :>> ", formData);
@@ -171,17 +187,18 @@ const UserList = () => {
       sortable: true,
     },
     {
-      name: "Edit",
-      selector: (row) => (
-        <FeatherIcon
-          icon="edit"
-          size="18"
-          onClick={(e) => {
-            handleToggle();
-            setEditUserData(row);
-          }}
-        />
-      ),
+      name: "Actions",
+      minWidth: "150px",
+      isVisible: true,
+      selector: (row) => {
+        return (
+          <ActionButtons
+            edit={{
+              handleClick: () => handleActionClick(row, 'edit'),
+            }}
+          />
+        );
+      },
     },
     {
       name: "Active/Deactive",
@@ -301,8 +318,8 @@ const UserList = () => {
                 </Col>
               </Row>
             </CardHeader>
-            <CardBody>
-              <Table columns={columns} data={tabledata} />
+            <CardBody className="table-responsive">
+              <Table columns={columns} data={tabledata} className="table mb-0" />
             </CardBody>
           </Card>
         </Container>

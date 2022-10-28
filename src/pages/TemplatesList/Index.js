@@ -5,9 +5,27 @@ import React from "react";
 import { Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 import Table from "../../components/Tables/Table";
+import ActionButtons from "components/form-controls/ActionButtons";
 
 const TemplatesList = () => {
   document.title = "Reporting Template | RiDiscovery";
+
+
+  const editHandler = (obj) => {
+    console.log({ obj })
+    handleToggle();
+  };
+
+
+  const handleActionClick = (payload, actionType) => {
+    const actionMapper = {
+      edit: editHandler,
+    };
+    if (actionMapper[actionType]) {
+      actionMapper[actionType](payload);
+    }
+  };
+
 
   const columns = [
     {
@@ -16,8 +34,18 @@ const TemplatesList = () => {
       sortable: true,
     },
     {
-      name: "Edit",
-      selector: (row) => <FeatherIcon icon="edit" />,
+      name: "Actions",
+      minWidth: "150px",
+      isVisible: true,
+      selector: (row) => {
+        return (
+          <ActionButtons
+            edit={{
+              handleClick: () => handleActionClick(row, 'edit'),
+            }}
+          />
+        );
+      },
     },
   ];
   const data = [

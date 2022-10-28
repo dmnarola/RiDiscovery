@@ -11,6 +11,8 @@ import FilterByStatus from 'components/Common/FilterByStatus';
 import RHFButton from 'components/form-controls/RHFButton';
 import DropdownButton from 'components/form-controls/DropdownButton';
 import ManageColumns from 'components/Common/ManageColumns';
+import DialogBox from 'components/Modals/DialogBox';
+import ApplicationAddEdit from './ApplicationAddEdit';
 
 
 const usersList = [
@@ -33,36 +35,59 @@ const data = [
     {
         id: 1,
         penId: 'AIL-1234',
-        status: 'Pending',
         name: 'ABC',
+        applicationType: {
+            value: "Web",
+            label: "Web",
+        },
+        assessmentType: "Default1",
+        developmentTeam: "Foram Sankhavara",
+        buTag: "tag 1",
+        securityManager: "Dipesh Mali",
+        developmentManager: "Mahesh Trapasiya",
+        securityTeam: "fas",
+        startDate: "2000-06-12",
+        template: "Default Template",
+        status: 'Active',
         score: '1.1',
         assignePentester: [],
         assigneDeveloper: [],
-        securityManager: [],
         projectManager: []
+
     },
     {
         id: 2,
         penId: 'AIL-2365',
         status: 'Completed',
         name: 'XYZ',
+        applicationType: "Mobile",
+        assessmentType: "Default1",
+        developmentTeam: "Foram Sankhavara",
+        buTag: "tag 3",
+        securityManager: "Dipesh Mali",
+        developmentManager: "Mahesh Trapasiya",
+        securityTeam: "dm",
+        startDate: "2011-01-18",
+        template: "ABC Template",
+        status: 'Deactive',
         score: '1.5',
         assignePentester: [],
         assigneDeveloper: [],
-        securityManager: [],
         projectManager: []
     },
 ];
 
+
 const Application = () => {
 
     const [customActiveTab, setcustomActiveTab] = useState(1);
-
+    const [isModelOpen, setIsModelOpen] = useState(false);
     const [filterColumns, setFilterColumns] = useState([]);
     const [columnOptions, setColumnOption] = useState([]);
+    const [formData, setFormData] = useState(null);
+    const [editUserData, setEditUserData] = useState(null);
 
     const history = useHistory();
-
 
     useEffect(() => {
         const columnFilter = [...columns];
@@ -70,10 +95,20 @@ const Application = () => {
         setFilterColumns(columnFilter.filter(o => o.isVisible && o));
     }, [])
 
+    useEffect(() => {
+        if (formData) {
+            console.log('formData :>> ', formData);
+        }
+    }, [formData])
+
     const getFilteredValues = (cols) => {
         setColumnOption(cols);
         setFilterColumns(cols.filter(o => o.isVisible && o));
     }
+
+    const handleToggle = () => {
+        setIsModelOpen(!isModelOpen);
+    };
 
     const getCols = (cols) => {
         setColumnOption(cols);
@@ -92,6 +127,7 @@ const Application = () => {
 
     const addeHandler = (obj) => {
         console.log({ obj })
+        history.push(`/${obj?.id}/add-finding`)
     };
 
     const deleteHandler = (obj) => {
@@ -100,8 +136,16 @@ const Application = () => {
 
     const editHandler = (obj) => {
         console.log({ obj })
+        handleToggle();
+        setEditUserData(obj);
     };
+    const downloadHandler = (obj) => {
+        console.log({ obj })
+    }
 
+    const handleOnChange = (data, name) => {
+        console.log({ data, name });
+    }
 
     const handleActionClick = (payload, actionType) => {
         const actionMapper = {
@@ -109,6 +153,7 @@ const Application = () => {
             add: addeHandler,
             edit: editHandler,
             delete: deleteHandler,
+            download: downloadHandler
         };
 
         if (actionMapper[actionType]) {
@@ -273,6 +318,7 @@ const Application = () => {
                                 name="search"
                                 placeholder="Search here"
                                 isController={false}
+                                handleOnChange={handleOnChange}
                             />
                         </Col>
                         <Col xs={6} lg={9}>
@@ -280,7 +326,25 @@ const Application = () => {
                                 <RHFButton
                                     btnName="Add"
                                     icon="plus"
+                                    onClick={() => {
+                                        handleToggle()
+                                        setEditUserData(null)
+                                        setFormData(null)
+                                    }}
                                 />
+                                <DialogBox
+                                    isModelOpen={isModelOpen}
+                                    handleToggle={handleToggle}
+                                    modelSize="lg"
+                                    title={editUserData === null ? "New Application (AIL-1234)" : "Edit Application (AIL-1234)"}
+                                    actions={null}
+                                >
+                                    <ApplicationAddEdit
+                                        setFormData={setFormData}
+                                        handleToggle={handleToggle}
+                                        editUserData={editUserData}
+                                    />
+                                </DialogBox>
                             </div>
                         </Col>
                     </Row>

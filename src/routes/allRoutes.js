@@ -22,23 +22,32 @@ import TemplatesList from "../pages/TemplatesList/Index";
 import EmailVerification from "pages/Authentication/EmailVerification";
 import ResetPassword from "pages/Authentication/ResetPassword";
 import UserList from "../pages/UserList/Index";
+import FindingAddEdit from "pages/ApplicationNetwork/Application/Finding/FindingAddEdit";
 
 const userRoutes = [
   //dashboard
   { path: "/dashboard", component: Dashboard },
 
-  //
-  { path: "/user-list", component: UserList },
-  { path: "/user-list/user/:id", component: UserDetails },
-  { path: "/project-list", component: ProjectList },
-  { path: "/templates-list", component: TemplatesList },
+  //application/Network
+  { path: "/applications", component: ApplicationNetwork },
+  { path: "/application/:applicationId/overview", component: Overview },
+  { path: "/:applicationId/add-finding", component: FindingAddEdit },
 
-  { path: "/dm-controls", component: dmControls },
+  //user
+  { path: "/user-list", component: UserList },
+  { path: "/user-list/user/:userId", component: UserDetails },
+
+  //project
+  { path: "/project-list", component: ProjectList },
+
+  // template
+  { path: "/templates-list", component: TemplatesList },
 
   //profile
   { path: "/profile", component: userProfile },
-  { path: "/applications", component: ApplicationNetwork },
-  { path: "/application/:applicationId/overview", component: Overview },
+
+
+  { path: "/dm-controls", component: dmControls },
 
   //Company
   { path: "/company", component: CompanyHierarchy },

@@ -4,10 +4,25 @@ import { Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 import RHFTextField from "../../components/form-controls/RHFTextField";
 import Table from "../../components/Tables/Table";
+import ActionButtons from "components/form-controls/ActionButtons";
 
 const ProjectList = () => {
   document.title = "Certificate| RiDiscovery";
 
+  const downloadHandler = (obj) => {
+    console.log({ obj })
+  }
+
+
+  const handleActionClick = (payload, actionType) => {
+    const actionMapper = {
+      download: downloadHandler
+    };
+
+    if (actionMapper[actionType]) {
+      actionMapper[actionType](payload);
+    }
+  };
   const columns = [
     {
       name: "Project Name",
@@ -21,8 +36,18 @@ const ProjectList = () => {
     },
     {
       name: "Action",
-      selector: (row) => <FeatherIcon icon="download" />,
-    },
+      isVisible: true,
+      selector: (row) => {
+        return (
+          <ActionButtons
+            download={{
+              handleClick: () => handleActionClick(row, 'download'),
+            }}
+          />
+        );
+      },
+    }
+
   ];
 
   const data = [

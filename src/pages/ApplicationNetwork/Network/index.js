@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card, CardBody, CardHeader, Col, Container, Row } from 'reactstrap';
 import Breadcrumb from 'components/Common/Breadcrumb';
 import Table from 'components/Tables/Table';
@@ -7,6 +7,8 @@ import AvtarGroup from 'components/form-controls/AvtarGroup';
 import { avatar1, avatar2, avatar3, avatar4, avatar5 } from "assets/images";
 import FilterByStatus from 'components/Common/FilterByStatus';
 import RHFButton from 'components/form-controls/RHFButton';
+import DialogBox from 'components/Modals/DialogBox';
+import NetworkAddEdit from './NetworkAddEdit';
 
 const usersList = [
     { id: 1, name: 'Dipesh Mali', image: avatar1 },
@@ -43,14 +45,29 @@ const data = [
 
 const Network = () => {
 
-
     const [customActiveTab, setcustomActiveTab] = useState(1);
+    const [isModelOpen, setIsModelOpen] = useState(false);
+    const [formData, setFormData] = useState(null);
+
+    const handleToggle = () => {
+        setIsModelOpen(!isModelOpen);
+    };
 
     const toggleCustom = (tab) => {
         if (customActiveTab !== tab) {
             setcustomActiveTab(tab);
         }
     };
+
+    const handleOnChange = (data, name) => {
+        console.log({ data, name });
+    }
+
+    useEffect(() => {
+        if (formData) {
+            console.log('formData :>> ', formData);
+        }
+    }, [formData])
 
 
     const columns = [
@@ -131,6 +148,7 @@ const Network = () => {
                                 name="search"
                                 placeholder="Search here"
                                 isController={false}
+                                handleOnChange={handleOnChange}
                             />
                         </Col>
                         <Col xs={6} lg={9}>
@@ -138,7 +156,22 @@ const Network = () => {
                                 <RHFButton
                                     btnName="Add"
                                     icon="plus"
+                                    onClick={() => {
+                                        handleToggle()
+                                    }}
                                 />
+                                <DialogBox
+                                    isModelOpen={isModelOpen}
+                                    handleToggle={handleToggle}
+                                    modelSize="sm-100"
+                                    title="New Network"
+                                    actions={null}
+                                >
+                                    <NetworkAddEdit
+                                        setFormData={setFormData}
+                                        handleToggle={handleToggle}
+                                    />
+                                </DialogBox>
                             </div>
                         </Col>
                     </Row>

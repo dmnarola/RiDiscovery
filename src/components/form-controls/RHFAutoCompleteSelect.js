@@ -26,6 +26,9 @@ const RHFAutoCompleteSelect = ({
   let isError = false;
   let errorMessage = "";
   let multiSelect = false;
+
+
+
   if (typeof isMultiple === "undefined" || isMultiple) {
     multiSelect = true;
   }
