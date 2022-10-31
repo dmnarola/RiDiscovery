@@ -10,7 +10,7 @@ const DropdownButton = (props) => {
     const [menuItemList, setMenuItemList] = useState(menuItems);
 
     const handleSearch = (val) => {
-        setMenuItemList(menuItems.filter(o => o?.name.toLowerCase()?.indexOf(val.toLowerCase()) > -1))
+        setMenuItemList(menuItems?.filter(o => o?.name.toLowerCase()?.indexOf(val.toLowerCase()) > -1))
     }
 
     const manageHandleClick = (item) => {
@@ -40,7 +40,7 @@ const DropdownButton = (props) => {
                             name="Search"
                             placeholder="Search"
                             backgroundColor="#5156be"
-                            onChange={(e) => handleSearch(e.target.value)}
+                            handleOnChange={handleSearch}
                         />
                     }
                     {menuItemList?.map(item => {

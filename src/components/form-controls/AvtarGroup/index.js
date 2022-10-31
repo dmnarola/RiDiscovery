@@ -39,7 +39,7 @@ const AvtarGroup = (props) => {
                         name="Search"
                         placeholder="Search"
                         backgroundColor="#5156be"
-                        onChange={(e) => handleSearch(e.target.value)}
+                        handleOnChange={handleSearch}
                     />
                     {avtarUsers?.map(user => {
                         return (
