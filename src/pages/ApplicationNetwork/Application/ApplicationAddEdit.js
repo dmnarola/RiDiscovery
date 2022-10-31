@@ -74,9 +74,6 @@ const ApplicationAddEdit = (props) => {
         resolver: yupResolver(applicationSchema),
     });
 
-    console.log('editUserData :>> ', editUserData);
-
-
     const handleAutoComplete = (data, name) => {
         console.log(data, name);
         setValue(name, data);
@@ -94,7 +91,7 @@ const ApplicationAddEdit = (props) => {
             // setValue('applicationType', {
             //     value: "Web",
             //     label: "Web",
-            // })
+            // })  @Foram >> working on set value fpr edit form  
             console.log('getValues =>', getValues())
         }
         else {

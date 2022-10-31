@@ -94,3 +94,96 @@ export const severityFinding = [{
     value: "Medium",
     label: "Medium"
 }]
+
+
+//add Finding page => Button Groups data
+
+export const attackVectorFinding = [{
+    id: "btn1",
+    labelName: "Network (N)",
+
+}, {
+    id: "btn2",
+    labelName: "Adjacent (A)",
+
+}, {
+    id: "btn3",
+    labelName: "Local (L)",
+
+}, {
+    id: "btn4",
+    labelName: "Physical (P)",
+
+}]
+
+export const scopeFinding = [{
+    id: "btn5",
+    labelName: "Unchanged (U)",
+}, {
+    id: "btn6",
+    labelName: "High (H)",
+}]
+
+export const attackComplexityFinding = [{
+    id: "btn7",
+    labelName: "Low (L)",
+}, {
+    id: "btn8",
+    labelName: "High (H)",
+},]
+
+export const confidentialityFinding = [{
+    id: "btn9",
+    labelName: "None (N)",
+}, {
+    id: "btn10",
+    labelName: "Low (L)",
+}, {
+    id: "btn11",
+    labelName: "High (H)",
+}]
+
+export const privilegesRequiredFinding = [{
+    id: "btn12",
+    labelName: "None (N)",
+
+}, {
+    id: "btn13",
+    labelName: "Low (L)",
+
+
+}, {
+    id: "btn14",
+    labelName: "High (H)",
+
+}]
+
+export const integrityFinding = [{
+    id: "btn15",
+    labelName: "None (N)",
+}, {
+    id: "btn16",
+    labelName: "Low (L)",
+}, {
+    id: "btn17",
+    labelName: "High (H)",
+}]
+
+export const userInteractionFinding = [{
+    id: "btn18",
+    labelName: "None (N)",
+}, {
+    id: "btn19",
+    labelName: "Required (R)",
+}]
+
+export const availabilityFinding = [{
+    id: "btn20",
+    labelName: "None (N)",
+}, {
+    id: "btn21",
+    labelName: "Low (L)",
+}, {
+    id: "btn22",
+    labelName: "High (H)",
+}]
