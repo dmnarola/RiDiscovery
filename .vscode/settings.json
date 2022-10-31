@@ -1,0 +1,12 @@
+{
+    // "editor.cursorBlinking": "expand",
+    "editor.formatOnSave": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "turboConsoleLog.wrapLogMessage": true,
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": false
+    },
+    
+}

@@ -12,6 +12,8 @@ import Register from "../pages/Authentication/Register";
 
 //
 import ApplicationNetwork from "pages/ApplicationNetwork";
+import ApplicationAddEdit from 'pages/ApplicationNetwork/Application/ApplicationAddEdit';
+
 import Overview from "pages/ApplicationNetwork/Application/Overview";
 import CompanyHierarchy from "pages/Company";
 import UserDetails from "pages/UserList/UserDetails";
@@ -30,6 +32,7 @@ const userRoutes = [
 
   //application/Network
   { path: "/applications", component: ApplicationNetwork },
+  { path: "/application/add", component: ApplicationAddEdit },
   { path: "/application/:applicationId/overview", component: Overview },
   { path: "/:applicationId/add-finding", component: FindingAddEdit },
 
