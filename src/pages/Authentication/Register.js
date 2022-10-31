@@ -33,10 +33,10 @@ const Register = (props) => {
   }));
 
   const registerSchema = yup.object().shape({
-    firstName: yup.string().required('First name is required'),
-    lastName: yup.string().required('Last name is required'),
+    firstName: yup.string().required('First Name is required'),
+    lastName: yup.string().required('Last Name is required'),
     email: yup.string().email().max(150).required('Email is required'),
-    phoneNo: yup.string().required('phone Number is required'),
+    phoneNo: yup.string().required('Phone Number is required'),
   });
 
   const {

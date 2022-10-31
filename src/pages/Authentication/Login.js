@@ -128,7 +128,7 @@ const Login = (props) => {
                             id="email"
                             label="Email"
                             name="email"
-                            placeholder="Enter valid email"
+                            placeholder="Enter valid Email"
                             errorobj={errors}
                             control={control}
                             isController={true}
@@ -140,7 +140,7 @@ const Login = (props) => {
                             label="Password"
                             name="password"
                             type="password"
-                            placeholder="Enter password"
+                            placeholder="Enter Password"
                             errorobj={errors}
                             control={control}
                             isController={true}

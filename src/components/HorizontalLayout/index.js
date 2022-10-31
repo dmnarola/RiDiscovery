@@ -26,14 +26,14 @@ const Layout = (props) => {
   const dispatch = useDispatch();
 
   const {
-    topbarTheme, layoutWidth, isPreloader, layoutPosition, layoutMode,layoutType,showRightSidebar
+    topbarTheme, layoutWidth, isPreloader, layoutPosition, layoutMode, layoutType, showRightSidebar
   } = useSelector(state => ({
     topbarTheme: state.Layout.topbarTheme,
     layoutWidth: state.Layout.layoutWidth,
     isPreloader: state.Layout.isPreloader,
     layoutPosition: state.Layout.layoutPosition,
     layoutMode: state.Layout.layoutMode,
-    layoutType : state.Layout.layoutType,
+    layoutType: state.Layout.layoutType,
     showRightSidebar: state.Layout.showRightSidebar,
   }));
 
@@ -46,7 +46,7 @@ const Layout = (props) => {
 
     document.title =
       currentage + " | Minia - React Admin & Dashboard Template";
-      
+
   }, [location.pathname]);
 
   useEffect(() => {
@@ -96,7 +96,7 @@ const Layout = (props) => {
     if (layoutMode) {
       dispatch(changelayoutMode(layoutMode, layoutType));
     }
-  }, [dispatch,changelayoutMode, layoutMode,layoutType]);
+  }, [dispatch, changelayoutMode, layoutMode, layoutType]);
 
   const [isMenuOpened, setIsMenuOpened] = useState(false);
   const openMenu = () => {
@@ -117,9 +117,9 @@ call dark/light mode
     <React.Fragment>
       <div className="pace pace-active" id="preloader">
         <div className="pace-progress" data-progress-text="100%" data-progress="99" style={{ transform: "translate3d(100%, 0px, 0px)" }}>
-        <div className="pace-progress-inner"></div>
-      </div>
-      <div className="pace-activity"></div></div>
+          <div className="pace-progress-inner"></div>
+        </div>
+        <div className="pace-activity"></div></div>
 
       <div id="layout-wrapper">
         <Header
@@ -130,9 +130,8 @@ call dark/light mode
         />
         <Navbar menuOpen={isMenuOpened} />
         <div className="main-content">{props.children}</div>
-        <Footer />
       </div>
-      
+
       {showRightSidebar ? <RightSidebar onChangeLayoutMode={onChangeLayoutMode} /> : null}
 
     </React.Fragment>

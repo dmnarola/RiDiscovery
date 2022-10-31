@@ -80,7 +80,7 @@ const VerifyOTP = (props) => {
                             id="otp"
                             label="OTP"
                             name="otp"
-                            placeholder="Enter otp"
+                            placeholder="Enter Otp"
                             errorobj={errors}
                             control={control}
                             isController={true}

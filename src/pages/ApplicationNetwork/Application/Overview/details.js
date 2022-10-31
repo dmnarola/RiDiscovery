@@ -58,15 +58,6 @@ const ApplicationDetail = () => {
                                         onChange={handleCheckboxChange}
                                     />
                                 </div>
-                                <div className="form-check">
-                                    <RHFCheckbox
-                                        name="checkbox"
-                                        label="NIST"
-                                        // checked={false}
-                                        isController={false}
-                                        onChange={handleCheckboxChange}
-                                    />
-                                </div>
                             </CardBody>
                         </Card>
                     </Col>

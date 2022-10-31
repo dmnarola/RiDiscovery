@@ -16,17 +16,17 @@ const NetworkAddEdit = (props) => {
     const networkSchema = yup.object().shape({
         title: yup
             .string()
-            .required("name is required"),
+            .required("Title is required"),
         type: yup
             .object()
             .shape({ label: yup.string(), value: yup.string() })
             .nullable()
             .required("Select atleast one option"),
-        startDate: yup.date().required("Date is required"),
-        endDate: yup.date().required("Date is required"),
+        startDate: yup.string().required("Date is required"),
+        endDate: yup.string().required("Date is required"),
         buTag: yup
             .string()
-            .required("buTag is required"),
+            .required("BU Tag is required"),
         nmapResult: yup.mixed().required('File is required'),
         nessuesResult: yup.mixed().required('File is required'),
     });
@@ -59,7 +59,7 @@ const NetworkAddEdit = (props) => {
                         id="title"
                         label="Title"
                         name="title"
-                        placeholder="Enter valid Title"
+                        placeholder="Enter Valid Title"
                         errorobj={errors}
                         control={control}
                         isController={true}
@@ -106,7 +106,7 @@ const NetworkAddEdit = (props) => {
                         id="buTag"
                         label="BU Tag"
                         name="buTag"
-                        placeholder="Enter valid BU Tag"
+                        placeholder="Enter Valid BU Tag"
                         errorobj={errors}
                         control={control}
                         isController={true}

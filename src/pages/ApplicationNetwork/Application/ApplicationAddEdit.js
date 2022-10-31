@@ -15,7 +15,6 @@ import RHFCheckbox from 'components/form-controls/RHFCheckbox';
 const ApplicationAddEdit = (props) => {
     let history = useHistory()
     const location = useLocation()
-    const [activeTab, setactiveTab] = useState(1);
     const [flag, setFlag] = useState(false)
     const editApplicationData = location?.state?.objData
     const isEditMode = editApplicationData ? true : false;
@@ -23,7 +22,7 @@ const ApplicationAddEdit = (props) => {
     const applicationSchema = yup.object().shape({
         name: yup
             .string()
-            .required("name is required"),
+            .required("Application Name is required"),
         applicationType: yup
             .object()
             .shape({ label: yup.string(), value: yup.string() })
@@ -61,12 +60,7 @@ const ApplicationAddEdit = (props) => {
             .shape({ label: yup.string(), value: yup.string() })
             .nullable()
             .required("Select atleast one option"),
-        startDate: yup.date().required("Date is required"),
-        status: yup
-            .object()
-            .shape({ label: yup.string(), value: yup.string() })
-            .nullable()
-            .required("Select atleast one option"),
+        startDate: yup.string().required("Date is required"),
     });
 
     const {
@@ -80,7 +74,6 @@ const ApplicationAddEdit = (props) => {
         resolver: yupResolver(applicationSchema),
     });
 
-
     const handleAutoComplete = (data, name) => {
         console.log(data, name);
         setValue(name, data);
@@ -88,7 +81,9 @@ const ApplicationAddEdit = (props) => {
 
     const onSubmit = (data) => {
         console.log('data', data)
-        // setFlag(true) @mmp temporary
+        // if (data) {
+        //     setFlag(true) // @mmp temporary
+        // }
     };
 
     useEffect(() => {
@@ -107,18 +102,6 @@ const ApplicationAddEdit = (props) => {
     return (
         <div className="page-content">
             <Container fluid>
-                <div className='page-title-box'>
-                    <RHFButton
-                        btnName="Application" className="mx-2"
-                        onClick={() => history.push({ pathname: '/applications', state: { activeTab: 1 } })}
-                        outline={activeTab === 1 ? false : true}
-                    />
-                    <RHFButton
-                        btnName="Network"
-                        onClick={() => history.push({ pathname: '/applications', state: { activeTab: 2 } })}
-                        outline={activeTab === 2 ? false : true}
-                    />
-                </div>
                 {!flag && <Breadcrumb title="Application" breadcrumbItem={!isEditMode ? "Add Application" : ` Edit Application (${editApplicationData?.penId})`} />}
                 {flag && <Breadcrumb title="Kick-off Doc" breadcrumbItem="Kick-off Doc:" />}
 
@@ -131,7 +114,7 @@ const ApplicationAddEdit = (props) => {
                                         id="name"
                                         label="Appliaction Name"
                                         name="name"
-                                        placeholder="Enter valid Application Name"
+                                        placeholder="Enter Valid Application Name"
                                         errorobj={errors}
                                         control={control}
                                         isController={true}
@@ -184,7 +167,7 @@ const ApplicationAddEdit = (props) => {
                                 <Col sm="6">
                                     <RHFAutoCompleteSelect
                                         id="developmrntManager"
-                                        label="Application Owner (Development Manager)"
+                                        label="Development Manager"
                                         name="developmrntManager"
                                         options={commonForAppDropDown}
                                         isMultiple={false}
@@ -198,18 +181,6 @@ const ApplicationAddEdit = (props) => {
                             <Row className="mb-3">
                                 <Col sm="6">
                                     <RHFAutoCompleteSelect
-                                        id="developmentTeam"
-                                        label="Development Team"
-                                        name="developmentTeam"
-                                        options={commonForAppDropDown}
-                                        isMultiple={false}
-                                        errorobj={errors}
-                                        control={control}
-                                        isController={true}
-                                    />
-                                </Col>
-                                <Col sm="6">
-                                    <RHFAutoCompleteSelect
                                         id="securityTeam"
                                         label="Security Team"
                                         name="securityTeam"
@@ -220,6 +191,19 @@ const ApplicationAddEdit = (props) => {
                                         isController={true}
                                     />
                                 </Col>
+                                <Col sm="6">
+                                    <RHFAutoCompleteSelect
+                                        id="developmentTeam"
+                                        label="Development Team"
+                                        name="developmentTeam"
+                                        options={commonForAppDropDown}
+                                        isMultiple={false}
+                                        errorobj={errors}
+                                        control={control}
+                                        isController={true}
+                                    />
+                                </Col>
+
                             </Row>
 
                             <Row className="mb-3">
@@ -228,7 +212,7 @@ const ApplicationAddEdit = (props) => {
                                         id="buTag"
                                         label="BU Tag"
                                         name="buTag"
-                                        placeholder="Enter valid BU Tag"
+                                        placeholder="Enter Valid BU Tag"
                                         errorobj={errors}
                                         control={control}
                                         isController={true}
@@ -246,24 +230,12 @@ const ApplicationAddEdit = (props) => {
                             </Row>
 
                             <Row className="mb-3">
-                                <Col sm="6">
+                                <Col sm="12">
                                     <RHFAutoCompleteSelect
                                         id="template"
                                         label="Templates"
                                         name="template"
                                         options={tamplateAppData}
-                                        isMultiple={false}
-                                        errorobj={errors}
-                                        control={control}
-                                        isController={true}
-                                    />
-                                </Col>
-                                <Col sm="6">
-                                    <RHFAutoCompleteSelect
-                                        id="status"
-                                        label="Status"
-                                        name="status"
-                                        options={statusApp}
                                         isMultiple={false}
                                         errorobj={errors}
                                         control={control}
@@ -289,6 +261,8 @@ const ApplicationAddEdit = (props) => {
                         </form>
                     </CardBody>
                 </Card>}
+
+
                 {flag && <Card>
                     <CardBody>
                         <form onSubmit={handleSubmit(onSubmit)}>

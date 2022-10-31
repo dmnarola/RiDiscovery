@@ -27,12 +27,12 @@ const ProjectList = () => {
     {
       name: "Project Name",
       selector: (row) => row?.projectname,
-      sortable: true,
+
     },
     {
       name: "Pen ID",
       selector: (row) => row?.penid,
-      sortable: true,
+
     },
     {
       name: "Action",

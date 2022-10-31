@@ -150,7 +150,7 @@ const Application = () => {
             id: 'penId', //  @DM  - its required when sorting is true @DM
             name: "Pen Id",
             selector: (row) => row?.penId,
-            sortable: true,
+
             isVisible: true,
         },
         {
@@ -163,7 +163,7 @@ const Application = () => {
             id: 'score',
             name: "Score",
             selector: (row) => <span className='badge-soft-danger badge fs-6'>{row?.score}</span>,
-            sortable: true,
+
             isVisible: true,
         },
         {
@@ -254,6 +254,12 @@ const Application = () => {
         }
     ];
 
+
+    const handleRowChange = (row) => {
+        history.push(`/application/${row?.id}/overview`)
+    }
+
+
     return (
         <React.Fragment>
             <Breadcrumb title="Application" breadcrumbItem="Application List" />
@@ -333,7 +339,7 @@ const Application = () => {
                     </Row>
                 </CardHeader>
                 <CardBody>
-                    <Table columns={filterColumns} data={data} />
+                    <Table columns={filterColumns} data={data} handleChange={handleRowChange} />
                 </CardBody>
             </Card>
         </React.Fragment>
