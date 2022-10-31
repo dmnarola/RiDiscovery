@@ -1,11 +1,11 @@
-import PropTypes from "prop-types";
 import React from "react";
+import PropTypes from "prop-types";
 import { Row, Col, Container, Form } from "reactstrap";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 
-import { Link, useParams, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // Formik Validation
 import * as yup from "yup";
@@ -15,25 +15,21 @@ import logo from "../../assets/images/logo-sm-ri.svg";
 import CarouselPage from "./CarouselPage";
 import RHFTextField from "components/form-controls/RHFTextField";
 import RHFButton from "components/form-controls/RHFButton";
-import { resetPassword } from "store/auth/resetPassword/actions";
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { verifyOtp } from "store/auth/twoFA/actions";
 
-const ResetPasswordPage = () => {
+const VerifyOTP = () => {
 
   //meta title
-  document.title = "Reset Password | RiDiscovery";
+  document.title = "2 Factor Auth | RiDiscovery ";
 
   const dispatch = useDispatch()
-  const history = useHistory()
-  const { token } = useParams();
 
+  const { loading, user } = useSelector((state) => state.Login);
 
-  const { isLoading, message } = useSelector(state => state?.ResetPassword);
-
-  const ResetPasswordSchema = yup.object().shape({
-    password: yup.string().required("Password is required"),
-    confirmPassword: yup.string().required("Confirm Password is required").oneOf([yup.ref('password'), null], 'Password and Confirm Password must match'),
+  const OtpSchema = yup.object().shape({
+    otp: yup.string().required('Otp is required')
   });
 
   const {
@@ -43,14 +39,16 @@ const ResetPasswordPage = () => {
     formState: { errors },
   } = useForm({
     mode: "onBlur",
-    resolver: yupResolver(ResetPasswordSchema)
+    resolver: yupResolver(OtpSchema)
   });
 
-  const resetPasswordd = (values) => {
-    const payload = { token: token, password: values?.password };
-    dispatch(resetPassword(payload, history));
+
+  const handleOtp = (values) => {
+    const payload = { otp: values?.otp, userId: user?.user?.id };
+    dispatch(verifyOtp(payload, history));
     reset();
   };
+
 
   return (
     <React.Fragment>
@@ -69,34 +67,20 @@ const ResetPasswordPage = () => {
                     </div>
                     <div className="auth-content my-auto">
                       <div className="text-center">
-                        <h5 className="mb-0">Reset Password</h5>
-                        <p className="text-muted mt-2">Reset Password with RiDiscovery.</p>
+                        <h5 className="mb-0">OTP</h5>
+                        <p className="text-muted mt-2">Verify Otp with RiDiscovery</p>
                       </div>
-
 
                       <Form
                         className="custom-form mt-4"
-                        onSubmit={handleSubmit(resetPasswordd)}
+                        onSubmit={handleSubmit(handleOtp)}
                       >
                         <div className="mb-3">
                           <RHFTextField
-                            id="password"
-                            label="Password"
-                            name="password"
-                            type="password"
-                            placeholder="Enter password"
-                            errorobj={errors}
-                            control={control}
-                            isController={true}
-                          />
-                        </div>
-                        <div className="mb-3">
-                          <RHFTextField
-                            id="confirmPassword"
-                            label="Confirm Password"
-                            name="confirmPassword"
-                            type="password"
-                            placeholder="Enter confirm password"
+                            id="otp"
+                            label="OTP"
+                            name="otp"
+                            placeholder="Enter otp"
                             errorobj={errors}
                             control={control}
                             isController={true}
@@ -106,7 +90,7 @@ const ResetPasswordPage = () => {
                         <Row className="mb-3">
                           <Col>
                             <div className="mt-3 d-grid">
-                              <RHFButton btnName="Reset Password" type="submit" />
+                              <RHFButton btnName="Send" type="submit" />
                             </div>
                           </Col>
                         </Row>
@@ -131,8 +115,8 @@ const ResetPasswordPage = () => {
   )
 }
 
-ResetPasswordPage.propTypes = {
+VerifyOTP.propTypes = {
   history: PropTypes.object,
 }
 
-export default ResetPasswordPage;
+export default VerifyOTP;

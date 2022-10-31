@@ -118,4 +118,6 @@ export const VERIFY_USER_EMAIL = "/auth/verify-email";
 export const USER_LOGIN = "/auth/login";
 export const RESET_PASSWORD = "/auth/reset-password";
 export const FORGET_PASSWORD = "/auth/reset-password-email";
+export const GENERATE_QR_CODE = "/auth/generate-2fa-qrcode";
+export const VERIFY_OTP = "/auth/verify-totp";
 

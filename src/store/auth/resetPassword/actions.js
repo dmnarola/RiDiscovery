@@ -4,10 +4,10 @@ import {
   RESET_PASSWORD_FAIL
 } from "./actionTypes"
 
-export const resetPassword = (payload) => {
+export const resetPassword = (payload, history) => {
   return {
     type: RESET_PASSWORD,
-    payload,
+    payload: { payload, history },
   }
 }
 

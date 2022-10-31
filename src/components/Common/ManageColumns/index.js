@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Dropdown, DropdownItem, DropdownMenu } from 'reactstrap';
 import RHFTextField from 'components/form-controls/RHFTextField';
 import RHFButton from 'components/form-controls/RHFButton';
+import RHFCheckbox from 'components/form-controls/RHFCheckbox';
 
 
 const ManageColumns = (props) => {
@@ -46,7 +47,7 @@ const ManageColumns = (props) => {
                         name="Search"
                         placeholder="Search"
                         backgroundColor="#5156be"
-                        onChange={(e) => handleSearch(e.target.value)}
+                        handleOnChange={handleSearch}
                     />
                     {columnList?.map(col => {
                         return (
@@ -54,14 +55,23 @@ const ManageColumns = (props) => {
                                 <div className='d-flex justify-content-between'>
                                     <span>{col?.name}</span>
                                     <span className='ms-2'>
-                                        <input
+                                        {/* <input
                                             name="chk"
                                             type="checkbox"
                                             value={col?.isVisible}
-                                            // checked={col?.isVisible}
-                                            checked={allColumns?.find(o => o.id === col?.id && col?.isVisible)}
+                                            defaultChecked={col?.isVisible}
+                                            onChange={(e) => handleChange(col?.id, !col?.isVisible)}
+                                        /> */}
+
+
+                                        <RHFCheckbox
+                                            name="chk"
+                                            value={col?.isVisible}
+                                            defaultChecked={col?.isVisible}
+                                            isController={false}
                                             onChange={(e) => handleChange(col?.id, !col?.isVisible)}
                                         />
+
                                     </span>
                                 </div>
                             </DropdownItem>

@@ -17,7 +17,7 @@ const RHFCheckbox = ({ isController = false, ...props }) => {
   if (!isController) {
     return (
       <Fragment>
-        <div className="mb-3">
+        <div className="mb-0">
           <Label htmlFor="example-checkbox-input" className="form-Label">{label}</Label>
           <Input type="checkbox" onChange={(e) => onChange(e.target.checked)} id="example-checkbox-input"  {...extraProps} />
         </div>
