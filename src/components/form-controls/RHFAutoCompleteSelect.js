@@ -48,7 +48,7 @@ const RHFAutoCompleteSelect = ({
           </Label>
           <Select
             {...props}
-            className={multiSelect ? "basic-multi-select" : "basic-single"}
+            className={multiSelect ? "basic-multi-select bg-light" : "basic-single bg-light"}
             isMulti={multiSelect}
             id={id}
             name={name}
@@ -93,7 +93,7 @@ const RHFAutoCompleteSelect = ({
                 {...props}
                 id={id}
                 name={name}
-                className={multiSelect ? "basic-multi-select" : "basic-single"}
+                className={multiSelect ? "basic-multi-select " : "basic-single"}
                 isMulti={multiSelect}
                 isClearable={isClearable}
                 isSearchable={isSearchable}

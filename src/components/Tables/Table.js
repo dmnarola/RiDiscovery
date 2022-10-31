@@ -2,21 +2,17 @@ import React, { useEffect, useState } from "react";
 import { layoutTheme } from "constants/layout";
 import DataTable, { createTheme } from "react-data-table-component";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
-// layoutMode
+
 
 const Table = ({ columns, data }) => {
 
   const [tableData, setTableData] = useState();
 
   const { layoutMode } = useSelector((state) => ({ layoutMode: state.Layout.layoutMode }));
-  // checked={layoutMode === layoutTheme.LIGHTMODE} DARKMODE
+
   useEffect(() => {
     setTableData(data);
   }, []);
-
-
-  console.log('layoutMode :>> ', layoutMode);
 
   const lightCustomStyles = {
     headCells: {

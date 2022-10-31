@@ -36,7 +36,7 @@ const userRoutes = [
   { path: "/applications", component: ApplicationNetwork },
   { path: "/application/add", component: ApplicationAddEdit },
   { path: "/application/:applicationId/overview", component: Overview },
-  { path: "/:applicationId/add-finding", component: FindingAddEdit },
+  { path: "/application/:applicationId/add-finding", component: FindingAddEdit },
 
   //user
   { path: "/user-list", component: UserList },

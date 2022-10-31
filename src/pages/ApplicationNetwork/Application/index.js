@@ -113,7 +113,7 @@ const Application = () => {
 
     const addeHandler = (obj) => {
         console.log({ obj })
-        history.push(`/${obj?.id}/add-finding`)
+        history.push(`/application/${obj?.id}/add-finding`)
     };
 
     const deleteHandler = (obj) => {
