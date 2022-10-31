@@ -19,17 +19,19 @@ const Company = () => {
   const data = [
     {
       id: 1,
-      name: "Aether Industries",
+      companyName: "Aether Industries",
       score: "1.1",
+      domainName: "domain 1",
       category: "Development Agency",
-      image: "/images/bg-1.jpg",
+      companyLogo: "/images/bg-1.jpg",
     },
     {
       id: 2,
-      name: "Aether Industries",
+      companyName: "Aether Industries",
       score: "1.1",
+      domainName: "domain 2",
       category: "Security Agency",
-      image: "/images/bg-3.jpg",
+      companyLogo: "/images/bg-3.jpg",
     },
   ];
 
@@ -47,13 +49,13 @@ const Company = () => {
       selector: (row) => (
         <div>
           <img
-            src={row?.image}
+            src={row?.companyLogo}
             className="rounded-circle"
             width="35px"
             height="35px"
             alt="logo"
           />
-          <span className="m-3">{row?.name}</span>
+          <span className="m-3">{row?.companyName}</span>
         </div>
       ),
 
@@ -75,7 +77,7 @@ const Company = () => {
         return (
           <ActionButtons
             edit={{
-              handleClick: () => setEditUserData(row),
+              handleClick: () => { handleToggle(); setEditCompanyData(row) }
             }}
           />
         );

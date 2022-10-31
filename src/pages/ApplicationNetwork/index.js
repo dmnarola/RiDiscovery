@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
 import RHFButton from 'components/form-controls/RHFButton';
@@ -7,7 +8,9 @@ import Network from './Network';
 
 
 const ApplicationNetwork = () => {
-  const [activeTab, setactiveTab] = useState(1);
+  let location = useLocation()
+  let tabValue = location.state?.activeTab
+  const [activeTab, setactiveTab] = useState(tabValue || 1);
 
   return (
     <div className="page-content">

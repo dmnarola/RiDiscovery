@@ -30,6 +30,7 @@ const RHFSwitch = (props) => {
                         height={24}
                         handleDiameter={18}
                     />
+                    {label && <span>&nbsp;{label}</span>}
                 </div>
             </Fragment>
         )
@@ -53,15 +54,15 @@ const RHFSwitch = (props) => {
         render={({ field }) => {
             return (
                 <Fragment>
-                    <div>
+                    <div className='d-flex align-items-center'>
                         <Switch
                             {...field}
                             {...extraProps}
                             name={name}
-                            checked={field.value}
+                            checked={field.value || checked}
                             disabled={disabled}
                             onChange={(e,) => {
-                                return !onChange ? field.onChange(e.target.checked) : onChange(e);
+                                return !onChange ? field.onChange(e) : onChange(e);
                             }}
                             uncheckedIcon={false}
                             checkedIcon={false}
@@ -73,6 +74,7 @@ const RHFSwitch = (props) => {
                             height={22}
                             handleDiameter={16}
                         />
+                        {label && <span>&nbsp;{label}</span>}
                         {isError && <FormFeedback type="invalid">{errorMessage}</FormFeedback>}
                     </div>
                 </Fragment>

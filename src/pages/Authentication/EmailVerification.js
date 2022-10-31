@@ -17,7 +17,7 @@ import CarouselPage from "./CarouselPage";
 const EmailVerification = () => {
 
   //meta title
-  document.title = "Email Verification |RiDiscovery";
+  document.title = "Email Verification | RiDiscovery";
 
   const dispatch = useDispatch()
 
@@ -35,7 +35,7 @@ const EmailVerification = () => {
   /** Note - Dipesh (After email verification there should be one email send to User (From that link user can open reset pwd page)) */
   useEffect(() => {
     if (user?.status) {
-      history.push(`/reset-password/${user?.token}`)
+      history.push(`/set-password/${user?.token}`)
     }
   }, [user])
 
@@ -50,7 +50,7 @@ const EmailVerification = () => {
                   <div className="d-flex flex-column h-100">
                     <div className="mb-4 mb-md-5 text-center">
                       <Link to="/dashboard" className="d-block auth-logo">
-                        <img src={logo} alt="" height="28" />
+                        <img src={logo} alt="" height="35" />
                         {/* <span className="logo-txt">Minia</span> */}
                       </Link>
                     </div>

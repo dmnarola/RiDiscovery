@@ -1,5 +1,5 @@
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import React from "react";
 import { Row, Col, Container, Form } from "reactstrap";
 
 //redux
@@ -18,18 +18,25 @@ import RHFButton from "components/form-controls/RHFButton";
 import { resetPassword } from "store/auth/resetPassword/actions";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import RHFSwitch from "components/form-controls/RHFSwitch";
+import { generateQRCode } from "store/auth/twoFA/actions";
 
-const ResetPasswordPage = () => {
+
+const SetPasswordPage = () => {
 
   //meta title
-  document.title = "Reset Password | RiDiscovery";
+  document.title = "Set Password | RiDiscovery";
 
   const dispatch = useDispatch()
   const history = useHistory()
   const { token } = useParams();
 
-
   const { isLoading, message } = useSelector(state => state?.ResetPassword);
+  const { isLoading: loading, qrCode } = useSelector(state => state?.TwoFA);
+
+  console.log('QrCode -> ', qrCode);
+
+  const [isActive, setIsActive] = useState(false);
 
   const ResetPasswordSchema = yup.object().shape({
     password: yup.string().required("Password is required"),
@@ -40,17 +47,31 @@ const ResetPasswordPage = () => {
     handleSubmit,
     control,
     reset,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: "onBlur",
     resolver: yupResolver(ResetPasswordSchema)
   });
 
-  const resetPasswordd = (values) => {
-    const payload = { token: token, password: values?.password };
+  const setPasswordd = (values) => {
+    const payload = {
+      password: values?.password,
+      token: token,
+      twoFAEnabled: values?.twoFAEnabled || false,
+      secret: qrCode?.secret || null,
+    };
+    console.log({ payload })
     dispatch(resetPassword(payload, history));
     reset();
   };
+
+
+  const handleSwitchChange = (val) => {
+    setIsActive(val);
+    setValue('twoFAEnabled', val);
+    dispatch(generateQRCode({ token: token }))
+  }
 
   return (
     <React.Fragment>
@@ -69,14 +90,14 @@ const ResetPasswordPage = () => {
                     </div>
                     <div className="auth-content my-auto">
                       <div className="text-center">
-                        <h5 className="mb-0">Reset Password</h5>
-                        <p className="text-muted mt-2">Reset Password with RiDiscovery.</p>
+                        <h5 className="mb-0">Set New Password</h5>
+                        <p className="text-muted mt-2">Set Password with RiDiscovery.</p>
                       </div>
 
 
                       <Form
                         className="custom-form mt-4"
-                        onSubmit={handleSubmit(resetPasswordd)}
+                        onSubmit={handleSubmit(setPasswordd)}
                       >
                         <div className="mb-3">
                           <RHFTextField
@@ -102,11 +123,29 @@ const ResetPasswordPage = () => {
                             isController={true}
                           />
                         </div>
+                        <div className="mb-3">
+                          <RHFSwitch
+                            name="twoFAEnabled"
+                            label="Allow two factor verification ?"
+                            checked={isActive}
+                            isController={true}
+                            errorobj={errors}
+                            control={control}
+                            onChange={handleSwitchChange}
+                          />
+                        </div>
+
+                        {
+                          isActive && qrCode?.QRCode &&
+                          <div className="mb-3 text-center">
+                            <img alt='qr-code' src={qrCode?.QRCode} width="150" height="150" />
+                          </div>
+                        }
 
                         <Row className="mb-3">
                           <Col>
                             <div className="mt-3 d-grid">
-                              <RHFButton btnName="Reset Password" type="submit" />
+                              <RHFButton btnName="Set Password" type="submit" />
                             </div>
                           </Col>
                         </Row>
@@ -131,8 +170,8 @@ const ResetPasswordPage = () => {
   )
 }
 
-ResetPasswordPage.propTypes = {
+SetPasswordPage.propTypes = {
   history: PropTypes.object,
 }
 
-export default ResetPasswordPage;
+export default SetPasswordPage;

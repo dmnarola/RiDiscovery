@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import RHFAutoCompleteSelect from "components/form-controls/RHFAutoCompleteSelect";
 import RHFButton from "components/form-controls/RHFButton";
 import RHFFileUpload from "components/form-controls/RHFFileUpload";
 import RHFTextField from "components/form-controls/RHFTextField";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { Col, Row } from "reactstrap";
 import * as yup from "yup";
 import defaultImage from "../../assets/images/Default-User-Image.jpeg";
@@ -53,13 +52,25 @@ const CompanyAddEdit = (props) => {
     setFormData(data);
   };
 
+  useEffect(() => {
+    if (isEditMode) {
+      const formFields = Object.keys(editCompanyData);
+      formFields.forEach((field) => {
+        setValue(field, editCompanyData[field]);
+      });
+    }
+    else {
+      setValue(null)
+    }
+  }, [editCompanyData]);
+
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {!isEditMode && (
         <div className="d-flex mb-3 justify-content-center">
           <div className="">
             <RHFFileUpload
-              name="userProfile"
+            name="companyLogo"
               defaultImage={defaultImage}
               errorobj={errors}
               setValue={setValue}
@@ -67,8 +78,7 @@ const CompanyAddEdit = (props) => {
             />
           </div>
         </div>
-      )}
-      {!isEditMode && (
+
         <Row className="mb-3">
           <Col sm="12">
             <RHFTextField
@@ -81,10 +91,8 @@ const CompanyAddEdit = (props) => {
               isController={true}
             />
           </Col>
-        </Row>
-      )}
+      </Row>
 
-      {!isEditMode && (
         <Row className="mb-3">
           <Col sm="12">
             <RHFTextField
@@ -97,8 +105,7 @@ const CompanyAddEdit = (props) => {
               isController={true}
             />
           </Col>
-        </Row>
-      )}
+      </Row>
 
       <Row className="mb-3">
         <Col sm="12">

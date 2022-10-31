@@ -79,14 +79,9 @@ const data = [
 
 
 const Application = () => {
-
     const [customActiveTab, setcustomActiveTab] = useState(1);
-    const [isModelOpen, setIsModelOpen] = useState(false);
     const [filterColumns, setFilterColumns] = useState([]);
     const [columnOptions, setColumnOption] = useState([]);
-    const [formData, setFormData] = useState(null);
-    const [editUserData, setEditUserData] = useState(null);
-
     const history = useHistory();
 
     useEffect(() => {
@@ -95,20 +90,11 @@ const Application = () => {
         setFilterColumns(columnFilter.filter(o => o.isVisible && o));
     }, [])
 
-    useEffect(() => {
-        if (formData) {
-            console.log('formData :>> ', formData);
-        }
-    }, [formData])
-
     const getFilteredValues = (cols) => {
         setColumnOption(cols);
         setFilterColumns(cols.filter(o => o.isVisible && o));
     }
 
-    const handleToggle = () => {
-        setIsModelOpen(!isModelOpen);
-    };
 
     const getCols = (cols) => {
         setColumnOption(cols);
@@ -135,9 +121,7 @@ const Application = () => {
     };
 
     const editHandler = (obj) => {
-        console.log({ obj })
-        handleToggle();
-        setEditUserData(obj);
+        history.push({ pathname: `/application/add`, state: { objData: obj } })
     };
     const downloadHandler = (obj) => {
         console.log({ obj })
@@ -327,12 +311,10 @@ const Application = () => {
                                     btnName="Add"
                                     icon="plus"
                                     onClick={() => {
-                                        handleToggle()
-                                        setEditUserData(null)
-                                        setFormData(null)
+                                        history.push(`/application/add`)
                                     }}
                                 />
-                                <DialogBox
+                                {/* <DialogBox
                                     isModelOpen={isModelOpen}
                                     handleToggle={handleToggle}
                                     modelSize="lg"
@@ -344,7 +326,8 @@ const Application = () => {
                                         handleToggle={handleToggle}
                                         editUserData={editUserData}
                                     />
-                                </DialogBox>
+                                </DialogBox> */ }
+                                {/* @mmp - For separate the add/edit page */}
                             </div>
                         </Col>
                     </Row>

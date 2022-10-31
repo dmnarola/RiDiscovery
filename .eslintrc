@@ -2,7 +2,9 @@
   "rules": {
     "no-undef": "off",
     "react/prop-types" : "off",
-    "react/no-unescaped-entities": 0
+    "react/no-unescaped-entities": 0,
+    "react/jsx-uses-react": 0,
+    "react/react-in-jsx-scope": 0
   },
   "extends": [
     "plugin:react/recommended"

@@ -10,7 +10,7 @@ const RHFDatePicker = ({ isController = false, ...props }) => {
     errorobj,
     control,
     handleOnChange,
-    defaultValue = null,
+    defaultValue = '',
     disabled = false,
     onChange,
     inputFormat = 'dd/MM/yyyy',

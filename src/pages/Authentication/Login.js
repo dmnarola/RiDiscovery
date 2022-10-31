@@ -1,11 +1,11 @@
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
 
 import { Row, Col, Container, Form } from "reactstrap";
 //redux
 import { useSelector, useDispatch } from "react-redux";
 
-import { withRouter, Link } from "react-router-dom";
+import { withRouter, Link, useHistory } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -29,13 +29,15 @@ import RHFTextField from "components/form-controls/RHFTextField";
 import RHFButton from "components/form-controls/RHFButton";
 import RHFCheckbox from "components/form-controls/RHFCheckbox";
 
+
 const Login = (props) => {
   const [isRemember, setIsRemember] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  const { error } = useSelector((state) => ({
-    error: state.Login.error,
-  }));
+  const { loading, user } = useSelector((state) => state.Login);
+
+  console.log('user resp  ==>', user);
 
   const loginSchema = yup.object().shape({
     email: yup.string().email().max(150).required("Email is required"),
@@ -71,6 +73,13 @@ const Login = (props) => {
       dispatch(socialLogin(postData, props.history, type));
     }
   };
+
+  useEffect(() => {
+    if (user?.status && user?.user['2FAEnabled']) {
+      history.push('/verify-otp')
+    }
+  }, [user])
+
 
   const handleCheckboxChange = (val) => {
     setIsRemember(val);
@@ -113,7 +122,7 @@ const Login = (props) => {
                       <div className="text-center">
                         <h5 className="mb-0">Welcome Back !</h5>
                         <p className="text-muted mt-2">
-                          Sign in to continue to RiDiscovery.
+                          Sign in to continue to RiDiscovery
                         </p>
                       </div>
                       <Form
@@ -146,14 +155,26 @@ const Login = (props) => {
 
                         <div className="row mb-4">
                           <div className="col">
-                            <div className="form-check">
-                              <RHFCheckbox
-                                name="isRemember"
-                                label="Remember me"
-                                checked={isRemember}
-                                isController={false}
-                                onChange={handleCheckboxChange} // mostly useful when isController === false
-                              />
+                            <div className="d-flex justify-content-between">
+                              <div className="form-check">
+                                <RHFCheckbox
+                                  name="isRemember"
+                                  label="Remember me"
+                                  checked={isRemember}
+                                  isController={false}
+                                  onChange={handleCheckboxChange} // mostly useful when isController === false
+                                />
+                              </div>
+                              <div>
+                                <p className="text-muted mb-0">
+                                  <Link
+                                    to="/forgot-password"
+                                    className="text-primary fw-semibold"
+                                  >
+                                    Forgot Password ?
+                                  </Link>{" "}
+                                </p>
+                              </div>
                             </div>
 
                             <div className="mt-3 d-grid">

@@ -12,6 +12,8 @@ import Register from "../pages/Authentication/Register";
 
 //
 import ApplicationNetwork from "pages/ApplicationNetwork";
+import ApplicationAddEdit from 'pages/ApplicationNetwork/Application/ApplicationAddEdit';
+
 import Overview from "pages/ApplicationNetwork/Application/Overview";
 import CompanyHierarchy from "pages/Company";
 import UserDetails from "pages/UserList/UserDetails";
@@ -23,6 +25,8 @@ import EmailVerification from "pages/Authentication/EmailVerification";
 import ResetPassword from "pages/Authentication/ResetPassword";
 import UserList from "../pages/UserList/Index";
 import FindingAddEdit from "pages/ApplicationNetwork/Application/Finding/FindingAddEdit";
+import SetPassword from 'pages/Authentication/SetPassword';
+import VerifyOTP from 'pages/Authentication/VerifyOTP';
 
 const userRoutes = [
   //dashboard
@@ -30,6 +34,7 @@ const userRoutes = [
 
   //application/Network
   { path: "/applications", component: ApplicationNetwork },
+  { path: "/application/add", component: ApplicationAddEdit },
   { path: "/application/:applicationId/overview", component: Overview },
   { path: "/application/:applicationId/add-finding", component: FindingAddEdit },
 
@@ -61,6 +66,8 @@ const authRoutes = [
   { path: "/logout", component: Logout },
   { path: "/login", component: Login },
   { path: "/forgot-password", component: ForgetPwd },
+  { path: "/verify-otp", component: VerifyOTP },
+  { path: "/set-password/:token", component: SetPassword },
   { path: "/reset-password/:token", component: ResetPassword },
   { path: "/register", component: Register },
   { path: "/email-verification/:token", component: EmailVerification },

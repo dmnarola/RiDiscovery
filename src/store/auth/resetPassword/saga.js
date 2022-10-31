@@ -7,10 +7,11 @@ import { resetPasswordSuccess, resetPasswordFail } from "./actions"
 
 
 /* Reset Password */
-function* resetUserPassword({ payload }) {
+function* resetUserPassword({ payload: { payload, history } }) {
   try {
     const response = yield call(resetPassword, payload)
     yield put(resetPasswordSuccess(response))
+    history.push('/login')
 
   } catch (error) {
     yield put(resetPasswordFail(error))
