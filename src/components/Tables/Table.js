@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { layoutTheme } from "constants/layout";
 import DataTable, { createTheme } from "react-data-table-component";
 import { useSelector } from "react-redux";
 
-
-const Table = ({ columns, data }) => {
+const Table = ({ columns, data, handleChange }) => {
 
   const [tableData, setTableData] = useState();
 
@@ -50,9 +48,6 @@ const Table = ({ columns, data }) => {
     },
   });
 
-
-
-
   createTheme('dark', {
     text: {
       primary: '#6f767e',
@@ -73,11 +68,14 @@ const Table = ({ columns, data }) => {
       columns={columns}
       data={tableData}
       theme={layoutMode === 'light' ? "solarized" : "dark"}
+      fixedHeaderScrollHeight="400px"
       customStyles={layoutMode === 'light' ? lightCustomStyles : darkCustomStyles}
-      highlightOnHover
+      sortServer
+      fixedHeader
       pagination
       paginationServer
-      sortServer
+      highlightOnHover
+      onRowClicked={handleChange ? handleChange : null}
     />
   );
 };

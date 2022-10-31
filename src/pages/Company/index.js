@@ -4,7 +4,7 @@ import RHFButton from "components/form-controls/RHFButton";
 import DialogBox from "components/Modals/DialogBox";
 import Table from "components/Tables/Table";
 import React, { useState } from "react";
-import { Card, CardBody, CardHeader, Col, Container } from "reactstrap";
+import { Card, CardBody, CardHeader, Col, Row } from "reactstrap";
 import CompanyAddEdit from "./CompanyAddEdit";
 
 const Company = () => {
@@ -58,8 +58,6 @@ const Company = () => {
           <span className="m-3">{row?.companyName}</span>
         </div>
       ),
-
-      sortable: true,
     },
     {
       id: "score",
@@ -67,7 +65,6 @@ const Company = () => {
       selector: (row) => (
         <span className="badge-soft-danger badge fs-6">{row?.score}</span>
       ),
-      sortable: true,
       isVisible: true,
     },
     {
@@ -86,60 +83,61 @@ const Company = () => {
   ];
 
   return (
-    <React.Fragment>
-      <div className="page-content">
-        <Container fluid>
-          <Breadcrumb title="Company" breadcrumbItem="Company List" />
 
-          <Col xs={6} lg={12}>
-            <div className="d-flex justify-content-end mb-3">
-              <RHFButton
-                btnName="Add"
-                icon="plus"
-                onClick={() => {
-                  handleToggle();
-                }}
-              />
-              <DialogBox
-                isModelOpen={isModelOpen}
-                handleToggle={handleToggle}
-                modelSize="md"
-                title={
-                  editCompanyData === null ? "Add Company" : "Edit Company"
-                }
-                actions={null}
-              >
-                <CompanyAddEdit
-                  editCompanyData={editCompanyData}
-                  setFormData={setFormData}
-                  handleToggle={handleToggle}
-                />
-              </DialogBox>
-            </div>
-          </Col>
+    <div className="page-content">
 
+      <Breadcrumb title="Company" breadcrumbItem="Company List" />
+
+      <Col xs={6} lg={12}>
+        <div className="d-flex justify-content-end mb-3">
+          <RHFButton
+            btnName="Add"
+            icon="plus"
+            onClick={() => {
+              handleToggle();
+            }}
+          />
+          <DialogBox
+            isModelOpen={isModelOpen}
+            handleToggle={handleToggle}
+            modelSize="md"
+            title={
+              editCompanyData === null ? "Add Company" : "Edit Company"
+            }
+            actions={null}
+          >
+            <CompanyAddEdit
+              editCompanyData={editCompanyData}
+              setFormData={setFormData}
+              handleToggle={handleToggle}
+            />
+          </DialogBox>
+        </div>
+      </Col>
+
+
+      <Row>
+        <Col sm="6">
           <Card>
-            {/* <div>
-              <RHFButton color="info">Development Agency</RHFButton>
-            </div> */}
-            <CardHeader>
-              <h5>Development Agency </h5>
+            <CardHeader >
+              <h5 className="m-0">Development Agency </h5>
             </CardHeader>
             <CardBody>
               <Table columns={columns} data={developmentCompany} />
-            </CardBody>
-          </Card>
+            </CardBody></Card>
+        </Col>
+        <Col sm="6">
           <Card>
             <CardHeader>
-              <h5>Security Agency </h5>
+              <h5 className="m-0">Security Agency </h5>
             </CardHeader>
             <CardBody>
               <Table columns={columns} data={securityCompany} />
-            </CardBody>
-          </Card>
-        </Container>
-      </div>
-    </React.Fragment>
+            </CardBody></Card>
+        </Col>
+      </Row>
+    </div>
+
   );
 };
 

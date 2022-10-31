@@ -16,12 +16,20 @@ const CompanyAddEdit = (props) => {
 
   const CategoryData = [
     {
-      value: "Development Agency",
-      label: "Development Agency",
+      value: "Development Agency - Internal",
+      label: "Development Agency - Internal",
     },
     {
-      value: "Security Agency",
-      label: "Security Agency",
+      value: "Security Agency - Internal",
+      label: "Security Agency - Internal",
+    },
+    {
+      value: "Development Agency - External",
+      label: "Development Agency - External",
+    },
+    {
+      value: "Security Agency - External",
+      label: "Security Agency - External",
     },
   ];
 
@@ -67,44 +75,44 @@ const CompanyAddEdit = (props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="d-flex mb-3 justify-content-center">
-          <div className="">
-            <RHFFileUpload
+      <div className="d-flex mb-3 justify-content-center">
+        <div className="">
+          <RHFFileUpload
             name="companyLogo"
-              defaultImage={defaultImage}
-              errorobj={errors}
-              setValue={setValue}
-              getFileData={setFileData}
-            />
-          </div>
+            defaultImage={defaultImage}
+            errorobj={errors}
+            setValue={setValue}
+            getFileData={setFileData}
+          />
         </div>
+      </div>
 
-        <Row className="mb-3">
-          <Col sm="12">
-            <RHFTextField
-              id="companyName"
-              label="Company Name"
-              name="companyName"
-              placeholder="Enter valid Company Name"
-              errorobj={errors}
-              control={control}
-              isController={true}
-            />
-          </Col>
+      <Row className="mb-3">
+        <Col sm="12">
+          <RHFTextField
+            id="companyName"
+            label="Company Name"
+            name="companyName"
+            placeholder="Enter Valid Company Name"
+            errorobj={errors}
+            control={control}
+            isController={true}
+          />
+        </Col>
       </Row>
 
-        <Row className="mb-3">
-          <Col sm="12">
-            <RHFTextField
-              id="domainName"
-              label="Domain Name"
-              name="domainName"
-              placeholder="Enter valid Domain Name"
-              errorobj={errors}
-              control={control}
-              isController={true}
-            />
-          </Col>
+      <Row className="mb-3">
+        <Col sm="12">
+          <RHFTextField
+            id="domainName"
+            label="Domain Name"
+            name="domainName"
+            placeholder="Enter Valid Domain Name"
+            errorobj={errors}
+            control={control}
+            isController={true}
+          />
+        </Col>
       </Row>
 
       <Row className="mb-3">

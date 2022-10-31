@@ -98,35 +98,35 @@ const Finding = () => {
             id: 'id', //  @DM  - its required when sorting is true @DM
             name: "Finding Id",
             selector: (row) => row?.id,
-            sortable: true,
+
             isVisible: true,
         },
         {
             id: 'title',
             name: "Finding Title",
             selector: (row) => row?.title,
-            sortable: true,
+
             isVisible: true,
         },
         {
             id: 'cweCategory',
             name: "CWE Category",
             selector: (row) => row?.cweCategory,
-            sortable: true,
+
             isVisible: true,
         },
         {
             id: 'severity',
             name: "Severity",
             selector: (row) => <TextChip text={row?.severity} />,
-            sortable: true,
+
             isVisible: true,
         },
         {
             id: 'score',
             name: "Score",
             selector: (row) => <span className='badge-soft-danger badge fs-6'>{row?.score}</span>,
-            sortable: true,
+
             isVisible: true,
         },
         {

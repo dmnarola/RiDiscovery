@@ -31,7 +31,7 @@ const TemplatesList = () => {
     {
       name: "Template Name",
       selector: (row) => row?.templatename,
-      sortable: true,
+
     },
     {
       name: "Actions",

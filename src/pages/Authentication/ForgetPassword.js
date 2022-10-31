@@ -80,7 +80,7 @@ const ForgetPasswordPage = () => {
                             id="email"
                             label="Email"
                             name="email"
-                            placeholder="Enter valid email"
+                            placeholder="Enter valid Email"
                             errorobj={errors}
                             control={control}
                             isController={true}
