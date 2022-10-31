@@ -16,10 +16,18 @@
         }
     }
 }
-    
+
 .page-content {
     background-color: #e9e9ef;
     min-height: 100vh;
+}
+
+body[data-topbar="dark"] {
+
+    .page-content {
+        background-color: $header-dark-bg;
+        border-color: $gray-dark-300;
+    }
 }
 
 .tab-navlink {
