@@ -5,7 +5,7 @@ import { Row, Col, Container, Form } from "reactstrap";
 //redux
 import { useSelector, useDispatch } from "react-redux";
 
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 // Formik Validation
 import * as yup from "yup";
@@ -19,7 +19,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { verifyOtp } from "store/auth/twoFA/actions";
 
-const VerifyOTP = () => {
+const VerifyOTP = (props) => {
 
   //meta title
   document.title = "2 Factor Auth | RiDiscovery ";
@@ -45,7 +45,7 @@ const VerifyOTP = () => {
 
   const handleOtp = (values) => {
     const payload = { otp: values?.otp, userId: user?.user?.id };
-    dispatch(verifyOtp(payload, history));
+    dispatch(verifyOtp(payload, props.history));
     reset();
   };
 
@@ -119,4 +119,4 @@ VerifyOTP.propTypes = {
   history: PropTypes.object,
 }
 
-export default VerifyOTP;
+export default withRouter(VerifyOTP);

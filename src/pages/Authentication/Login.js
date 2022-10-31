@@ -74,12 +74,6 @@ const Login = (props) => {
     }
   };
 
-  useEffect(() => {
-    if (user?.status && user?.user['2FAEnabled']) {
-      history.push('/verify-otp')
-    }
-  }, [user])
-
 
   const handleCheckboxChange = (val) => {
     setIsRemember(val);
