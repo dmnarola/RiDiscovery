@@ -11,6 +11,7 @@ const RHFDatePicker = ({ isController = false, ...props }) => {
     control,
     handleOnChange,
     defaultValue = '',
+    isRequired = true,
     disabled = false,
     onChange,
     inputFormat = 'dd/MM/yyyy',
@@ -58,7 +59,7 @@ const RHFDatePicker = ({ isController = false, ...props }) => {
     defaultValue={someValue}
     render={({ field }) => (
       <Fragment>
-        <Label htmlFor="example-date-input" className="form-Label">{label}</Label>
+        <Label htmlFor="example-date-input" className="form-Label">{label} {isRequired && <span>*</span>}</Label>
         <Input
           {...field}
           {...extraProps}

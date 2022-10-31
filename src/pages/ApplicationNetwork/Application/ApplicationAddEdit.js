@@ -81,7 +81,6 @@ const ApplicationAddEdit = (props) => {
     });
 
 
-
     const handleAutoComplete = (data, name) => {
         console.log(data, name);
         setValue(name, data);

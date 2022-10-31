@@ -205,7 +205,6 @@ const UserList = () => {
       cell: (row) => (
         <RHFSwitch
           name="isActive"
-          label="Is Active"
           isController={true}
           checked={isActive}
           errorobj={errors}
