@@ -20,7 +20,7 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import { loginUser, socialLogin } from "../../store/actions";
 
 // import images
-import logo from "../../assets/images/logo-sm-ri.svg";
+import logo from "../../assets/images/RiDiscovery_Icon.png";
 
 //Import config
 import { facebook, google } from "../../config";
@@ -115,7 +115,7 @@ const Login = (props) => {
                     <div className="mb-4 mb-md-5 text-center">
                       <Link to="/dashboard" className="d-block auth-logo">
                         <img src={logo} alt="" height="35" />{" "}
-                        {/* <span className="logo-txt">Minia</span> */}
+                        <span className="logo-txt">RiDiscovery</span>
                       </Link>
                     </div>
                     <div className="auth-content my-auto">

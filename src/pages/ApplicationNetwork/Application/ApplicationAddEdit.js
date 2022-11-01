@@ -11,6 +11,7 @@ import RHFButton from 'components/form-controls/RHFButton';
 import RHFTextField from 'components/form-controls/RHFTextField';
 import { applicationType, assessmentType, commonForAppDropDown, statusApp, tamplateAppData } from 'constants/mokeData';
 import RHFCheckbox from 'components/form-controls/RHFCheckbox';
+import RHFMultipleValue from 'components/form-controls/RHFMultipleValue';
 
 const ApplicationAddEdit = (props) => {
     let history = useHistory()
@@ -69,6 +70,23 @@ const ApplicationAddEdit = (props) => {
             .required("Select atleast one option"),
     });
 
+    const kickOffDocSchema = yup.object().shape({
+        applicationType: yup
+            .object()
+            .shape({ label: yup.string(), value: yup.string() })
+            .nullable()
+            .required("Select atleast one option"),
+        walkthrough: yup.string().required("Required field"),
+        environment: yup.string().required("Required field"),
+        assessmentType: yup
+            .object()
+            .shape({ label: yup.string(), value: yup.string() })
+            .nullable()
+            .required("Select atleast one option"),
+        ip: yup.string().required("Required field"),
+        url: yup.string().required("Required field"),
+    });
+
     const {
         handleSubmit,
         control,
@@ -77,10 +95,12 @@ const ApplicationAddEdit = (props) => {
         formState: { errors },
     } = useForm({
         mode: "onBlur",
-        resolver: yupResolver(applicationSchema),
+        resolver: yupResolver(!flag ? applicationSchema : kickOffDocSchema),
     });
 
-
+    const handleCheckboxChange = (val) => {
+        console.log('Checkbox Val ->', val);
+    };
 
     const handleAutoComplete = (data, name) => {
         console.log(data, name);
@@ -89,8 +109,13 @@ const ApplicationAddEdit = (props) => {
 
     const onSubmit = (data) => {
         console.log('data', data)
-        // setFlag(true) @mmp temporary
+        setFlag(true) 
     };
+
+    const onSubmitKickOff = (data) => {
+        console.log('data', data)
+    };
+
 
     useEffect(() => {
         if (isEditMode) {
@@ -120,8 +145,8 @@ const ApplicationAddEdit = (props) => {
                         outline={activeTab === 2 ? false : true}
                     />
                 </div>
-                {!flag && <Breadcrumb title="Application" breadcrumbItem={!isEditMode ? "Add Application" : ` Edit Application (${editApplicationData?.penId})`} />}
-                {flag && <Breadcrumb title="Kick-off Doc" breadcrumbItem="Kick-off Doc:" />}
+
+                {flag ? <Breadcrumb title="Kick-off Doc" breadcrumbItem="Kick-off Doc:" /> : <Breadcrumb title="Application" breadcrumbItem={!isEditMode ? "Add Application" : ` Edit Application (${editApplicationData?.penId})`} />}
 
                 {!flag && <Card>
                     <CardBody>
@@ -290,9 +315,10 @@ const ApplicationAddEdit = (props) => {
                         </form>
                     </CardBody>
                 </Card>}
+
                 {flag && <Card>
                     <CardBody>
-                        <form onSubmit={handleSubmit(onSubmit)}>
+                        <form onSubmit={handleSubmit(onSubmitKickOff)}>
                             <Row className="mb-3">
                                 <Col sm="6">
                                     <RHFAutoCompleteSelect
@@ -323,21 +349,22 @@ const ApplicationAddEdit = (props) => {
                             <Row className="mb-3">
                                 <Col sm="6">
                                     <RHFTextField
-                                        id="walkthrough"
-                                        label="Walkthrough"
-                                        name="walkthrough"
-                                        placeholder="Walkthrough"
+                                        id="environment"
+                                        label="Environment"
+                                        name="environment"
+                                        placeholder="Environment"
                                         errorobj={errors}
                                         control={control}
                                         isController={true}
                                     />
                                 </Col>
                                 <Col sm="6">
-                                    <RHFTextField
-                                        id="walkthrough"
-                                        label="Walkthrough"
-                                        name="walkthrough"
-                                        placeholder="Walkthrough"
+                                    <RHFAutoCompleteSelect
+                                        id="assessmentType"
+                                        label="Assessment Type"
+                                        name="assessmentType"
+                                        options={assessmentType}
+                                        isMultiple={false}
                                         errorobj={errors}
                                         control={control}
                                         isController={true}
@@ -347,10 +374,10 @@ const ApplicationAddEdit = (props) => {
                             <Row className="mb-3">
                                 <Col sm="6">
                                     <RHFTextField
-                                        id="walkthrough"
-                                        label="Walkthrough"
-                                        name="walkthrough"
-                                        placeholder="Walkthrough"
+                                        id="ip"
+                                        label="IP"
+                                        name="ip"
+                                        placeholder="IP"
                                         errorobj={errors}
                                         control={control}
                                         isController={true}
@@ -358,9 +385,9 @@ const ApplicationAddEdit = (props) => {
                                 </Col>
                                 <Col sm="6">
                                     <RHFAutoCompleteSelect
-                                        id="applicationType"
-                                        label="Application Type"
-                                        name="applicationType"
+                                        id="url"
+                                        label="URL"
+                                        name="url"
                                         options={applicationType}
                                         isMultiple={false}
                                         errorobj={errors}
@@ -374,47 +401,112 @@ const ApplicationAddEdit = (props) => {
                             </Row>
                             <Row>
                                 <Col sm="6">
-                                    <Card>
-                                        <CardBody>
+                                    <Card className='p-2' style={{ height: "160px", }}>
+                                        <label>Checklist</label>
                                             <div className="form-check">
                                                 <RHFCheckbox
-                                                    name="checkbox"
-                                                    label="OWASP"
-                                                    // checked={false}
-                                                    isController={false}
-                                                // onChange={handleCheckboxChange}
+                                                name="checkbox"
+                                                label="OWASP"
+                                                isController={false}
+                                                onChange={handleCheckboxChange}
                                                 />
                                             </div>
                                             <div className="form-check">
                                                 <RHFCheckbox
-                                                    name="checkbox"
-                                                    label="CVE"
-                                                    // checked={false}
-                                                    isController={false}
-                                                // onChange={handleCheckboxChange}
+                                                name="checkbox"
+                                                label="CVE"
+                                                isController={false}
+                                                onChange={handleCheckboxChange}
                                                 />
                                             </div>
                                             <div className="form-check">
                                                 <RHFCheckbox
-                                                    name="checkbox"
-                                                    label="CWE"
-                                                    // checked={false}
-                                                    isController={false}
-                                                // onChange={handleCheckboxChange}
-                                                />
-                                            </div>
-                                            <div className="form-check">
-                                                <RHFCheckbox
-                                                    name="checkbox"
-                                                    label="NIST"
-                                                    // checked={false}
-                                                    isController={false}
-                                                // onChange={handleCheckboxChange}
-                                                />
-                                            </div>
-                                        </CardBody>
+                                                name="checkbox"
+                                                label="CWE"
+                                                isController={false}
+                                                onChange={handleCheckboxChange}
+                                            />
+                                        </div>
                                     </Card>
                                 </Col>
+                                <Col sm="6">
+                                    <Card className='p-2'>
+                                        <RHFMultipleValue
+                                            label="Scope Details"
+                                            name="scopeDetails"
+                                            id="scopeDetails"
+                                            errorobj={errors}
+                                            control={control}
+                                            isController={true}
+                                        />
+                                    </Card>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col sm="6">
+                                    <Card className='p-2'>
+                                        <RHFMultipleValue
+                                            label="App Details"
+                                            name="appDetails"
+                                            id="appDetails"
+                                            errorobj={errors}
+                                            control={control}
+                                            isController={true}
+                                        />
+                                    </Card>
+                                </Col>
+                                <Col sm="6">
+                                    <Card className='p-2'>
+                                        <RHFMultipleValue
+                                            label="Out Of Scope"
+                                            name="outOfScope"
+                                            id="outOfScope"
+                                            errorobj={errors}
+                                            control={control}
+                                            isController={true}
+                                        />
+                                    </Card>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col sm="6">
+                                    <Card className='p-2'>
+                                        <RHFMultipleValue
+                                            label="User Details"
+                                            name="userDetails"
+                                            id="userDetails"
+                                            errorobj={errors}
+                                            control={control}
+                                            isController={true}
+                                        />
+                                    </Card>
+                                </Col>
+                                <Col sm="6">
+                                    <Card className='p-2'>
+                                        <RHFMultipleValue
+                                            label="Server Details"
+                                            name="serverDetails"
+                                            id="serverDetails"
+                                            errorobj={errors}
+                                            control={control}
+                                            isController={true}
+                                        />
+                                    </Card>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <div className="modal-footer">
+                                    <RHFButton
+                                        btnName="Save"
+                                        type="submit"
+                                        className="mx-2"
+                                    />
+                                    <RHFButton
+                                        btnName="Cancel"
+                                        outline={true}
+                                        onClick={() => history.push('/applications')}
+                                    />
+                                </div>
                             </Row>
                         </form>
                     </CardBody>

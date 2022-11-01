@@ -11,7 +11,7 @@ import { emailVerify } from "store/actions";
 
 
 // import images
-import logo from "../../assets/images/logo-sm-ri.svg";
+import logo from "../../assets/images/RiDiscovery_Icon.png";
 import CarouselPage from "./CarouselPage";
 
 const EmailVerification = () => {
@@ -51,7 +51,7 @@ const EmailVerification = () => {
                     <div className="mb-4 mb-md-5 text-center">
                       <Link to="/dashboard" className="d-block auth-logo">
                         <img src={logo} alt="" height="35" />
-                        {/* <span className="logo-txt">Minia</span> */}
+                        <span className="logo-txt">RiDiscovery</span>
                       </Link>
                     </div>
                     <div className="auth-content my-auto">

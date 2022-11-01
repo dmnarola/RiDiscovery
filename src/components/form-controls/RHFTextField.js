@@ -77,9 +77,9 @@ const RHFTextField = ({ isController = true, ...props }) => {
       defaultValue={someValue}
       render={({ field }) => (
         <Fragment>
-          <Label htmlFor="example-text-input" className="form-Label">
+          {label && <Label htmlFor="example-text-input" className="form-Label">
             {label}
-          </Label>
+          </Label>}
           <Input
             autoComplete="off"
             {...field}

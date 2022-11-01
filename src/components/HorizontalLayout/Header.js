@@ -19,7 +19,7 @@ import NotificationDropdown from "../CommonForBoth/TopbarDropdown/NotificationDr
 import ProfileMenu from "../CommonForBoth/TopbarDropdown/ProfileMenu";
 
 // import images
-import logo from "../../assets/images/logo-sm-ri.svg";
+import logo from "../../assets/images/RiDiscovery_Icon.png";
 
 //i18n
 import { withTranslation } from "react-i18next";

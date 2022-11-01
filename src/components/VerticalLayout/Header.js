@@ -13,7 +13,7 @@ import LightDark from "../CommonForBoth/Menus/LightDark";
 import ProfileMenu from "../CommonForBoth/TopbarDropdown/ProfileMenu";
 
 // import images
-import logoSvg from "../../assets/images/logo-sm.svg";
+import logo from "../../assets/images/RiDiscovery_Icon.png";
 
 //i18n
 import { withTranslation } from "react-i18next";
@@ -53,20 +53,20 @@ const Header = (props) => {
             <div className="navbar-brand-box">
               <Link to="/dashboard" className="logo logo-dark">
                 <span className="logo-sm">
-                  <img src={logoSvg} alt="" height="24" />
+                  <img src={logo} alt="" height="24" />
                 </span>
                 <span className="logo-lg">
-                  <img src={logoSvg} alt="" height="24" />{" "}
+                  <img src={logo} alt="" height="24" />{" "}
                   <span className="logo-txt">RiDiscovery</span>
                 </span>
               </Link>
 
               <Link to="/dashboard" className="logo logo-light">
                 <span className="logo-sm">
-                  <img src={logoSvg} alt="" height="24" />
+                  <img src={logo} alt="" height="24" />
                 </span>
                 <span className="logo-lg">
-                  <img src={logoSvg} alt="" height="24" />{" "}
+                  <img src={logo} alt="" height="24" />{" "}
                   <span className="logo-txt">RiDiscovery</span>
                 </span>
               </Link>

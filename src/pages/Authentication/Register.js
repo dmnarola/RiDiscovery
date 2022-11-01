@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 // import images
 import RHFButton from "components/form-controls/RHFButton";
 import RHFTextField from "components/form-controls/RHFTextField";
-import logo from "../../assets/images/logo-sm-ri.svg";
+import logo from "../../assets/images/RiDiscovery_Icon.png";
 import CarouselPage from "../Authentication/CarouselPage";
 
 const Register = (props) => {
@@ -70,9 +70,7 @@ const Register = (props) => {
                     <div className="mb-4 mb-md-5 text-center">
                       <Link to="/dashboard" className="d-block auth-logo">
                         <img src={logo} alt="" height="35" />{" "}
-                        {/* <span className="logo-txt">RiDiscovery</span>  */}
-                        {/*@mmp -
-                        for future use if logo and text would be separate*/}
+                        <span className="logo-txt">RiDiscovery</span>
                       </Link>
                     </div>
                     <div className="auth-content my-auto">
