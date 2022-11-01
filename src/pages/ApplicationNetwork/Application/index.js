@@ -285,7 +285,7 @@ const Application = () => {
                             <ManageColumns
                                 // allColumns={columns}
                                 allColumns={columnOptions}
-                                getCols={getCols}
+                                // getCols={getCols}
                                 getFilteredValues={getFilteredValues}
                             />
                         </div>

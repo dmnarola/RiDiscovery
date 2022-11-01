@@ -27,7 +27,9 @@ if (token) {
 
 const successHandler = (response) => {
   console.log('API Success ->', response);
-  Toast.success(response?.data?.message)
+  if (response?.data?.message) {
+    Toast.success(response?.data?.message)
+  }
   return response;
 };
 

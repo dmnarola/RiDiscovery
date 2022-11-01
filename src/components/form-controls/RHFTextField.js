@@ -13,6 +13,7 @@ const RHFTextField = ({ isController = true, ...props }) => {
     rows,
     onChange,
     handleOnChange,
+    isRequired = true,
     backgroundColor = false,
     autoFocus = false,
     bsSize = "md",
@@ -78,7 +79,7 @@ const RHFTextField = ({ isController = true, ...props }) => {
       render={({ field }) => (
         <Fragment>
           <Label htmlFor="example-text-input" className="form-Label">
-            {label}
+            {label} {isRequired && <span>*</span>}
           </Label>
           <Input
             autoComplete="off"

@@ -19,11 +19,11 @@ function* generateQRCode({ payload }) {
 function* verify2FAOtp({ payload: { payload, history } }) {
   try {
     const response = yield call(verifyOTP, payload)
-    yield put(verifyOtpSuccess(response))
     if (response?.status) {
       localStorage.setItem('authUser', response?.user?.token);
-      history.push('/dashborad')
+      history.push('/dashboard')
     }
+    yield put(verifyOtpSuccess(response))
   } catch (error) {
     yield put(verifyOtpFail(error))
   }

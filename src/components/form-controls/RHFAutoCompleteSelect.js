@@ -15,6 +15,7 @@ const RHFAutoCompleteSelect = ({
   errorobj,
   onChange,
   handleOnChange,
+  isRequired = true,
   isClearable = true,
   isSearchable = true,
   isLoading = false,
@@ -29,6 +30,22 @@ const RHFAutoCompleteSelect = ({
 
 
 
+  const customStyles = {
+    control: (base, state) => ({
+      ...base,
+      boxShadow: state.isFocused ? 0 : 0,
+      borderColor: ((isError && state.isFocused) || isError)
+        ? 'red'
+        : base.borderColor,
+      '&:hover': {
+        borderColor: ((isError && state.isFocused) || isError)
+          ? 'red'
+          : base.borderColor,
+      }
+    })
+  };
+
+
   if (typeof isMultiple === "undefined" || isMultiple) {
     multiSelect = true;
   }
@@ -39,6 +56,8 @@ const RHFAutoCompleteSelect = ({
     errorMessage = errorobj[name].message;
   }
 
+  // console.log('errors ==>', errorobj, errorMessage, isError);
+
   if (!isController) {
     return (
       <Fragment>
@@ -48,6 +67,7 @@ const RHFAutoCompleteSelect = ({
           </Label>
           <Select
             {...props}
+            placeholder="Select"
             className={multiSelect ? "basic-multi-select bg-light" : "basic-single bg-light"}
             isMulti={multiSelect}
             id={id}
@@ -87,12 +107,13 @@ const RHFAutoCompleteSelect = ({
           return (
             <Fragment>
               <Label htmlFor="select-input" className="form-Label">
-                {label}
+                {label} {isRequired && <span>*</span>}
               </Label>
               <Select
                 {...props}
                 id={id}
                 name={name}
+                placeholder="Select"
                 className={multiSelect ? "basic-multi-select " : "basic-single"}
                 isMulti={multiSelect}
                 isClearable={isClearable}
@@ -107,6 +128,7 @@ const RHFAutoCompleteSelect = ({
                     handleOnChange(data, name);
                   }
                 }}
+                styles={customStyles}
               />
             </Fragment>
           );
