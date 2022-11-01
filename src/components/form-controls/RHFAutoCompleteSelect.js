@@ -56,8 +56,6 @@ const RHFAutoCompleteSelect = ({
     errorMessage = errorobj[name].message;
   }
 
-  // console.log('errors ==>', errorobj, errorMessage, isError);
-
   if (!isController) {
     return (
       <Fragment>
@@ -110,7 +108,9 @@ const RHFAutoCompleteSelect = ({
                 {label} {isRequired && <span>*</span>}
               </Label>
               <Select
+                {...field}
                 {...props}
+                options={filteredOptionList}
                 id={id}
                 name={name}
                 placeholder="Select"
@@ -120,7 +120,6 @@ const RHFAutoCompleteSelect = ({
                 isSearchable={isSearchable}
                 isDisabled={disabled}
                 isLoading={isLoading}
-                options={options}
                 defaultValue={defaultValue}
                 onChange={(data) => {
                   field.onChange(data);

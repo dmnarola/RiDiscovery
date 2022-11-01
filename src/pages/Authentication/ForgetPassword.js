@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import * as yup from "yup";
 
 // import images
-import logo from "../../assets/images/logo-sm-ri.svg";
+import logo from "../../assets/images/RiDiscovery_Icon.png";
 import CarouselPage from "../Authentication/CarouselPage";
 import RHFTextField from "components/form-controls/RHFTextField";
 import RHFButton from "components/form-controls/RHFButton";
@@ -62,7 +62,7 @@ const ForgetPasswordPage = () => {
                     <div className="mb-4 mb-md-5 text-center">
                       <Link to="/dashboard" className="d-block auth-logo">
                         <img src={logo} alt="" height="35" />
-                        {/* <span className="logo-txt">Minia</span> */}
+                        <span className="logo-txt">RiDiscovery</span>
                       </Link>
                     </div>
                     <div className="auth-content my-auto">
