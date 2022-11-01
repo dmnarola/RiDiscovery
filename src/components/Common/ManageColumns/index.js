@@ -34,10 +34,14 @@ const ManageColumns = (props) => {
         // allColumns.map(mainColumn => {
         //     columnList.map(subColumn => {
         //         if (mainColumn.id === subColumn.id) {
-        //             finalArr.push()
+        //             finalArr.push([...allColumns, subColumn])
+        //         } else {
+        //             finalArr.push([...allColumns])
         //         }
         //     })
         // })
+
+
         getFilteredValues(columnList);
         setDropdownOpen(false);
     }

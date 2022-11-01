@@ -166,9 +166,9 @@ const ApplicationAddEdit = (props) => {
                                 </Col>
                                 <Col sm="6">
                                     <RHFAutoCompleteSelect
-                                        id="developmrntManager"
+                                        id="developmentManager"
                                         label="Development Manager"
-                                        name="developmrntManager"
+                                        name="developmentManager"
                                         options={commonForAppDropDown}
                                         isMultiple={false}
                                         errorobj={errors}
