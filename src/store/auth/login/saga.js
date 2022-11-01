@@ -21,8 +21,10 @@ function* loginUser({ payload: { user, history } }) {
     if (response?.status && response?.user['2FAEnabled']) {
       history.push('/verify-otp')
     } else {
-      localStorage.setItem('authUser', response?.user?.token);
-      history.push("/dashboard")
+      if (response?.status) {
+        localStorage.setItem('authUser', response?.user?.token);
+        history.push("/dashboard")
+      }
     }
     yield put(loginSuccess(response))
   } catch (error) {
