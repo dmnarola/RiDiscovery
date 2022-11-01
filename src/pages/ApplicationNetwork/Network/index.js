@@ -78,32 +78,32 @@ const Network = () => {
         {
             name: "Type",
             selector: (row) => row?.type,
-            sortable: true,
+
         },
         {
             name: "Source",
             selector: (row) => row?.source,
-            sortable: true,
+
         },
         {
             name: "Score",
             selector: (row) => <span className='badge-soft-danger badge fs-6'>{row?.score}</span>,
-            sortable: true,
+
         },
         {
             name: "BU Tag",
             selector: (row) => row?.branchUnit,
-            sortable: true,
+
         },
         {
             name: "Start Date",
             selector: (row) => row?.startDate,
-            sortable: true,
+
         },
         {
             name: "End Date",
             selector: (row) => row?.endDate,
-            sortable: true,
+
         },
         {
             name: "Team",
@@ -117,6 +117,8 @@ const Network = () => {
             }
         }
     ];
+
+
 
 
     return (

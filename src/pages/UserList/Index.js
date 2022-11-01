@@ -89,6 +89,38 @@ export const tabledata = [
     isActive: false,
     category: "Application Agency",
   },
+  {
+    _id: 3,
+    internal: "Red",
+    image: "/images/bg-1.jpg",
+    firstName: "ABC",
+    lastName: "vdgs",
+    email: "a@gmail.com",
+    companyName: "Narola",
+    domainName: "dadada",
+    mobileNumber: 9849375666,
+    role: "Slate",
+    startDate: "2000-06-12",
+    endDate: "2021-10-22",
+    isActive: true,
+    category: "Security Agency",
+  },
+  {
+    _id: 4,
+    internal: "Orange",
+    image: "/images/bg-3.jpg",
+    firstName: "XYZ",
+    lastName: "vdgs",
+    email: "x@gmail.com",
+    companyName: "Narola",
+    domainName: "fsdfe",
+    mobileNumber: 9849375666,
+    role: "Slate",
+    startDate: "2000-06-12",
+    endDate: "2021-10-22",
+    isActive: false,
+    category: "Application Agency",
+  },
 ];
 
 const UserList = () => {
@@ -170,7 +202,7 @@ const UserList = () => {
         </div>
       ),
 
-      sortable: true,
+
     },
     {
       name: "Email",
@@ -179,12 +211,12 @@ const UserList = () => {
     {
       name: "Start Date",
       selector: (row) => row?.startDate,
-      sortable: true,
+
     },
     {
       name: "End Date",
       selector: (row) => row?.endDate,
-      sortable: true,
+
     },
     {
       name: "Actions",
@@ -205,7 +237,6 @@ const UserList = () => {
       cell: (row) => (
         <RHFSwitch
           name="isActive"
-          label="Is Active"
           isController={true}
           checked={isActive}
           errorobj={errors}

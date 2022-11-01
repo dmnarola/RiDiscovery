@@ -40,14 +40,32 @@ const data = [
             value: "Web",
             label: "Web",
         },
-        assessmentType: "Default1",
-        developmentTeam: "Foram Sankhavara",
+        assessmentType: {
+            value: "Default1",
+            label: "Default 1",
+        },
+        developmentTeam: {
+            value: "Pratik Shah",
+            label: "Pratik Shah",
+        },
         buTag: "tag 1",
-        securityManager: "Dipesh Mali",
-        developmentManager: "Mahesh Trapasiya",
-        securityTeam: "fas",
+        securityManager: {
+            value: "Pratik Shah",
+            label: "Pratik Shah",
+        },
+        developmentManager: {
+            value: "Pratik Shah",
+            label: "Pratik Shah",
+        },
+        securityTeam: {
+            value: "Pratik Shah",
+            label: "Pratik Shah",
+        },
         startDate: "2000-06-12",
-        template: "Default Template",
+        template: {
+            value: "Default Template",
+            label: "Default Template",
+        },
         status: 'Active',
         score: '1.1',
         assignePentester: [],
@@ -60,15 +78,36 @@ const data = [
         penId: 'AIL-2365',
         status: 'Completed',
         name: 'XYZ',
-        applicationType: "Mobile",
-        assessmentType: "Default1",
-        developmentTeam: "Foram Sankhavara",
+        applicationType: {
+            value: "Mobile",
+            label: "Mobile",
+        },
+        assessmentType: {
+            value: "Default2",
+            label: "Default 2",
+        },
+        developmentTeam: {
+            value: "Dipesh Mali",
+            label: "Dipesh Mali",
+        },
         buTag: "tag 3",
-        securityManager: "Dipesh Mali",
-        developmentManager: "Mahesh Trapasiya",
-        securityTeam: "dm",
+        securityManager: {
+            value: "Dipesh Mali",
+            label: "Dipesh Mali",
+        },
+        developmentManager: {
+            value: "Dipesh Mali",
+            label: "Dipesh Mali",
+        },
+        securityTeam: {
+            value: "Dipesh Mali",
+            label: "Dipesh Mali",
+        },
         startDate: "2011-01-18",
-        template: "ABC Template",
+        template: {
+            value: "ABC Template",
+            label: "ABC Template",
+        },
         status: 'Deactive',
         score: '1.5',
         assignePentester: [],
@@ -113,7 +152,7 @@ const Application = () => {
 
     const addeHandler = (obj) => {
         console.log({ obj })
-        history.push(`/${obj?.id}/add-finding`)
+        history.push(`/application/${obj?.id}/add-finding`)
     };
 
     const deleteHandler = (obj) => {
@@ -150,7 +189,7 @@ const Application = () => {
             id: 'penId', //  @DM  - its required when sorting is true @DM
             name: "Pen Id",
             selector: (row) => row?.penId,
-            sortable: true,
+
             isVisible: true,
         },
         {
@@ -163,7 +202,7 @@ const Application = () => {
             id: 'score',
             name: "Score",
             selector: (row) => <span className='badge-soft-danger badge fs-6'>{row?.score}</span>,
-            sortable: true,
+
             isVisible: true,
         },
         {
@@ -254,6 +293,12 @@ const Application = () => {
         }
     ];
 
+
+    const handleRowChange = (row) => {
+        history.push(`/application/${row?.id}/overview`)
+    }
+
+
     return (
         <React.Fragment>
             <Breadcrumb title="Application" breadcrumbItem="Application List" />
@@ -279,7 +324,7 @@ const Application = () => {
                             <ManageColumns
                                 // allColumns={columns}
                                 allColumns={columnOptions}
-                                getCols={getCols}
+                                // getCols={getCols}
                                 getFilteredValues={getFilteredValues}
                             />
                         </div>
@@ -333,7 +378,7 @@ const Application = () => {
                     </Row>
                 </CardHeader>
                 <CardBody>
-                    <Table columns={filterColumns} data={data} />
+                    <Table columns={filterColumns} data={data} handleChange={handleRowChange} />
                 </CardBody>
             </Card>
         </React.Fragment>

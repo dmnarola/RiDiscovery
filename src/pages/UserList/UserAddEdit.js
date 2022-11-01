@@ -88,8 +88,8 @@ const UserAddEdit = (props) => {
       .nullable()
       .required("Select atleast one option"),
 
-    firstName: yup.string().required("firstName is required"),
-    lastName: yup.string().required("lastName is required"),
+    firstName: yup.string().required("First Name is required"),
+    lastName: yup.string().required("Last Name is required"),
     companyName: !isEditMode && yup
       .object()
       .shape({ label: yup.string(), value: yup.string() })
@@ -100,17 +100,16 @@ const UserAddEdit = (props) => {
       .string()
       .matches(
         /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
-        "mobile number is not valid"
-      ).required("mobile no. is required"),
+        "Mobile Number is not Valid"
+      ).required("Mobile Number is required"),
     role: !isEditMode && yup
       .object()
       .shape({ label: yup.string(), value: yup.string() })
       .nullable()
       .required("Select atleast one option"),
-    domainName: !isEditMode && yup.string().required("Domain Name is required"),
     email: yup.string().email().max(150).required("Email is required"),
-    startDate: yup.date().required("Date is required"),
-    endDate: yup.date().required("Date is required"),
+    startDate: yup.string().required("Date is required"),
+    endDate: yup.string().required("Date is required"),
   });
 
   const {
@@ -142,7 +141,7 @@ const UserAddEdit = (props) => {
   return (
 
     <form onSubmit={handleSubmit(onSubmit)}>
-      {!isEditMode && <Row className="mb-3 col d-flex justify-content-end align-items-end">
+      {/* {!isEditMode && <Row className="mb-3 col d-flex justify-content-end align-items-end">
         <Col sm="4">
           <RHFAutoCompleteSelect
             id="internal"
@@ -157,7 +156,7 @@ const UserAddEdit = (props) => {
           />
         </Col>
       </Row>
-      }
+      } */}
 
       <Row className="mb-3">
         <Col sm="6">
@@ -165,7 +164,7 @@ const UserAddEdit = (props) => {
             id="firstName"
             label="First Name"
             name="firstName"
-            placeholder="Enter valid First Name"
+            placeholder="Enter Valid First Name"
             errorobj={errors}
             control={control}
             isController={true}
@@ -176,7 +175,7 @@ const UserAddEdit = (props) => {
             id="lastName"
             label="Last Name"
             name="lastName"
-            placeholder="Enter valid Last Name"
+            placeholder="Enter Valid Last Name"
             errorobj={errors}
             control={control}
             isController={true}
@@ -184,8 +183,35 @@ const UserAddEdit = (props) => {
         </Col>
       </Row>
 
+      <Row className="mb-3">
+        <Col sm={!isEditMode ? "6" : "12"}>
+          <RHFTextField
+            id="email"
+            label="Email"
+            name="email"
+            placeholder="Enter Valid email"
+            errorobj={errors}
+            control={control}
+            isController={true}
+          />
+        </Col>
+        {!isEditMode &&
+          <Col sm="6">
+            <RHFTextField
+              id="mobileNumber"
+              label="Mobile Number"
+              name="mobileNumber"
+              placeholder="Enter Valid Mobile Number"
+              errorobj={errors}
+              control={control}
+              isController={true}
+            />
+          </Col>
+        }
+      </Row>
+
       {!isEditMode && <Row className="mb-3">
-        <Col sm="12">
+        <Col sm="6">
           <RHFAutoCompleteSelect
             id="companyName"
             label="Company Name"
@@ -197,25 +223,6 @@ const UserAddEdit = (props) => {
             isController={true}
           />
         </Col>
-      </Row>
-      }
-
-      {!isEditMode && <Row className="mb-3">
-        <Col sm="12">
-          <RHFTextField
-            id="mobileNumber"
-            label="Mobile Number"
-            name="mobileNumber"
-            placeholder="Enter valid Mobile Number"
-            errorobj={errors}
-            control={control}
-            isController={true}
-          />
-        </Col>
-      </Row>
-      }
-
-      {!isEditMode && <Row className="mb-3">
         <Col sm="6">
           <RHFAutoCompleteSelect
             id="role"
@@ -228,33 +235,8 @@ const UserAddEdit = (props) => {
             isController={true}
           />
         </Col>
-        <Col sm="6">
-          <RHFTextField
-            id="domainName"
-            label="Domain Name"
-            name="domainName"
-            placeholder="Enter valid Domain Name"
-            errorobj={errors}
-            control={control}
-            isController={true}
-          />
-        </Col>
       </Row>
       }
-
-      <Row className="mb-3">
-        <Col sm="12">
-          <RHFTextField
-            id="email"
-            label="Email"
-            name="email"
-            placeholder="Enter valid email"
-            errorobj={errors}
-            control={control}
-            isController={true}
-          />
-        </Col>
-      </Row>
 
       <Row className="mb-3">
         <Col sm="6">

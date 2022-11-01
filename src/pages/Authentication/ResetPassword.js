@@ -84,7 +84,7 @@ const ResetPasswordPage = () => {
                             label="Password"
                             name="password"
                             type="password"
-                            placeholder="Enter password"
+                            placeholder="Enter Password"
                             errorobj={errors}
                             control={control}
                             isController={true}
@@ -96,7 +96,7 @@ const ResetPasswordPage = () => {
                             label="Confirm Password"
                             name="confirmPassword"
                             type="password"
-                            placeholder="Enter confirm password"
+                            placeholder="Enter Confirm Password"
                             errorobj={errors}
                             control={control}
                             isController={true}

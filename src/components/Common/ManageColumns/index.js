@@ -23,10 +23,25 @@ const ManageColumns = (props) => {
         console.log({ id, isChecked })
         const filterCols = columnList.map(o => o.id === id ? ({ ...o, isVisible: isChecked }) : o)
         setColumnList(filterCols)
+
         // getCols(filterCols)
     }
 
     const handleApply = () => {
+        console.log({ allColumns, columnList })
+
+        // const finalArr = [];
+        // allColumns.map(mainColumn => {
+        //     columnList.map(subColumn => {
+        //         if (mainColumn.id === subColumn.id) {
+        //             finalArr.push([...allColumns, subColumn])
+        //         } else {
+        //             finalArr.push([...allColumns])
+        //         }
+        //     })
+        // })
+
+
         getFilteredValues(columnList);
         setDropdownOpen(false);
     }

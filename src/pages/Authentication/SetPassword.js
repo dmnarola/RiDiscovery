@@ -105,7 +105,7 @@ const SetPasswordPage = () => {
                             label="Password"
                             name="password"
                             type="password"
-                            placeholder="Enter password"
+                            placeholder="Enter Password"
                             errorobj={errors}
                             control={control}
                             isController={true}
@@ -117,7 +117,7 @@ const SetPasswordPage = () => {
                             label="Confirm Password"
                             name="confirmPassword"
                             type="password"
-                            placeholder="Enter confirm password"
+                            placeholder="Enter Confirm Password"
                             errorobj={errors}
                             control={control}
                             isController={true}

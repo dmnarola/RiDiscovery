@@ -15,6 +15,7 @@ const RHFAutoCompleteSelect = ({
   errorobj,
   onChange,
   handleOnChange,
+  isRequired = true,
   isClearable = true,
   isSearchable = true,
   isLoading = false,
@@ -27,6 +28,22 @@ const RHFAutoCompleteSelect = ({
   let errorMessage = "";
   let multiSelect = false;
 
+
+
+  const customStyles = {
+    control: (base, state) => ({
+      ...base,
+      boxShadow: state.isFocused ? 0 : 0,
+      borderColor: ((isError && state.isFocused) || isError)
+        ? 'red'
+        : base.borderColor,
+      '&:hover': {
+        borderColor: ((isError && state.isFocused) || isError)
+          ? 'red'
+          : base.borderColor,
+      }
+    })
+  };
 
 
   if (typeof isMultiple === "undefined" || isMultiple) {
@@ -48,7 +65,8 @@ const RHFAutoCompleteSelect = ({
           </Label>
           <Select
             {...props}
-            className={multiSelect ? "basic-multi-select" : "basic-single"}
+            placeholder="Select"
+            className={multiSelect ? "basic-multi-select bg-light" : "basic-single bg-light"}
             isMulti={multiSelect}
             id={id}
             name={name}
@@ -87,19 +105,21 @@ const RHFAutoCompleteSelect = ({
           return (
             <Fragment>
               <Label htmlFor="select-input" className="form-Label">
-                {label}
+                {label} {isRequired && <span>*</span>}
               </Label>
               <Select
+                {...field}
                 {...props}
+                options={filteredOptionList}
                 id={id}
                 name={name}
-                className={multiSelect ? "basic-multi-select" : "basic-single"}
+                placeholder="Select"
+                className={multiSelect ? "basic-multi-select " : "basic-single"}
                 isMulti={multiSelect}
                 isClearable={isClearable}
                 isSearchable={isSearchable}
                 isDisabled={disabled}
                 isLoading={isLoading}
-                options={options}
                 defaultValue={defaultValue}
                 onChange={(data) => {
                   field.onChange(data);
@@ -107,6 +127,7 @@ const RHFAutoCompleteSelect = ({
                     handleOnChange(data, name);
                   }
                 }}
+                styles={customStyles}
               />
             </Fragment>
           );
