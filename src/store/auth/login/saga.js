@@ -18,7 +18,8 @@ const fireBaseBackend = getFirebaseBackend();
 function* loginUser({ payload: { user, history } }) {
   try {
     const response = yield call(signIn, user);
-    if (response?.status && response?.user['2FAEnabled']) {
+
+    if (response?.status && response?.user?.['2FAEnabled']) {
       history.push('/verify-otp')
     } else {
       if (response?.status) {

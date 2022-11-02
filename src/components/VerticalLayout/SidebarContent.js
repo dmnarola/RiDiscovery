@@ -11,13 +11,14 @@ import SimpleBar from "simplebar-react";
 
 // MetisMenu
 import MetisMenu from "metismenujs";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, useLocation } from "react-router-dom";
 
 //i18n
 import { withTranslation } from "react-i18next";
 
 const SidebarContent = (props) => {
   const ref = useRef();
+  const location = useLocation();
   const activateParentDropdown = useCallback((item) => {
     item.classList.add("active");
     const parent = item.parentElement;
@@ -95,49 +96,59 @@ const SidebarContent = (props) => {
     <React.Fragment>
       <SimpleBar style={{ maxHeight: "100%" }} ref={ref}>
         <div id="sidebar-menu">
-          <ul className="metismenu list-unstyled" id="side-menu">
-            <li className="menu-title">{props.t("Menu")} </li>
-            <li>
-              <Link to="/dashboard" className="">
-                <FeatherIcon icon="home" />
-                <span>{props.t("Dashboard")}</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/applications" className="">
-                <FeatherIcon icon="grid" />
-                <span>{props.t("Assessment")}</span>
-              </Link>
-            </li>
+          {location?.pathname === '/register-company' ?
+            <ul className="metismenu list-unstyled" id="side-menu">
+              <li>
+                <Link to="/register-company" className="">
+                  <FeatherIcon icon="home" />
+                  <span>{props.t("Company")}</span>
+                </Link>
+              </li>
+            </ul>
+            :
+            <ul className="metismenu list-unstyled" id="side-menu">
+              <li>
+                <Link to="/dashboard" className="">
+                  <FeatherIcon icon="home" />
+                  <span>{props.t("Dashboard")}</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/applications" className="">
+                  <FeatherIcon icon="grid" />
+                  <span>{props.t("Assessment")}</span>
+                </Link>
+              </li>
 
-            <li>
-              <Link to="/user-list" className="">
-                <FeatherIcon icon="users" />
-                <span>{props.t("Role Management")}</span>
-              </Link>
-            </li>
+              <li>
+                <Link to="/user-list" className="">
+                  <FeatherIcon icon="users" />
+                  <span>{props.t("Role Management")}</span>
+                </Link>
+              </li>
 
-            <li>
-              <Link to="/project-list" className="">
-                <FeatherIcon icon="file-text" />
-                <span>{props.t("Certificates")}</span>
-              </Link>
-            </li>
+              <li>
+                <Link to="/project-list" className="">
+                  <FeatherIcon icon="file-text" />
+                  <span>{props.t("Certificates")}</span>
+                </Link>
+              </li>
 
-            <li>
-              <Link to="/company" className="">
-                <FeatherIcon icon="home" />
-                <span>{props.t("Company")}</span>
-              </Link>
-            </li>
+              <li>
+                <Link to="/company" className="">
+                  <FeatherIcon icon="home" />
+                  <span>{props.t("Company")}</span>
+                </Link>
+              </li>
 
-            <li>
-              <Link to="/templates-list" className="">
-                <FeatherIcon icon="file" />
-                <span>{props.t("Templates")}</span>
-              </Link>
-            </li>
-          </ul>
+              <li>
+                <Link to="/templates-list" className="">
+                  <FeatherIcon icon="file" />
+                  <span>{props.t("Templates")}</span>
+                </Link>
+              </li>
+            </ul>
+          }
         </div>
       </SimpleBar>
     </React.Fragment>

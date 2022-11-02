@@ -29,3 +29,32 @@
 .tab-navlink {
     cursor: pointer;
 }
+
+/* Input Tag Css Start */
+
+.react-tagsinput {
+    border: 1px solid #ccc !important;
+    border-radius: 3px;
+}
+
+.react-tagsinput-tag {
+    background-color: #cfd2f0;
+    border-radius: 5px;
+    border: 1px solid #b8b8b8;
+    color: #5156be;
+}
+
+.react-tagsinput-input {
+    width: 200px;
+}
+
+.react-tagsinput--focused {
+    border-color: #b8b8b8;
+}
+
+.tag-error {
+    border: 1px solid red;
+    border-radius: 3px;
+}
+
+/* Input Tag Css Over */

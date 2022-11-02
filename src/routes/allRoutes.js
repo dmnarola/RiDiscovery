@@ -27,6 +27,7 @@ import UserList from "../pages/UserList/Index";
 import FindingAddEdit from "pages/ApplicationNetwork/Application/Finding/FindingAddEdit";
 import SetPassword from 'pages/Authentication/SetPassword';
 import VerifyOTP from 'pages/Authentication/VerifyOTP';
+import RegisterCompany from 'pages/Authentication/RegisterCompany';
 
 const userRoutes = [
   //dashboard
@@ -57,8 +58,10 @@ const userRoutes = [
   //Company
   { path: "/company", component: CompanyHierarchy },
 
+  { path: "/register-company", component: RegisterCompany },
+
   // this route should be at the end of all other routes
-  { path: "/", exact: true, component: () => <Redirect to="/dashboard" /> },
+  { path: "*", exact: true, component: () => <Redirect to="/dashboard" /> },
 ];
 
 const authRoutes = [
