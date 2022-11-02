@@ -22,6 +22,14 @@
     min-height: 100vh;
 }
 
+body[data-topbar="dark"] {
+
+    .page-content {
+        background-color: $header-dark-bg;
+        border-color: $gray-dark-300;
+    }
+}
+
 .invalid-feedback {
     display: block !important;
 }
