@@ -26,6 +26,14 @@
 .page-content1 {
     margin-top: $header-height;
 }
+body[data-topbar="dark"] {
+
+    .page-content {
+        background-color: $header-dark-bg;
+        border-color: $gray-dark-300;
+    }
+}
+
 .invalid-feedback {
     display: block !important;
 }
