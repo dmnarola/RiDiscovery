@@ -9,6 +9,7 @@ import Account from "./auth/register/reducer"
 import ForgetPassword from "./auth/forgetpwd/reducer"
 import ResetPassword from "./auth/resetPassword/reducer"
 import TwoFA from "./auth/twoFA/reducer"
+import Agency from "./company/agency/reducer"
 import Profile from "./auth/profile/reducer"
 
 //Calendar
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   ForgetPassword,
   ResetPassword,
   TwoFA,
+  Agency,
   Profile,
   calendar,
   chat,

@@ -28,6 +28,7 @@ import FindingAddEdit from "pages/ApplicationNetwork/Application/Finding/Finding
 import SetPassword from 'pages/Authentication/SetPassword';
 import VerifyOTP from 'pages/Authentication/VerifyOTP';
 import RegisterCompany from 'pages/Authentication/RegisterCompany';
+import TanentLogin from 'pages/Authentication/TanentLogin';
 
 const userRoutes = [
   //dashboard
@@ -68,6 +69,7 @@ const authRoutes = [
   //authencation page
   { path: "/logout", component: Logout },
   { path: "/login", component: Login },
+  { path: "/tenant/login", component: TanentLogin },
   { path: "/forgot-password", component: ForgetPwd },
   { path: "/verify-otp", component: VerifyOTP },
   { path: "/set-password/:token", component: SetPassword },

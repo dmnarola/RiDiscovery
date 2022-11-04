@@ -6,12 +6,16 @@ import {
   API_ERROR,
   LOGIN_FAIL,
   LOGOUT_USER_FAIL,
+  VERIFY_TANENT,
+  VERIFY_TANENT_SUCCESS,
+  VERIFY_TANENT_FAIL
 } from "./actionTypes";
 
 const initialState = {
   error: "",
   loading: false,
-  user: null
+  user: null,
+  tanent: { isTenantAvailable: true }
 };
 
 const login = (state = initialState, action) => {
@@ -45,6 +49,26 @@ const login = (state = initialState, action) => {
       break;
     case LOGOUT_USER_FAIL:
       state = { ...state, user: null };
+      break;
+    case VERIFY_TANENT:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case VERIFY_TANENT_SUCCESS:
+      state = {
+        ...state,
+        loading: false,
+        tanent: action?.payload
+      };
+      break;
+    case VERIFY_TANENT_FAIL:
+      state = {
+        ...state,
+        loading: false,
+        tanent: action?.payload
+      };
       break;
     case API_ERROR:
       state = { ...state, error: action.payload, loading: false };

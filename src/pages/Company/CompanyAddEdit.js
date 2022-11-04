@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import RHFAutoCompleteSelect from "components/form-controls/RHFAutoCompleteSelect";
@@ -7,36 +8,43 @@ import RHFFileUpload from "components/form-controls/RHFFileUpload";
 import RHFTextField from "components/form-controls/RHFTextField";
 import { Col, Row } from "reactstrap";
 import * as yup from "yup";
+import { addAgency } from 'store/company/agency/actions';
+import RHFInputTags from 'components/form-controls/RHFInputTags';
 import defaultImage from "../../assets/images/Default-User-Image.jpeg";
 
 const CompanyAddEdit = (props) => {
-  const { editCompanyData, setFormData, handleToggle } = props;
+  const { editCompanyData, handleToggle } = props;
   const isEditMode = editCompanyData ? true : false;
   const [fileData, setFileData] = useState();
 
+  console.log("fileData ==>", fileData);
+
+  const dispatch = useDispatch();
+
   const CategoryData = [
     {
-      value: "Development Agency - Internal",
+      value: "development_agency_internal",
       label: "Development Agency - Internal",
     },
     {
-      value: "Security Agency - Internal",
+      value: "security_agency_internal",
       label: "Security Agency - Internal",
     },
     {
-      value: "Development Agency - External",
+      value: "development_agency_external",
       label: "Development Agency - External",
     },
     {
-      value: "Security Agency - External",
+      value: "security_agency_external",
       label: "Security Agency - External",
     },
   ];
 
   const userSchema = yup.object().shape({
+    companyLogo: yup.mixed().required("Company logo is required"),
     companyName: yup.string().required("Company Name is required"),
-    domainName: yup.string().required("Domain is required"),
-    category:
+    domain: yup.array().min(1, "Domain is required"),
+    companyType:
       !isEditMode &&
       yup
         .object()
@@ -49,6 +57,7 @@ const CompanyAddEdit = (props) => {
     handleSubmit,
     control,
     setValue,
+    reset,
     formState: { errors },
   } = useForm({
     mode: "onBlur",
@@ -56,8 +65,14 @@ const CompanyAddEdit = (props) => {
   });
 
   const onSubmit = (data) => {
-    console.log("data", data);
-    setFormData(data);
+    const payload = {
+      ...data,
+      companyType: data?.companyType?.value,
+      companyLogo: fileData?.base64
+    };
+    dispatch(addAgency(payload));
+    reset();
+    handleToggle()
   };
 
   useEffect(() => {
@@ -83,6 +98,7 @@ const CompanyAddEdit = (props) => {
             errorobj={errors}
             setValue={setValue}
             getFileData={setFileData}
+            isValidate={true}
           />
         </div>
       </div>
@@ -103,11 +119,11 @@ const CompanyAddEdit = (props) => {
 
       <Row className="mb-3">
         <Col sm="12">
-          <RHFTextField
-            id="domainName"
-            label="Domain Name"
-            name="domainName"
-            placeholder="Enter Valid Domain Name"
+          <RHFInputTags
+            id="domain"
+            label="Domain"
+            name="domain"
+            placeholder="Add Domain"
             errorobj={errors}
             control={control}
             isController={true}
@@ -118,9 +134,9 @@ const CompanyAddEdit = (props) => {
       <Row className="mb-3">
         <Col sm="12">
           <RHFAutoCompleteSelect
-            id="category"
+            id="companyType"
             label="Category"
-            name="category"
+            name="companyType"
             options={CategoryData}
             setValue={setValue}
             isMultiple={false}

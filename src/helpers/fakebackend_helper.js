@@ -280,14 +280,26 @@ const onAddComment = (productId, commentText) => {
 
 /** DM  API Execution */
 
+//  BASE_API_URL = 'http:192.168.1.235'
+
+// const API_URL = {
+//   'AUTH': `${BASE_API_URL}:5001/`,
+//   'COMPANY': `${BASE_API_URL}:5002/`,
+// }
+
+
 export const registerNewUser = user => post(url.RIGISTER_NEW_USER, user);
 export const verifyUserEmail = (token) => post(url.VERIFY_USER_EMAIL, token);
 export const resetPassword = (data) => post(url.RESET_PASSWORD, data);
 export const forgetPassword = (data) => post(url.FORGET_PASSWORD, data);
-export const signIn = (data) => post(url.USER_LOGIN, data);
+export const signIn = (data, config) => post(url.USER_LOGIN, data, config);
 export const getQRCode = (data) => post(url.GENERATE_QR_CODE, data);
 export const verifyOTP = (data) => post(url.VERIFY_OTP, data);
+export const verifyTanent = (data) => post(url.VERIFY_TANENT, data);
 
+export const onBoardCompany = (data) => post(url.COMPANY_ON_BOARDING, data);
+export const addCompany = (data) => post(url.ADD_COMPANY, data);
+export const listAllCompany = (data) => post(url.GET_ALL_COMPANY, data);
 
 export {
   getLoggedInUser,

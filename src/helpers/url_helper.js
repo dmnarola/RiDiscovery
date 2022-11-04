@@ -113,6 +113,7 @@ export const ON_ADD_COMMENT = "/comments-product-add-comment"
 
 /** Dm */
 
+/* AUTH Routes */
 export const RIGISTER_NEW_USER = "/auth/signup";
 export const VERIFY_USER_EMAIL = "/auth/verify-email";
 export const USER_LOGIN = "/auth/login";
@@ -120,4 +121,11 @@ export const RESET_PASSWORD = "/auth/reset-password";
 export const FORGET_PASSWORD = "/auth/reset-password-email";
 export const GENERATE_QR_CODE = "/auth/generate-2fa-qrcode";
 export const VERIFY_OTP = "/auth/verify-totp";
+export const VERIFY_TANENT = "/auth/verify-tenant";
+
+/* Company Routes */
+export const COMPANY_ON_BOARDING = "/company/register";
+export const ADD_COMPANY = "/company/add";
+export const GET_ALL_COMPANY = "/company/list";
+
 

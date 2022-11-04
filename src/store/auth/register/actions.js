@@ -4,7 +4,10 @@ import {
   REGISTER_USER_FAILED,
   EMAIL_VERIFY,
   EMAIL_VERIFY_SUCCESSFUL,
-  EMAIL_VERIFY_FAILED
+  EMAIL_VERIFY_FAILED,
+  REGISTER_COMPANY,
+  REGISTER_COMPANY_SUCCESS,
+  REGISTER_COMPANY_FAIL
 } from "./actionTypes"
 
 export const registerUser = payload => {
@@ -46,6 +49,27 @@ export const emailVerifyFailed = (data) => {
   return {
     type: EMAIL_VERIFY_FAILED,
     payload: data
+  }
+}
+
+export const registerCompany = payload => {
+  return {
+    type: REGISTER_COMPANY,
+    payload
+  }
+}
+
+export const registerCompanySuccess = payload => {
+  return {
+    type: REGISTER_COMPANY_SUCCESS,
+    payload
+  }
+}
+
+export const registerCompanyFail = payload => {
+  return {
+    type: REGISTER_COMPANY_FAIL,
+    payload
   }
 }
 

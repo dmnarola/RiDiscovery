@@ -19,10 +19,22 @@ function* generateQRCode({ payload }) {
 function* verify2FAOtp({ payload: { payload, history } }) {
   try {
     const response = yield call(verifyOTP, payload)
+    // if (response?.status) {
+    //   localStorage.setItem('authUser', response?.user?.token);
+    //   history.push('/dashboard')
+    // }
+
     if (response?.status) {
-      localStorage.setItem('authUser', response?.user?.token);
-      history.push('/dashboard')
+      if (response?.user?.tenantName) {
+        localStorage.setItem('authUser', response?.user?.token);
+        history.push("/dashboard")
+      }
+      else {
+        localStorage.setItem('authUser', response?.user?.token);
+        history.push("/register-company")
+      }
     }
+
     yield put(verifyOtpSuccess(response))
   } catch (error) {
     yield put(verifyOtpFail(error))

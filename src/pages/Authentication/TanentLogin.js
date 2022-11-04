@@ -17,20 +17,20 @@ import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
 // actions
-import { loginUser, socialLogin, verifyTanent } from "../../store/actions";
+import { loginUser, socialLogin } from "../../store/actions";
 
 // import images
 import logo from "../../assets/images/RiDiscovery_Icon.png";
 
 //Import config
 import { facebook, google } from "../../config";
-import CarouselPage from "../Authentication/CarouselPage";
+import CarouselPage from "./CarouselPage";
 import RHFTextField from "components/form-controls/RHFTextField";
 import RHFButton from "components/form-controls/RHFButton";
 import RHFCheckbox from "components/form-controls/RHFCheckbox";
 
 
-const Login = (props) => {
+const TanentLogin = (props) => {
   const [isRemember, setIsRemember] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -46,7 +46,7 @@ const Login = (props) => {
 
   const loginSchema = yup.object().shape({
     email: yup.string().email().max(150).required("Email is required"),
-    password: !tanent?.isTenantAvailable && yup.string().required("Password is required"),
+    password: yup.string().required("Password is required"),
   });
 
   const {
@@ -90,14 +90,7 @@ const Login = (props) => {
 
     console.log({ payload })
 
-
-    // dispatch(loginUser(payload, props.history));
-
-    if (tanent?.isTenantAvailable) {
-      dispatch(verifyTanent({ email: values?.email }));
-    } else {
-      dispatch(loginUser(payload, props.history));
-    }
+    dispatch(loginUser(payload, props.history));
 
   };
 
@@ -150,29 +143,91 @@ const Login = (props) => {
                             isController={true}
                           />
                         </div>
-                        {(!tanent?.isTenantAvailable) &&
-                          <div className="mb-3">
-                            <RHFTextField
-                              id="password"
-                              label="Password"
-                              name="password"
-                              type="password"
-                              placeholder="Enter Password"
-                              errorobj={errors}
-                              control={control}
-                              isController={true}
-                            />
-                          </div>
-                        }
+
+                        <div className="mb-3">
+                          <RHFTextField
+                            id="password"
+                            label="Password"
+                            name="password"
+                            type="password"
+                            placeholder="Enter Password"
+                            errorobj={errors}
+                            control={control}
+                            isController={true}
+                          />
+                        </div>
 
                         <div className="row mb-4">
                           <div className="col">
+                            <div className="d-flex justify-content-between">
+                              <div className="form-check">
+                                <RHFCheckbox
+                                  name="isRemember"
+                                  label="Remember me"
+                                  checked={isRemember}
+                                  isController={false}
+                                  onChange={handleCheckboxChange} // mostly useful when isController === false
+                                />
+                              </div>
+                              <div>
+                                <p className="text-muted mb-0">
+                                  <Link
+                                    to="/forgot-password"
+                                    className="text-primary fw-semibold"
+                                  >
+                                    Forgot Password ?
+                                  </Link>{" "}
+                                </p>
+                              </div>
+                            </div>
+
                             <div className="mt-3 d-grid">
                               <RHFButton btnName="Log In" type="submit" />
                             </div>
                           </div>
                         </div>
                       </Form>
+
+                      {/* <div className="mt-4 text-center">
+                        <h5 className="font-size-14 mb-3">Sign in with</h5>
+
+                        <ul className="list-inline">
+                          <li className="list-inline-item">
+                            <FacebookLogin
+                              appId={facebook.APP_ID}
+                              autoLoad={false}
+                              callback={facebookResponse}
+                              render={(renderProps) => (
+                                <Link
+                                  to="#"
+                                  className="social-list-item bg-primary text-white border-primary"
+                                  onClick={renderProps.onClick}
+                                >
+                                  <i className="mdi mdi-facebook" />
+                                </Link>
+                              )}
+                            />
+                          </li>
+                          {google.CLIENT_ID && (
+                            <li className="list-inline-item">
+                              <GoogleLogin
+                                clientId={google.CLIENT_ID}
+                                render={(renderProps) => (
+                                  <Link
+                                    to="#"
+                                    className="social-list-item bg-danger text-white border-danger"
+                                    onClick={renderProps.onClick}
+                                  >
+                                    <i className="mdi mdi-google" />
+                                  </Link>
+                                )}
+                                onSuccess={googleResponse}
+                                onFailure={() => { }}
+                              />
+                            </li>
+                          )}
+                        </ul>
+                      </div>
 
                       <div className="mt-5 text-center">
                         <p className="text-muted mb-0">
@@ -185,7 +240,7 @@ const Login = (props) => {
                             Signup now{" "}
                           </Link>{" "}
                         </p>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -199,8 +254,8 @@ const Login = (props) => {
   );
 };
 
-export default withRouter(Login);
+export default withRouter(TanentLogin);
 
-Login.propTypes = {
+TanentLogin.propTypes = {
   history: PropTypes.object,
 };

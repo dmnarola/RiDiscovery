@@ -8,20 +8,26 @@ import accessToken from "./jwt-token-access/accessToken"
 //apply base url for axios
 
 // const API_URL = ""
-const API_URL = "http://192.168.1.235:5001/"
+const API_URL = "http://192.168.1.235:5001/";
+
+
+// const API_URL = "http://192.168.1.235:5002/";
+
+// Front-End Port
+const PORT1 = "3000"; // app.ridiscovery.com // global tenenat
+const PORT2 = "3001"; // nisl.ridiscovery.com // main tenenat
+const DEFAULT_TANANT = 'nisl';
+
 
 const axiosApi = axios.create({
   baseURL: API_URL,
 })
 
 
-// axiosApi.defaults.headers.common["Authorization"] = token
-
-
 const token = localStorage.getItem('authUser');
 
 if (token) {
-  axiosApi.defaults.headers.common["Authorization"] = token
+  axiosApi.defaults.headers.common["x-access-token"] = token
 }
 
 
@@ -41,7 +47,14 @@ const errorHandler = (error) => {
 };
 
 axiosApi.interceptors.request.use(function (config) {
-  config.headers["tenant_id"] = 1;
+
+  const tenantName = location?.host?.split('.')[0];
+  const tanant = location?.port === PORT2 ? DEFAULT_TANANT : tenantName
+
+  if (location?.port === PORT2 || (tenantName !== 'app' && location?.port !== PORT1)) {
+    config.headers["tenant_id"] = tanant;
+  }
+
   return config;
 });
 
@@ -55,8 +68,15 @@ export async function get(url, config = {}) {
 }
 
 export async function post(url, data, config = {}) {
+
+  // temp
+  let finalUrl = url;
+  if (['/company/register', '/company/add', '/company/list'].includes(url)) {
+    finalUrl = `http://192.168.1.235:5002${url}`
+  }
+
   return axiosApi
-    .post(url, { ...data }, { ...config })
+    .post(finalUrl, { ...data }, { ...config })
     .then(response => response.data)
 }
 

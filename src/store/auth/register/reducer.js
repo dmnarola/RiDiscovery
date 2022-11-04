@@ -5,6 +5,9 @@ import {
   EMAIL_VERIFY,
   EMAIL_VERIFY_SUCCESSFUL,
   EMAIL_VERIFY_FAILED,
+  REGISTER_COMPANY,
+  REGISTER_COMPANY_SUCCESS,
+  REGISTER_COMPANY_FAIL
 } from "./actionTypes"
 
 const initialState = {
@@ -12,6 +15,7 @@ const initialState = {
   message: null,
   isLoading: false,
   user: null,
+  company: null,
   emailVerification: false
 }
 
@@ -61,6 +65,27 @@ const account = (state = initialState, action) => {
         isLoading: false,
         emailVerification: action?.payload,
         user: null,
+      }
+      break
+
+    case REGISTER_COMPANY:
+      state = {
+        ...state,
+        isLoading: true,
+      }
+      break
+    case REGISTER_COMPANY_SUCCESS:
+      state = {
+        ...state,
+        isLoading: false,
+        company: action.payload,
+      }
+      break
+    case REGISTER_COMPANY_FAIL:
+      state = {
+        ...state,
+        user: null,
+        isLoading: false,
       }
       break
 

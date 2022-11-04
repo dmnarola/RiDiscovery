@@ -7,6 +7,9 @@ import {
   SOCIAL_LOGIN,
   LOGIN_FAIL,
   LOGOUT_USER_FAIL,
+  VERIFY_TANENT,
+  VERIFY_TANENT_SUCCESS,
+  VERIFY_TANENT_FAIL
 } from "./actionTypes"
 
 export const loginUser = (user, history) => {
@@ -48,6 +51,27 @@ export const logoutUserFail = () => {
   return {
     type: LOGOUT_USER_FAIL,
     payload: {},
+  }
+}
+
+export const verifyTanent = (data) => {
+  return {
+    type: VERIFY_TANENT,
+    payload: data,
+  }
+}
+
+export const verifyTanentSuccess = resp => {
+  return {
+    type: VERIFY_TANENT_SUCCESS,
+    payload: resp,
+  }
+}
+
+export const verifyTanentFail = resp => {
+  return {
+    type: VERIFY_TANENT_FAIL,
+    payload: resp,
   }
 }
 

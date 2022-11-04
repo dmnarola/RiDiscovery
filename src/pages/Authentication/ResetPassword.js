@@ -115,7 +115,7 @@ const ResetPasswordPage = () => {
 
                       <div className="mt-5 text-center">
                         <p className="text-muted mb-0">Remember It ?
-                          <Link to="/login" className="text-primary fw-semibold"> Login</Link>
+                          <Link to="/tenant/login" className="text-primary fw-semibold"> Login</Link>
                         </p>
                       </div>
                     </div>
