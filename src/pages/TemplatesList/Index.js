@@ -13,7 +13,7 @@ const TemplatesList = () => {
 
   const editHandler = (obj) => {
     console.log({ obj })
-    handleToggle();
+    // handleToggle();
   };
 
 

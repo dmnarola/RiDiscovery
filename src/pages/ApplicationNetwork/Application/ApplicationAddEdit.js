@@ -135,7 +135,6 @@ const ApplicationAddEdit = (props) => {
                                         control={control}
                                         isController={true}
                                         handleOnChange={handleAutoComplete}
-                                    // defaultValue={{ value: 'Web', label: 'Web' }}
                                     />
                                 </Col>
                                 <Col sm="6">

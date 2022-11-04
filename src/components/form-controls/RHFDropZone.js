@@ -1,19 +1,126 @@
-import React from 'react'
-import Dropzone from 'react-dropzone'
+import React, { Fragment, useCallback, useState } from 'react'
+import { useDropzone } from 'react-dropzone';
+import { Controller } from 'react-hook-form';
+import { Button, Card, FormFeedback, Label } from 'reactstrap';
+import FeatherIcon from "feather-icons-react";
 
-const RHFDropZone = () => {
+const RHFDropZone = ({ control, errorobj, label, name, isRequired = true, pocSetvalue, setPocStepsImage }) => {
+    let isError = false;
+    let errorMessage = "";
+
+    if (errorobj && Object.prototype.hasOwnProperty.call(errorobj, name)) {
+        isError = true;
+        errorMessage = errorobj[name]?.message;
+    }
+
     return (
-        <Dropzone onDrop={(acceptedFiles) => console.log(acceptedFiles)}>
-            {({ getRootProps, getInputProps }) => (
-                <section className="file-upload-wrapper">
-                    <div {...getRootProps({ className: "wfp--dropzone__input" })}>
-                        <input {...getInputProps()} />
-                        <div>Drag 'n' drop some files here, or click to select files</div>
-                    </div>
-                </section>
+
+        <Controller
+            render={({ field: onChange }) => (
+                <Fragment>
+                    {label && <Label htmlFor="example-text-input" className="form-Label">
+                        {label} {isRequired && <span>*</span>}
+                    </Label>}
+                    <Dropzone
+                        onChange={onChange}
+                        label={label}
+                        id="file"
+                        pocSetvalue={pocSetvalue}
+                        name={name}
+                        setPocStepsImage={setPocStepsImage}
+                    />
+                    {isError && (
+                        <FormFeedback type="invalid">{errorMessage}</FormFeedback>
+                    )}
+                </Fragment>
             )}
-        </Dropzone>
-    )
-}
+            name={name}
+            control={control}
+            defaultValue={[]}
+            id={name}
+        />
+
+    );
+};
+
+const Dropzone = ({ onChange, name, pocSetvalue, setPocStepsImage }) => {
+
+    const [files, setfiles] = useState([]);
+
+    const onDrop = useCallback((acceptedFiles) => {
+        // Do something with the files
+        // console.log({ acceptedFiles });
+        pocSetvalue(name, acceptedFiles)
+        setPocStepsImage(
+            acceptedFiles.map((file) =>
+                Object.assign(file, { preview: URL.createObjectURL(file) })
+            ))
+        setfiles(
+            acceptedFiles.map((file) =>
+                Object.assign(file, { preview: URL.createObjectURL(file) })
+            )
+        );
+
+    }, []);
+
+    const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } =
+        useDropzone({
+            accept: "image/png, image/jpg, image/jpeg, image/gif",
+            // accept: "image/*,audio/*,video/*",
+            onDrop,
+        });
+
+    const additionalClass = isDragAccept
+        ? "accept"
+        : isDragReject
+            ? "reject"
+            : "";
+
+    const deleteFile = (e) => {
+        const deleted = files.filter((item, index) => index !== e);
+        setfiles(deleted);
+    }
+
+    const images = files.map((file, index) => (
+
+        <div className='file-preview' key={index}>
+            <div>
+                <FeatherIcon
+                    className="delete-preview-image" size="20" icon="x"
+                    onClick={() => { deleteFile(index) }}
+                />
+            </div>
+            <img
+                src={file.preview}
+                alt="image"
+            />
+        </div>
+    ));
+
+    return (
+        <>
+
+            <div {...getRootProps({
+                className: `droparea ${additionalClass}`
+
+            })}>
+                <input {...getInputProps({ onChange })} />
+                <input {...getInputProps()} />
+                <span>{isDragActive ? <FeatherIcon
+                    icon="upload"
+                /> : <FeatherIcon
+                    icon="upload"
+                />}</span>
+                <p>Drag'n'drop images, or click to select files</p>
+            </div>
+            {
+                files ?
+                    <div>
+                        {images}
+                    </div> : ""
+            }
+        </>
+    );
+};
 
 export default RHFDropZone
