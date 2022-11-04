@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Container } from 'reactstrap';
-
-import RHFButton from 'components/form-controls/RHFButton';
+import { Card } from 'reactstrap';
 import Application from './Application';
 import Network from './Network';
 import Tabs from 'components/Tab/Tabs';
@@ -30,20 +28,18 @@ const ApplicationNetwork = () => {
   };
 
   return (
-    <div className="page-content">
-      <Container fluid>
-
+    <div className="page-content1">
+      <Card>
         <div className='page-title-box'>
           <Tabs
             navLinkData={navLinkData}
             activeTab={activeTab}
             toggle={toggle}
-          />
+          >
+            {activeTab === "1" ? <Application /> : <Network />}
+          </Tabs>
         </div>
-
-        {activeTab === "1" ? <Application /> : <Network />}
-
-      </Container>
+      </Card>
     </div>
 
   )

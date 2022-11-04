@@ -101,89 +101,132 @@ export const severityFinding = [{
 export const attackVectorFinding = [{
     id: "btn1",
     labelName: "Network (N)",
+    value: "Network (N)",
+
 
 }, {
     id: "btn2",
     labelName: "Adjacent (A)",
+    value: "Adjacent (A)",
 
 }, {
     id: "btn3",
     labelName: "Local (L)",
+    value: "Local (L)",
+
 
 }, {
     id: "btn4",
     labelName: "Physical (P)",
+    value: "Physical (P)",
+
 
 }]
 
 export const scopeFinding = [{
     id: "btn5",
     labelName: "Unchanged (U)",
+    value: "Unchanged (U)",
+
 }, {
     id: "btn6",
     labelName: "High (H)",
+    value: "High (H)",
+
 }]
 
 export const attackComplexityFinding = [{
     id: "btn7",
     labelName: "Low (L)",
+    value: "Low (L)",
+
 }, {
     id: "btn8",
     labelName: "High (H)",
+    value: "High (H)",
+
 },]
 
 export const confidentialityFinding = [{
     id: "btn9",
     labelName: "None (N)",
+    value: "None (N)",
+
 }, {
     id: "btn10",
     labelName: "Low (L)",
+    value: "Low (L)",
+
 }, {
     id: "btn11",
     labelName: "High (H)",
+    value: "High (H)",
+
 }]
 
 export const privilegesRequiredFinding = [{
     id: "btn12",
     labelName: "None (N)",
+    value: "None (N)",
+
 
 }, {
     id: "btn13",
     labelName: "Low (L)",
+    value: "Low (L)",
+
 
 
 }, {
     id: "btn14",
     labelName: "High (H)",
+    value: "High (H)",
+
 
 }]
 
 export const integrityFinding = [{
     id: "btn15",
     labelName: "None (N)",
+    value: "None (N)",
+
 }, {
     id: "btn16",
     labelName: "Low (L)",
+    value: "Low (L)",
+
 }, {
     id: "btn17",
     labelName: "High (H)",
+    value: "High (H)",
+
 }]
 
 export const userInteractionFinding = [{
     id: "btn18",
     labelName: "None (N)",
+    value: "None (N)",
+
 }, {
     id: "btn19",
     labelName: "Required (R)",
+    value: "Required (R)",
+
 }]
 
 export const availabilityFinding = [{
     id: "btn20",
     labelName: "None (N)",
+    value: "None (N)",
+
 }, {
     id: "btn21",
     labelName: "Low (L)",
+    value: "Low (L)",
+
 }, {
     id: "btn22",
     labelName: "High (H)",
+    value: "High (H)",
+
 }]

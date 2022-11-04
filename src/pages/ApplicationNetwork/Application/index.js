@@ -11,9 +11,6 @@ import FilterByStatus from 'components/Common/FilterByStatus';
 import RHFButton from 'components/form-controls/RHFButton';
 import DropdownButton from 'components/form-controls/DropdownButton';
 import ManageColumns from 'components/Common/ManageColumns';
-import DialogBox from 'components/Modals/DialogBox';
-import ApplicationAddEdit from './ApplicationAddEdit';
-
 
 const usersList = [
     { id: 1, name: 'Dipesh Mali', image: avatar1 },
@@ -49,6 +46,7 @@ const data = [
             label: "Pratik Shah",
         },
         buTag: "tag 1",
+        checkList: "OWASP",
         securityManager: {
             value: "Pratik Shah",
             label: "Pratik Shah",
@@ -62,6 +60,7 @@ const data = [
             label: "Pratik Shah",
         },
         startDate: "2000-06-12",
+        endDate: "2005-03-15",
         template: {
             value: "Default Template",
             label: "Default Template",
@@ -70,7 +69,8 @@ const data = [
         score: '1.1',
         assignePentester: [],
         assigneDeveloper: [],
-        projectManager: []
+        projectManager: [],
+        scope: "www.figma.com/1/AIL-1234"
 
     },
     {
@@ -91,6 +91,7 @@ const data = [
             label: "Dipesh Mali",
         },
         buTag: "tag 3",
+        checkList: "CWE",
         securityManager: {
             value: "Dipesh Mali",
             label: "Dipesh Mali",
@@ -104,6 +105,7 @@ const data = [
             label: "Dipesh Mali",
         },
         startDate: "2011-01-18",
+        endDate: "2019-04-28",
         template: {
             value: "ABC Template",
             label: "ABC Template",
@@ -112,7 +114,8 @@ const data = [
         score: '1.5',
         assignePentester: [],
         assigneDeveloper: [],
-        projectManager: []
+        projectManager: [],
+        scope: "www.figma.com/2/AIL-2365"
     },
 ];
 
@@ -147,7 +150,7 @@ const Application = () => {
 
     const previewHandler = (obj) => {
         console.log({ obj })
-        history.push(`/application/${obj?.id}/overview`)
+        history.push({ pathname: `/application/${obj?.id}/overview`, state: { objData: obj } })
     };
 
     const addeHandler = (obj) => {

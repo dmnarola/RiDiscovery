@@ -9,10 +9,11 @@ const Tabs = (props) => {
     const { navLinkData, activeTab, toggle, children } = props
     return (
         <>
-            <Nav tabs>
+            <Nav tabs className="nav-tabs-custom">
                 {navLinkData.map((data, index) => (
                     <NavItem key={index} className="tab-navlink">
                         <NavLink
+                            style={{ cursor: "pointer" }}
                             className={classnames({
                                 active: activeTab === data.tabNo,
                             })}
