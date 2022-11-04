@@ -87,14 +87,7 @@ const UserDetails = () => {
                 <Breadcrumbs title="User List" breadcrumbItem="User" />
                 <Card>
                     <CardBody>
-                        <Tabs
-                            navLinkData={navLinkData}
-                            activeTab={activeTab}
-                            toggle={toggle}
-                        >
-                            {activeTab === "1" ? <UserTab columns={columns} userDetails={userDetails} /> :
-                                activeTab === "3" ? "Tab Profile " : ""}
-                        </Tabs>
+                        <UserTab columns={columns} userDetails={userDetails} />
                     </CardBody>
                 </Card>
             </Container>

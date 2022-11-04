@@ -10,7 +10,7 @@ const Overview = () => {
             <Container fluid>
                 <Breadcrumb title="Application" breadcrumbItem="Application Overview" />
                 <ApplicationDetail />
-                <Finding />
+
             </Container>
         </div>
     )
