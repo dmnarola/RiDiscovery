@@ -22,6 +22,10 @@
     min-height: 100vh;
 }
 
+//for Application component @mmp
+.page-content1 {
+    margin-top: $header-height;
+}
 .invalid-feedback {
     display: block !important;
 }

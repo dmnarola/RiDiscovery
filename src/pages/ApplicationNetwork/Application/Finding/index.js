@@ -10,6 +10,7 @@ import RHFButton from 'components/form-controls/RHFButton';
 
 import ManageColumns from 'components/Common/ManageColumns';
 import TextChip from 'components/Common/TextChip';
+import { useHistory } from 'react-router-dom';
 
 
 const usersList = [
@@ -39,8 +40,8 @@ const data = [
     },
 ];
 
-const Finding = () => {
-
+const Finding = ({ editApplicationData }) => {
+    const history = useHistory()
     const [filterColumns, setFilterColumns] = useState([]);
     const [columnOptions, setColumnOption] = useState([]);
 
@@ -189,6 +190,9 @@ const Finding = () => {
                                 <RHFButton
                                     btnName="Add Finding"
                                     icon="plus"
+                                    onClick={() => {
+                                        history.push(`/application/${editApplicationData?.id}/add-finding`)
+                                    }}
                                 />
                             </div>
                         </Col>
