@@ -1,57 +1,75 @@
 import React, { useState } from 'react'
+import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { Button, FormFeedback, Input, Label } from 'reactstrap';
 
-const RHFButtonGroup = ({ ...props }) => {
+const RHFButtonGroup = (props) => {
 
     const {
-        name,
-        data,
-        label,
-        errorobj,
-        control,
-        checked = false,
-        disabled = false,
-        onChange,
-        ...extraProps
+        data, control, name, label, onChange, errorobj, defaultValue
     } = props;
 
     let isError = false;
-    let errorMessage = '';
+    let errorMessage = "";
+    let someValue = "";
 
     if (errorobj && Object.prototype.hasOwnProperty.call(errorobj, name)) {
         isError = true;
-        errorMessage = errorobj[name].message;
+        errorMessage = errorobj[name]?.message;
     }
 
-    const handleChange = (e) => {
-        console.log('e.target.value :>> ', e.target.value);
-        console.log('e.target.value :>> ', e.target.name);
-
+    if (defaultValue !== undefined) {
+        someValue = defaultValue;
     }
+
+    const changeRadio = e => {
+        let id = e.target.id.replace(name, "");
+        console.log(id);
+    };
 
     return (
-        <div className='my-3'>
-            <Label className="form-Label d-block">
-                {label}
-            </Label>
-            <div className="btn-group" role="group" aria-label="Basic radio toggle button group" onChange={handleChange}>
-                {data.map((d, index) => {
-                    return <>
-                        <Input type="radio" className="btn-check"
-                            name={name}
-                            value={`${name + ' ' + d.id}`} id={d.id}
-                            invalid={isError}
-                            disabled={disabled}
-                            key={index}
-                        />
-                        <label className="btn btn-outline-primary" htmlFor={d.id}>{d.labelName}</label>
-                    </>
-                })}
-            </div>
-            {isError && <FormFeedback type="invalid">{errorMessage}</FormFeedback>}
-        </div>
-    )
+        <Controller
+            render={({ field }) => (
+                <div className='my-3'>
+                    <Label className="form-Label d-block">
+                        {label}
+                    </Label>
+                    <div
+                        className="btn-group"
+                        role="group"
+                        aria-label="Basic radio toggle button group"
+                    >
+                        {data.map((d) => {
+                            return (
+                                <>
+                                    <Input
+                                        {...field}
+                                        type="radio"
+                                        className="btn-check"
+                                        key={name + d.id}
+                                        label={d.label}
+                                        id={name + d.id}
+                                        onChange={() => {
+                                            setRadio(opt.id);
+                                        }}
+                                    />
+                                    <label className="btn btn-outline-primary" htmlFor={d.id}>{d.labelName}</label>
+                                </>
+                            );
+                        })}
+                    </div>
+                    {isError && <FormFeedback type="invalid">{errorMessage}</FormFeedback>}
+                </div>
+            )}
+            control={control}
+            name={name}
+            defaultValue={someValue}
+            id={name}
+            onChange={([e]) => {
+                changeRadio(e);
+            }}
+        />
+    );
 }
 
 export default RHFButtonGroup

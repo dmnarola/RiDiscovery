@@ -79,6 +79,7 @@ const RoleData = [{
 
 const UserAddEdit = (props) => {
   const { editUserData, setFormData, handleToggle } = props;
+
   const isEditMode = editUserData ? true : false;
 
   const userSchema = yup.object().shape({

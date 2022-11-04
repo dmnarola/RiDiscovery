@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
     Card,
     CardBody,
     Col,
     Container,
+    Label,
     Row,
 } from 'reactstrap';
 import * as yup from "yup";
@@ -14,15 +15,16 @@ import { attackComplexityFinding, attackVectorFinding, availabilityFinding, conf
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import RHFTextField from 'components/form-controls/RHFTextField';
-import classnames from "classnames";
-import RHFButtonGroup from 'components/form-controls/RHFButtonGroup';
 import RHFTextEditor from 'components/form-controls/RHFTextEditor';
 import RHFDropZone from 'components/form-controls/RHFDropZone';
 import RHFButton from 'components/form-controls/RHFButton';
-
+import DialogBox from 'components/Modals/DialogBox';
+import PocStepsAddEdit from './PocStepsAddEdit';
+import { useEffect } from 'react';
 
 const FindingAddEdit = () => {
     let history = useHistory()
+    const { applicationId } = useParams()
 
     const findingSchema = yup.object().shape({
         status: yup
@@ -30,7 +32,6 @@ const FindingAddEdit = () => {
             .shape({ label: yup.string(), value: yup.string() })
             .nullable()
             .required("Select atleast one option"),
-
         title: yup
             .string()
             .required("Title is required"),
@@ -54,30 +55,30 @@ const FindingAddEdit = () => {
             .shape({ label: yup.string(), value: yup.string() })
             .nullable()
             .required("Select atleast one option"),
-        attackVector: yup
-            .string()
-            .required("Select Attack Vector is required"),
-        scope: yup
-            .string()
-            .required("Select Scope is required"),
-        confidentiality: yup
-            .string()
-            .required("Select Confidentiality is required"),
-        attackComplexity: yup
-            .string()
-            .required("Select Attack Complexity is required"),
-        privilegesRequired: yup
-            .string()
-            .required("Select Privileges Required is required"),
-        integrity: yup
-            .string()
-            .required("Select integrity is required"),
-        userInteraction: yup
-            .string()
-            .required("Select User Interaction is required"),
-        availability: yup
-            .string()
-            .required("Select Availability is required"),
+        // attackVector: yup
+        //     .string()
+        //     .required("Select Attack Vector is required"),
+        // scope: yup
+        //     .string()
+        //     .required("Select Scope is required"),
+        // confidentiality: yup
+        //     .string()
+        //     .required("Select Confidentiality is required"),
+        // attackComplexity: yup
+        //     .string()
+        //     .required("Select Attack Complexity is required"),
+        // privilegesRequired: yup
+        //     .string()
+        //     .required("Select Privileges Required is required"),
+        // integrity: yup
+        //     .string()
+        //     .required("Select integrity is required"),
+        // userInteraction: yup
+        //     .string()
+        //     .required("Select User Interaction is required"),
+        // availability: yup
+        //     .string()
+        //     .required("Select Availability is required"),
         description: yup
             .string()
             .required("Description is required"),
@@ -96,7 +97,6 @@ const FindingAddEdit = () => {
         handleSubmit,
         control,
         setValue,
-        getValues,
         formState: { errors },
     } = useForm({
         mode: "onBlur",
@@ -104,20 +104,30 @@ const FindingAddEdit = () => {
     });
 
 
-    const handleRadioChange = (e) => {
-        console.log('object :>> ', e.target.value);
-    }
+    const [isModelOpen, setIsModelOpen] = useState(false);
+    const [editUserData, setEditUserData] = useState(null);
+    const [formData, setFormData] = useState(null);
+    const [pocStepData, setPocStepData] = useState([])
+    const [pocStepsImage, setPocStepsImage] = useState([])
 
-    const onTextEditorChange = (value) => {
-        console.log('value :>> ', value);
-    }
-    const onSubmit = (data) => {
-        // setFormData(data);
-        console.log('data :>> ', data);
-    };
     const handleToggle = () => {
-        history.push('/applications')
-    }
+        setIsModelOpen(!isModelOpen);
+    };
+
+    useEffect(() => {
+        if (formData) {
+            setPocStepData(prevState => [...prevState, formData]);
+        }
+    }, [formData])
+
+    useEffect(() => {
+        setValue('poc', pocStepData);
+    }, [pocStepData])
+
+    const onSubmit = async (data) => {
+        console.log('Finding data :>> ', data);
+        history.push(`/application/${applicationId}/overview`)
+    };
 
     return (
         <div className="page-content">
@@ -205,7 +215,7 @@ const FindingAddEdit = () => {
                                     />
                                 </Col>
                             </Row>
-                            <Card>
+                            {/* <Card>
                                 <CardBody>
                                     <div className='justify-content-between d-flex'>
                                         <div className='font-weight-bold'>
@@ -220,22 +230,18 @@ const FindingAddEdit = () => {
                                     <Row>
                                         <Col sm="6">
                                             <RHFButtonGroup
-
                                                 label="Attack Vector (AV)"
                                                 name="attackVector"
                                                 data={attackVectorFinding}
-                                                id="attackVector"
                                                 errorobj={errors}
                                                 control={control}
                                             />
                                         </Col>
                                         <Col sm="6">
                                             <RHFButtonGroup
-
                                                 label="Scope (S)"
                                                 name="scope"
                                                 data={scopeFinding}
-                                                id="scope"
                                                 errorobj={errors}
                                                 control={control}
                                             />
@@ -244,22 +250,18 @@ const FindingAddEdit = () => {
                                     <Row>
                                         <Col sm="6">
                                             <RHFButtonGroup
-
                                                 label="Attack Complexity (AC)"
                                                 name="attackComplexity"
                                                 data={attackComplexityFinding}
-                                                id="attackComplexity"
                                                 errorobj={errors}
                                                 control={control}
                                             />
                                         </Col>
                                         <Col sm="6">
                                             <RHFButtonGroup
-
                                                 label="Confidentiality (C)"
                                                 name="confidentiality"
                                                 data={confidentialityFinding}
-                                                id="confidentiality"
                                                 errorobj={errors}
                                                 control={control}
                                             />
@@ -268,22 +270,18 @@ const FindingAddEdit = () => {
                                     <Row>
                                         <Col sm="6">
                                             <RHFButtonGroup
-
                                                 label="Privileges Required (PR)"
                                                 name="privilegesRequired "
                                                 data={privilegesRequiredFinding}
-                                                id="privilegesRequired"
                                                 errorobj={errors}
                                                 control={control}
                                             />
                                         </Col>
                                         <Col sm="6">
                                             <RHFButtonGroup
-
                                                 label="Integrity (I)"
                                                 name="integrity"
                                                 data={integrityFinding}
-                                                id="integrity"
                                                 errorobj={errors}
                                                 control={control}
                                             />
@@ -292,22 +290,18 @@ const FindingAddEdit = () => {
                                     <Row>
                                         <Col sm="6">
                                             <RHFButtonGroup
-
                                                 label="User Interaction (UI)"
                                                 name-="userInteraction"
                                                 data={userInteractionFinding}
-                                                id="userInteraction"
                                                 errorobj={errors}
                                                 control={control}
                                             />
                                         </Col>
                                         <Col sm="6">
                                             <RHFButtonGroup
-
                                                 label="Availability (A)"
                                                 name="availability"
                                                 data={availabilityFinding}
-                                                id="availability"
                                                 errorobj={errors}
                                                 control={control}
                                             />
@@ -315,64 +309,102 @@ const FindingAddEdit = () => {
                                     </Row>
 
                                 </CardBody>
-                            </Card>
-                            <Card>
-                                <CardBody>
+                            </Card> */}
+                            {/* @Foram COV Radio Buttons Ui */}
+                            <Row className="mb-3">
+                                <Col sm="12">
                                     <RHFTextEditor
-                                        setValue={setValue}
-                                        onTextEditorChange={onTextEditorChange}
-                                        placeHolder="Description"
                                         name="description"
                                         id="description"
                                         errorobj={errors}
                                         control={control}
+                                        label="Description"
                                     />
-                                </CardBody>
-                            </Card>
-                            <Card>
-                                <CardBody>
-                                    <RHFDropZone />
-                                </CardBody>
-                            </Card>
-                            <Card>
-                                <CardBody>
+                                </Col>
+                            </Row>
+                            <Row className="mb-3">
+                                <Col sm="12">
+                                    <div className='d-block justify-content-between'>
+                                        <div className='d-flex justify-content-between'>
+                                            <Label className='d-block'>POC *</Label>
+                                            <div className="poc-new-steps" onClick={() => {
+                                                handleToggle();
+                                                setFormData(null);
+                                            }} >
+                                                <span >+ Add New Step</span>
+                                            </div>
+                                        </div>
+                                        <DialogBox
+                                            isModelOpen={isModelOpen}
+                                            handleToggle={handleToggle}
+                                            modelSize="sm-20"
+                                            title="Add New Steps"
+                                            actions={null}
+                                        >
+                                            <PocStepsAddEdit
+                                                handleToggle={handleToggle}
+                                                setFormData={setFormData}
+                                                setPocStepsImage={setPocStepsImage}
+                                            />
+                                        </DialogBox>
+                                    </div>
+
+                                    {pocStepsImage?.map((file, index) => (
+                                        <div className='file-preview' key={index} >
+                                            <img
+                                                src={file.preview}
+                                                alt="image"
+                                                style={{ width: "200px", height: "200px" }}
+                                            />
+                                        </div>
+                                    ))}
+
+                                </Col>
+                            </Row>
+                            <Row className="mb-3">
+                                <Col sm="12">
                                     <RHFTextEditor
-                                        setValue={setValue}
-                                        onTextEditorChange={onTextEditorChange}
-                                        placeHolder="Impact"
                                         name="impact"
                                         id="impact"
                                         errorobj={errors}
                                         control={control}
+                                        label="Impact"
                                     />
-                                </CardBody>
-                            </Card>
-                            <Card>
-                                <CardBody>
+                                </Col>
+                            </Row>
+                            <Row className="mb-3">
+                                <Col sm="12">
                                     <RHFTextEditor
-                                        setValue={setValue}
-                                        onTextEditorChange={onTextEditorChange}
-                                        placeHolder="Remediation"
                                         name="remediation"
                                         id="remediation"
                                         errorobj={errors}
                                         control={control}
+                                        label="Remediation"
                                     />
-                                </CardBody>
-                            </Card>
-                            <Card>
-                                <CardBody>
+                                </Col>
+                            </Row>
+                            <Row className="mb-3">
+                                <Col sm="12">
                                     <RHFTextEditor
-                                        setValue={setValue}
-                                        onTextEditorChange={onTextEditorChange}
-                                        placeHolder="Your Comment"
+                                        name="reference"
+                                        id="reference"
+                                        errorobj={errors}
+                                        control={control}
+                                        label="Reference"
+                                    />
+                                </Col>
+                            </Row>
+                            <Row className="mb-3">
+                                <Col sm="12">
+                                    <RHFTextEditor
                                         name="comment"
                                         id="comment"
                                         errorobj={errors}
                                         control={control}
+                                        label="Comment"
                                     />
-                                </CardBody>
-                            </Card>
+                                </Col>
+                            </Row>
                             <Row>
                                 <div className="modal-footer">
                                     <RHFButton

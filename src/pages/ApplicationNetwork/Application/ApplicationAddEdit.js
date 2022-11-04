@@ -103,7 +103,7 @@ const ApplicationAddEdit = (props) => {
 
     const onSubmit = (data) => {
         console.log('data', data)
-        setFlag(true) 
+        setFlag(true)
     };
 
     const onSubmitKickOff = (data) => {
@@ -162,7 +162,6 @@ const ApplicationAddEdit = (props) => {
                                         control={control}
                                         isController={true}
                                         handleOnChange={handleAutoComplete}
-                                    // defaultValue={{ value: 'Web', label: 'Web' }}
                                     />
                                 </Col>
                                 <Col sm="6">
@@ -289,7 +288,7 @@ const ApplicationAddEdit = (props) => {
                         </form>
                     </CardBody>
                 </Card>
-            }
+                }
 
                 {flag && <Card>
                     <CardBody>
@@ -306,7 +305,6 @@ const ApplicationAddEdit = (props) => {
                                         control={control}
                                         isController={true}
                                         handleOnChange={handleAutoComplete}
-                                    // defaultValue={{ value: 'Web', label: 'Web' }}
                                     />
                                 </Col>
                                 <Col sm="6">
@@ -369,7 +367,6 @@ const ApplicationAddEdit = (props) => {
                                         control={control}
                                         isController={true}
                                         handleOnChange={handleAutoComplete}
-                                    // defaultValue={{ value: 'Web', label: 'Web' }}
                                     />
 
                                 </Col>
@@ -378,24 +375,24 @@ const ApplicationAddEdit = (props) => {
                                 <Col sm="6">
                                     <Card className='p-2' style={{ height: "160px", }}>
                                         <label>Checklist</label>
-                                            <div className="form-check">
-                                                <RHFCheckbox
+                                        <div className="form-check">
+                                            <RHFCheckbox
                                                 name="checkbox"
                                                 label="OWASP"
                                                 isController={false}
                                                 onChange={handleCheckboxChange}
-                                                />
-                                            </div>
-                                            <div className="form-check">
-                                                <RHFCheckbox
+                                            />
+                                        </div>
+                                        <div className="form-check">
+                                            <RHFCheckbox
                                                 name="checkbox"
                                                 label="CVE"
                                                 isController={false}
                                                 onChange={handleCheckboxChange}
-                                                />
-                                            </div>
-                                            <div className="form-check">
-                                                <RHFCheckbox
+                                            />
+                                        </div>
+                                        <div className="form-check">
+                                            <RHFCheckbox
                                                 name="checkbox"
                                                 label="CWE"
                                                 isController={false}

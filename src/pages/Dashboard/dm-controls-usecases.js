@@ -20,6 +20,7 @@ import { Toast } from "components/Common/Toaster";
 import AvtarGroup from "components/form-controls/AvtarGroup";
 import { avatar1, avatar2, avatar3, avatar4, avatar5 } from "assets/images";
 import TextChip from "components/Common/TextChip";
+import RHFDropZone from "components/form-controls/RHFDropZone";
 
 const DmControl = () => {
     document.title = "Dm Control | Minia - React Admin & Dm Control Template";
@@ -196,6 +197,16 @@ const DmControl = () => {
                             handleClick={(item) => alert(item)}
                         />
 
+                        <br />
+                        <br />
+
+                        <RHFDropZone
+                            // accept="image/png, image/jpg, image/jpeg, image/gif"
+                            name="imagefile"
+                            label="imagefile"
+                            errorobj={errors}
+                            control={control}
+                        />
                         <br />
                         <br />
 
