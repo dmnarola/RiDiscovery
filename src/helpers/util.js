@@ -1,6 +1,5 @@
-
-
-/* Check if user has permission or not */
-export const isModulePermisssion = (permissions, slug) => {
+import { useSelector } from "react-redux";
+export const isModulePermisssion = (slug) => {
+    const { permissions } = useSelector(state => state.Login);
     return permissions && permissions[slug]
 }

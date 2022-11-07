@@ -9,14 +9,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAllAgency, getAllDevAgency, getAllSecurityAgency } from "store/company/agency/actions";
 import CompanyAddEdit from "./CompanyAddEdit";
 import { isModulePermisssion } from "helpers/util";
+import { ROLE_PERMISSIONS } from "constants/RolePermissions";
 
 const Company = () => {
   const [editCompanyData, setEditCompanyData] = useState(null);
   const [isModelOpen, setIsModelOpen] = useState(false);
 
   const { isLoading, devAgency, securityAgency } = useSelector(state => state.Agency)
-
-  const { permissions } = useSelector(state => state.Login)
 
   console.log("list =>", devAgency)
 
@@ -121,7 +120,7 @@ const Company = () => {
 
       <Col xs={6} lg={12}>
         <div className="d-flex justify-content-end mb-3">
-          {isModulePermisssion(permissions, 'add_update_agency') &&
+          {isModulePermisssion(ROLE_PERMISSIONS?.ADD_UPDATE_AGENCY) &&
             <RHFButton
               btnName="Add"
               icon="plus"
