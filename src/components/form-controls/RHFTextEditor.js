@@ -15,16 +15,16 @@ const RHFTextEditor = (props) => {
         label = "label",
         isRequired = true,
     } = props
-    const [state, setState] = useState({ value: null });
+    // const [state, setState] = useState({ value: null });
 
-    const handleChange = (value) => {
-        setState({ value });
-        console.log('object :>> ', value)
-        if (onTextEditorChange) {
-            onTextEditorChange(value);
-        }
+    // const handleChange = (value) => {
+    //     setState({ value });
+    //     console.log('object :>> ', value)
+    //     if (onTextEditorChange) {
+    //         onTextEditorChange(value);
+    //     }
 
-    };
+    // };
     const modules = {
         toolbar: [
             ["bold", "italic", "underline"],

@@ -29,15 +29,30 @@ const FindingAddEdit = () => {
     const { findingid } = useParams()
     console.log('findingid :>> ', findingid);
 
-    const editFindingData
-        = {
+    const editFindingData = {
         id: 1256,
-        status: "Open",
+        status: {
+            value: "Open",
+            label: "Open",
+        },
         title: 'FIND !',
-        cwe: 'Open',
-        cve: 'Close',
-        owasp: 'Open',
-        severity: 'Close',
+        cwe: {
+            value: "Close",
+            label: "Close",
+        },
+
+        cve: {
+            value: "Open",
+            label: "Open",
+        },
+        owasp: {
+            value: "Close",
+            label: "Close",
+        },
+        severity: {
+            value: "Open",
+            label: "Open",
+        },
         description: "<p>description</p>",
         impact: "<p>impact</p>",
         remediation: "<p>remediation</p>",

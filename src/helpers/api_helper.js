@@ -2,13 +2,27 @@ import axios from "axios"
 import { Toast } from "components/Common/Toaster"
 import accessToken from "./jwt-token-access/accessToken"
 
+//pass new generated access token here
+// const token = accessToken
+
+//apply base url for axios
+
+// const API_URL = ""
+const API_URL = "http://192.168.1.235:5001/";
+
+
+// const API_URL = "http://192.168.1.235:5002/";
 
 // Front-End Port
 const PORT1 = "3000"; // app.ridiscovery.com // global tenenat
 const PORT2 = "3001"; // nisl.ridiscovery.com // main tenenat
 const DEFAULT_TANANT = 'nisl';
 
-const axiosApi = axios.create();
+
+const axiosApi = axios.create({
+  baseURL: API_URL,
+})
+
 
 const token = localStorage.getItem('authUser');
 
@@ -54,8 +68,15 @@ export async function get(url, config = {}) {
 }
 
 export async function post(url, data, config = {}) {
+
+  // temp
+  let finalUrl = url;
+  if (['/company/register', '/company/add', '/company/list'].includes(url)) {
+    finalUrl = `http://192.168.1.235:5002${url}`
+  }
+
   return axiosApi
-    .post(url, { ...data }, { ...config })
+    .post(finalUrl, { ...data }, { ...config })
     .then(response => response.data)
 }
 
@@ -70,29 +91,3 @@ export async function del(url, config = {}) {
     .delete(url, { ...config })
     .then(response => response.data)
 }
-
-
-
-/* Common API For All Services */
-/**
- * @Author - Dipesh Mali 
- */
-export const makeAPICall = async (apiData) => {
-  let config = {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    ...apiData.config
-  }
-
-  const { option: { method, url, baseURL }, data } = apiData;
-  return await axiosApi({
-    method,
-    url,
-    baseURL,
-    data,
-    ...config
-  }).then(response => response.data)
-    .catch(err => err.response)
-}
-
