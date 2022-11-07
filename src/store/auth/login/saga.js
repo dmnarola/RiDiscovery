@@ -25,6 +25,11 @@ function* checkTenantExistOrNot({ payload }) {
     const response = yield call(verifyTanent, payload);
 
     if (response?.status && response?.isTenantAvailable) {
+      // if (location.port) {
+      //   window.open(`http://localhost:3001/tenant/login`, '_self');
+      // } else {
+      //   window.open(`http://${response.tenantName}.ridiscovery.com/tenant/login`, '_self');
+      // }
       window.open(`${nislTanent}/tenant/login`, '_self');
     }
 
