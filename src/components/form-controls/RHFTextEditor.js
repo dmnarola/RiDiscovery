@@ -9,6 +9,7 @@ const RHFTextEditor = (props) => {
     const {
         onTextEditorChange,
         name,
+        id,
         errorobj,
         control,
         defaultValue,
@@ -69,7 +70,7 @@ const RHFTextEditor = (props) => {
                     </Label>
                     }
                     <ReactQuill
-                        name="sasssas"
+                        name={name}
                         theme="snow"
                         onChange={(e) => field.onChange(e)}
                         modules={modules}
@@ -82,7 +83,7 @@ const RHFTextEditor = (props) => {
             )}
             name={name}
             control={control}
-            id={name}
+            id={id}
             defaultValue={someValue}
         />
 

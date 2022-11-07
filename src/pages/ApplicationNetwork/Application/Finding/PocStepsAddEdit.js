@@ -33,7 +33,12 @@ const PocStepsAddEdit = (props) => {
     });
 
     const onSubmitPocSteps = (data) => {
-        if (data) {
+        if (isEditMode || data) {
+            setFormData(data)
+            handleToggle()
+
+        }
+        else {
             console.log('poc data :>> ', data);
             setFormData(data)
             handleToggle()
@@ -114,6 +119,8 @@ const PocStepsAddEdit = (props) => {
                         errorobj={pocErrors}
                         control={pocControl}
                         pocSetvalue={pocSetvalue}
+                        editPocData={editPocData ? editPocData : null}
+
                     />
                 </Col>
             </Row>

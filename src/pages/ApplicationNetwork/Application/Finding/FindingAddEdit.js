@@ -29,35 +29,74 @@ const FindingAddEdit = () => {
     const { findingid } = useParams()
     console.log('findingid :>> ', findingid);
 
-    const editFindingData = {
-        id: 1256,
-        status: {
-            value: "Open",
-            label: "Open",
-        },
-        title: 'FIND !',
-        cwe: {
-            value: "Close",
-            label: "Close",
-        },
+    // const editFindingData = {
+    //     id: 1256,
+    //     status: {
+    //         value: "Open",
+    //         label: "Open",
+    //     },
+    //     title: 'FIND !',
+    //     cwe: {
+    //         value: "Close",
+    //         label: "Close",
+    //     },
 
-        cve: {
-            value: "Open",
-            label: "Open",
-        },
-        owasp: {
-            value: "Close",
-            label: "Close",
-        },
-        severity: {
-            value: "Open",
-            label: "Open",
-        },
-        description: "<p>description</p>",
-        impact: "<p>impact</p>",
-        remediation: "<p>remediation</p>",
-        reference: "<p>reference</p>",
-        comment: "<p>comment</p>",
+    //     cve: {
+    //         value: "Open",
+    //         label: "Open",
+    //     },
+    //     owasp: {
+    //         value: "Close",
+    //         label: "Close",
+    //     },
+    //     severity: {
+    //         value: "Open",
+    //         label: "Open",
+    //     },
+    //     description: "<p>description</p>",
+    //     impact: "<p>impact</p>",
+    //     remediation: "<p>remediation</p>",
+    //     reference: "<p>reference</p>",
+    //     comment: "<p>comment</p>",
+    // }
+
+    const editFindingData = {
+        comment: "<p>fgdfg</p>",
+        cve: { value: 'Open', label: 'Open' },
+        cwe: { value: 'Open', label: 'Open' },
+        description: "<p>eteter</p>",
+        impact: "<p>sdfds</p>",
+        owasp: { value: 'Open', label: 'Open' },
+        poc: [{
+            discription:
+                "df",
+            images: [{
+                path: '0d550647711b50fb15a2720e3935e106.jpeg',
+                preview: 'blob:http://192.168.100.8:3001/0d982b44-efd1-4d1f-a897-3e5aa8d878fe',
+                name: '0d550647711b50fb15a2720e3935e106.jpeg', lastModified: 1659509398901,
+            }],
+
+            parameter: "dfd",
+            payload: "fdf",
+            url: "fdf"
+        }, {
+            discription:
+                "df",
+            images: [{
+                path: '0d550647711b50fb15a2720e3935e106.jpeg',
+                preview: 'blob:http://192.168.100.8:3001/0d982b44-efd1-4d1f-a897-3e5aa8d878fe',
+                name: '0d550647711b50fb15a2720e3935e106.jpeg', lastModified: 1659509398901,
+            }],
+
+            parameter: "dfd",
+            payload: "fdf",
+            url: "fdf"
+        }],
+        reference: "<p>dfgdf</p>",
+        remediation: "<p>dfgdgd</p>",
+        severity: { value: 'Open', label: 'Open' },
+        status: { value: 'Open', label: 'Open' },
+        title: "adsfsefgs",
     }
 
     const isEditMode = findingid

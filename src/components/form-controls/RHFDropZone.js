@@ -49,7 +49,7 @@ const Dropzone = ({ onChange, name, pocSetvalue, }) => {
     const onDrop = useCallback((acceptedFiles) => {
         // Do something with the files
         // console.log({ acceptedFiles });
-        pocSetvalue(name, acceptedFiles)
+        pocSetvalue(name, files)
 
         setfiles(
             acceptedFiles.map((file) =>
