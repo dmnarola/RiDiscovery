@@ -9,7 +9,10 @@ import {
   LOGOUT_USER_FAIL,
   VERIFY_TANENT,
   VERIFY_TANENT_SUCCESS,
-  VERIFY_TANENT_FAIL
+  VERIFY_TANENT_FAIL,
+  GET_PERMISSION,
+  GET_PERMISSION_SUCCESS,
+  GET_PERMISSION_FAIL
 } from "./actionTypes"
 
 export const loginUser = (user, history) => {
@@ -74,6 +77,29 @@ export const verifyTanentFail = resp => {
     payload: resp,
   }
 }
+
+
+export const getPermission = (data) => {
+  return {
+    type: GET_PERMISSION,
+    payload: data,
+  }
+}
+
+export const getPermissionSuccess = resp => {
+  return {
+    type: GET_PERMISSION_SUCCESS,
+    payload: resp,
+  }
+}
+
+export const getPermissionFail = resp => {
+  return {
+    type: GET_PERMISSION_FAIL,
+    payload: resp,
+  }
+}
+
 
 export const apiError = error => {
   return {

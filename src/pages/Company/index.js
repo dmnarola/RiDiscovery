@@ -8,6 +8,8 @@ import { Card, CardBody, CardHeader, Col, Row } from "reactstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllAgency, getAllDevAgency, getAllSecurityAgency } from "store/company/agency/actions";
 import CompanyAddEdit from "./CompanyAddEdit";
+import { isModulePermisssion } from "helpers/util";
+import { ROLE_PERMISSIONS } from "constants/RolePermissions";
 
 const Company = () => {
   const [editCompanyData, setEditCompanyData] = useState(null);
@@ -118,13 +120,15 @@ const Company = () => {
 
       <Col xs={6} lg={12}>
         <div className="d-flex justify-content-end mb-3">
-          <RHFButton
-            btnName="Add"
-            icon="plus"
-            onClick={() => {
-              handleToggle();
-            }}
-          />
+          {isModulePermisssion(ROLE_PERMISSIONS?.ADD_UPDATE_AGENCY) &&
+            <RHFButton
+              btnName="Add"
+              icon="plus"
+              onClick={() => {
+                handleToggle();
+              }}
+            />
+          }
           <DialogBox
             isModelOpen={isModelOpen}
             handleToggle={handleToggle}
