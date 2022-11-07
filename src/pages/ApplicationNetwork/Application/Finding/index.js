@@ -45,7 +45,7 @@ const Finding = ({ editApplicationData }) => {
     const [filterColumns, setFilterColumns] = useState([]);
     const [columnOptions, setColumnOption] = useState([]);
 
-
+    console.log('editApplicationData.id :>> ', editApplicationData?.id);
     useEffect(() => {
         const columnFilter = [...columns];
         setColumnOption([...columns]);
@@ -75,6 +75,7 @@ const Finding = ({ editApplicationData }) => {
 
     const editHandler = (obj) => {
         console.log({ obj })
+        history.push(`/application/${editApplicationData?.id}/${obj?.id}/edit-finding`)
     };
 
     const handleOnChange = (data, name) => {

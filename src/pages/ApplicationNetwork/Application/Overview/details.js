@@ -15,6 +15,7 @@ const testLink = "https://www.figma.com/proto/fqwZm1SZRGMif2r46lMHxn/29-08-22-Ad
 const ApplicationDetail = () => {
     const location = useLocation()
     const editApplicationData = location?.state?.objData
+    console.log('editApplicationData :>> ', editApplicationData);
 
     const handleCheckboxChange = (val) => {
         console.log('Checkbox Val ->', val);
@@ -35,7 +36,7 @@ const ApplicationDetail = () => {
                     <Col lg={4}>
                         <Card>
                             <CardBody style={{ height: "300px" }}>
-                        Pie Chart
+                                Pie Chart
                             </CardBody>
                         </Card>
                     </Col>
@@ -64,19 +65,19 @@ const ApplicationDetail = () => {
                     <CardBody>
                         <div className="app-details">
                             <p className="h6 mt-1">Status</p>
-                            <p className="fs-6">{editApplicationData.status}</p>
+                            <p className="fs-6">{editApplicationData?.status}</p>
                             <div>
                                 <RHFDatePicker
                                     name="startDate"
                                     label="Start Date"
-                                    defaultValue={editApplicationData.startDate}
+                                    defaultValue={editApplicationData?.startDate}
                                     isController={false}
                                     disabled={true}
                                 />
                                 <RHFDatePicker
                                     name="endDate"
                                     label="End Date"
-                                    defaultValue={editApplicationData.endDate}
+                                    defaultValue={editApplicationData?.endDate}
                                     isController={false}
                                     disabled={true}
                                 />
@@ -88,7 +89,7 @@ const ApplicationDetail = () => {
                                         name="checkbox"
                                         label="OWASP"
                                         control={control}
-                                        checked={editApplicationData.checkList === "OWASP" ? true : false}
+                                        checked={editApplicationData?.checkList === "OWASP" ? true : false}
                                         isController={true}
                                         onChange={handleCheckboxChange}
                                     />
@@ -98,7 +99,7 @@ const ApplicationDetail = () => {
                                         name="checkbox"
                                         label="CVE"
                                         control={control}
-                                        checked={editApplicationData.checkList === "CVE" ? true : false}
+                                        checked={editApplicationData?.checkList === "CVE" ? true : false}
                                         isController={true}
                                         onChange={handleCheckboxChange}
                                     />
@@ -108,7 +109,7 @@ const ApplicationDetail = () => {
                                         name="checkbox"
                                         label="CWE"
                                         control={control}
-                                        checked={editApplicationData.checkList === "CWE" ? true : false}
+                                        checked={editApplicationData?.checkList === "CWE" ? true : false}
                                         isController={true}
                                         onChange={handleCheckboxChange}
                                     />

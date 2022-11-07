@@ -119,6 +119,7 @@ body[data-topbar="dark"] {
     border: 1px solid #adb5bd;
     padding: 10px;
     width: fit-content;
+
     margin: 3px 3px 3px 0px;
     border-radius: 5px;
 }
@@ -144,10 +145,14 @@ body[data-topbar="dark"] {
 }
 
 .delete-preview-image {
-    margin-bottom: 3px;
     padding: 2px;
     float: right;
 }
+
+.delete-preview-image:hover {
+    color: #5156be
+}
+
 
 .accept {
     border-color: #107c10 !important;

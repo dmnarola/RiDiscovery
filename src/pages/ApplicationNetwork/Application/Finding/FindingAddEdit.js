@@ -21,10 +21,31 @@ import RHFButton from 'components/form-controls/RHFButton';
 import DialogBox from 'components/Modals/DialogBox';
 import PocStepsAddEdit from './PocStepsAddEdit';
 import { useEffect } from 'react';
+import FeatherIcon from "feather-icons-react";
 
 const FindingAddEdit = () => {
     let history = useHistory()
     const { applicationId } = useParams()
+    const { findingid } = useParams()
+    console.log('findingid :>> ', findingid);
+
+    const editFindingData
+        = {
+        id: 1256,
+        status: "Open",
+        title: 'FIND !',
+        cwe: 'Open',
+        cve: 'Close',
+        owasp: 'Open',
+        severity: 'Close',
+        description: "<p>description</p>",
+        impact: "<p>impact</p>",
+        remediation: "<p>remediation</p>",
+        reference: "<p>reference</p>",
+        comment: "<p>comment</p>",
+    }
+
+    const isEditMode = findingid
 
     const findingSchema = yup.object().shape({
         status: yup
@@ -88,6 +109,9 @@ const FindingAddEdit = () => {
         remediation: yup
             .string()
             .required("Remediation is required"),
+        reference: yup
+            .string()
+            .required("Reference is required"),
         comment: yup
             .string()
             .required("Comment is required"),
@@ -105,10 +129,10 @@ const FindingAddEdit = () => {
 
 
     const [isModelOpen, setIsModelOpen] = useState(false);
-    const [editUserData, setEditUserData] = useState(null);
+    const [editPocData, setEditPocData] = useState(null);
     const [formData, setFormData] = useState(null);
     const [pocStepData, setPocStepData] = useState([])
-    const [pocStepsImage, setPocStepsImage] = useState([])
+    const [pocStepsImage,] = useState([])
 
     const handleToggle = () => {
         setIsModelOpen(!isModelOpen);
@@ -128,6 +152,31 @@ const FindingAddEdit = () => {
         console.log('Finding data :>> ', data);
         history.push(`/application/${applicationId}/overview`)
     };
+
+    const deleteFile = (e) => {
+        const deleted = pocStepData.filter((item, index) => index !== e);
+        setPocStepData(deleted);
+    }
+
+    const uploadFile = (pocdata) => {
+        setEditPocData(pocdata)
+        handleToggle()
+    }
+
+    console.log('editPocData :>> ', editPocData);
+
+
+    useEffect(() => {
+        if (isEditMode) {
+            const formFields = Object.keys(editFindingData);
+            formFields.forEach((field) => {
+                setValue(field, editFindingData[field]);
+            });
+        }
+        else {
+            setValue(null)
+        }
+    }, [editFindingData]);
 
     return (
         <div className="page-content">
@@ -344,18 +393,28 @@ const FindingAddEdit = () => {
                                             <PocStepsAddEdit
                                                 handleToggle={handleToggle}
                                                 setFormData={setFormData}
-                                                setPocStepsImage={setPocStepsImage}
+                                                editPocData={editPocData}
                                             />
                                         </DialogBox>
                                     </div>
 
-                                    {pocStepsImage?.map((file, index) => (
+                                    {pocStepData?.map((pocdata, index) => (
                                         <div className='file-preview' key={index} >
                                             <img
-                                                src={file.preview}
+                                                src={pocdata?.images[0]?.preview}
                                                 alt="image"
                                                 style={{ width: "200px", height: "200px" }}
                                             />
+                                            <div>
+                                                <FeatherIcon
+                                                    className="delete-preview-image" size="25" icon="trash-2"
+                                                    onClick={() => { deleteFile(index) }}
+                                                />
+                                                <FeatherIcon
+                                                    className="delete-preview-image" size="25" icon="edit"
+                                                    onClick={() => { uploadFile(pocdata) }}
+                                                />
+                                            </div>
                                         </div>
                                     ))}
 

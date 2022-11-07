@@ -4,7 +4,7 @@ import { Controller } from 'react-hook-form';
 import { Button, Card, FormFeedback, Label } from 'reactstrap';
 import FeatherIcon from "feather-icons-react";
 
-const RHFDropZone = ({ control, errorobj, label, name, isRequired = true, pocSetvalue, setPocStepsImage }) => {
+const RHFDropZone = ({ control, errorobj, label, name, isRequired = true, pocSetvalue, }) => {
     let isError = false;
     let errorMessage = "";
 
@@ -27,7 +27,6 @@ const RHFDropZone = ({ control, errorobj, label, name, isRequired = true, pocSet
                         id="file"
                         pocSetvalue={pocSetvalue}
                         name={name}
-                        setPocStepsImage={setPocStepsImage}
                     />
                     {isError && (
                         <FormFeedback type="invalid">{errorMessage}</FormFeedback>
@@ -43,7 +42,7 @@ const RHFDropZone = ({ control, errorobj, label, name, isRequired = true, pocSet
     );
 };
 
-const Dropzone = ({ onChange, name, pocSetvalue, setPocStepsImage }) => {
+const Dropzone = ({ onChange, name, pocSetvalue, }) => {
 
     const [files, setfiles] = useState([]);
 
@@ -51,10 +50,7 @@ const Dropzone = ({ onChange, name, pocSetvalue, setPocStepsImage }) => {
         // Do something with the files
         // console.log({ acceptedFiles });
         pocSetvalue(name, acceptedFiles)
-        setPocStepsImage(
-            acceptedFiles.map((file) =>
-                Object.assign(file, { preview: URL.createObjectURL(file) })
-            ))
+
         setfiles(
             acceptedFiles.map((file) =>
                 Object.assign(file, { preview: URL.createObjectURL(file) })

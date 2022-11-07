@@ -85,7 +85,7 @@ const ApplicationAddEdit = (props) => {
     const onSubmit = (data) => {
         console.log('data', data)
         if (data) {
-            setFlag(true) 
+            setFlag(true)
         }
     };
 
@@ -260,7 +260,7 @@ const ApplicationAddEdit = (props) => {
                             </Row>
                         </form>
                     </CardBody>
-                </Card>  
+                </Card>
             </Container>
         </div>
     )
