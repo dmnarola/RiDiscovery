@@ -129,3 +129,7 @@ export const ADD_COMPANY = "/company/add";
 export const GET_ALL_COMPANY = "/company/list";
 
 
+/* Role Permission Routes */
+export const GET_ROLE_PERMISSIONS = '/getUserPermissions'
+
+

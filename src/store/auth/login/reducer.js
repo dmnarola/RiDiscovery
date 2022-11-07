@@ -8,13 +8,17 @@ import {
   LOGOUT_USER_FAIL,
   VERIFY_TANENT,
   VERIFY_TANENT_SUCCESS,
-  VERIFY_TANENT_FAIL
+  VERIFY_TANENT_FAIL,
+  GET_PERMISSION,
+  GET_PERMISSION_SUCCESS,
+  GET_PERMISSION_FAIL
 } from "./actionTypes";
 
 const initialState = {
   error: "",
   loading: false,
   user: null,
+  permissions: null,
   tanent: { isTenantAvailable: true }
 };
 
@@ -70,6 +74,28 @@ const login = (state = initialState, action) => {
         tanent: action?.payload
       };
       break;
+
+
+    case GET_PERMISSION:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case GET_PERMISSION_SUCCESS:
+      state = {
+        ...state,
+        loading: false,
+        permissions: action?.payload
+      };
+      break;
+    case GET_PERMISSION_FAIL:
+      state = {
+        ...state,
+        loading: false,
+      };
+      break;
+
     case API_ERROR:
       state = { ...state, error: action.payload, loading: false };
       break;

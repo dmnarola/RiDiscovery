@@ -8,12 +8,15 @@ import { Card, CardBody, CardHeader, Col, Row } from "reactstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllAgency, getAllDevAgency, getAllSecurityAgency } from "store/company/agency/actions";
 import CompanyAddEdit from "./CompanyAddEdit";
+import { isModulePermisssion } from "helpers/util";
 
 const Company = () => {
   const [editCompanyData, setEditCompanyData] = useState(null);
   const [isModelOpen, setIsModelOpen] = useState(false);
 
   const { isLoading, devAgency, securityAgency } = useSelector(state => state.Agency)
+
+  const { permissions } = useSelector(state => state.Login)
 
   console.log("list =>", devAgency)
 
@@ -118,13 +121,15 @@ const Company = () => {
 
       <Col xs={6} lg={12}>
         <div className="d-flex justify-content-end mb-3">
-          <RHFButton
-            btnName="Add"
-            icon="plus"
-            onClick={() => {
-              handleToggle();
-            }}
-          />
+          {isModulePermisssion(permissions, 'add_update_agency') &&
+            <RHFButton
+              btnName="Add"
+              icon="plus"
+              onClick={() => {
+                handleToggle();
+              }}
+            />
+          }
           <DialogBox
             isModelOpen={isModelOpen}
             handleToggle={handleToggle}

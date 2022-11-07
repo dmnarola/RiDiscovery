@@ -282,6 +282,7 @@ const onAddComment = (productId, commentText) => {
 
 /** DM  API Execution */
 
+/* AUTH  */
 export const registerNewUser = (data) => makeAPICall({ option: AUTH.registerNewUser, data });
 export const verifyUserEmail = (data) => makeAPICall({ option: AUTH.verifyUserEmail, data });
 export const resetPassword = (data) => makeAPICall({ option: AUTH.resetPassword, data })
@@ -290,9 +291,15 @@ export const signIn = (data) => makeAPICall({ option: AUTH.signIn, data });
 export const getQRCode = (data) => makeAPICall({ option: AUTH.getQRCode, data });
 export const verifyOTP = (data) => makeAPICall({ option: AUTH.verifyOTP, data });
 export const verifyTanent = (data) => makeAPICall({ option: AUTH.verifyTanent, data });
+
+/* Company */
 export const onBoardCompany = (data) => makeAPICall({ option: COMPANY.onBoardCompany, data });
 export const addCompany = (data) => makeAPICall({ option: COMPANY.addCompany, data });
 export const listAllCompany = (data) => makeAPICall({ option: COMPANY.listAllCompany, data });
+
+/* Role Permission */
+export const getAllUserPermission = (params) => makeAPICall({ option: AUTH.getUserPermission, params });
+
 
 export {
   getLoggedInUser,

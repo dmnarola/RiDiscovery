@@ -1,8 +1,8 @@
+import React, { useEffect } from "react";
 import PropTypes from 'prop-types';
-import React from "react";
 
 import { Switch, BrowserRouter as Router } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 
 // Import Routes all
 import { userRoutes, authRoutes } from "./routes/allRoutes";
@@ -23,25 +23,32 @@ import "./assets/scss/preloader.scss";
 // import { initFirebaseBackend } from "./helpers/firebase_helper"
 
 import fakeBackend from "./helpers/AuthType/fakeBackend";
+import { getPermission } from 'store/actions';
 
 // Activating fake backend
 fakeBackend();
 
-// const firebaseConfig = {
-//   apiKey: process.env.REACT_APP_APIKEY,
-//   authDomain: process.env.REACT_APP_AUTHDOMAIN,
-//   databaseURL: process.env.REACT_APP_DATABASEURL,
-//   projectId: process.env.REACT_APP_PROJECTID,
-//   storageBucket: process.env.REACT_APP_STORAGEBUCKET,
-//   messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
-//   appId: process.env.REACT_APP_APPID,
-//   measurementId: process.env.REACT_APP_MEASUREMENTID,
-// }
-
-// init firebase backend
-// initFirebaseBackend(firebaseConfig)
-
 const App = props => {
+
+  const { user } = useSelector(state => state?.Login)
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    if (user?.user) {
+      const params = {
+        slug: user?.user?.roleId
+      }
+      dispatch(getPermission({ ...params }))
+    }
+    else {
+      const params = {
+        slug: 'pentester'
+      }
+      dispatch(getPermission({ ...params }))
+    }
+  }, [user?.user?.roleId])
+
 
   function getLayout() {
     let layoutCls = VerticalLayout

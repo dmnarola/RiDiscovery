@@ -1,4 +1,4 @@
-import { FORGET_PASSWORD, GENERATE_QR_CODE, RESET_PASSWORD, RIGISTER_NEW_USER, USER_LOGIN, VERIFY_OTP, VERIFY_TANENT, VERIFY_USER_EMAIL } from "helpers/url_helper";
+import { FORGET_PASSWORD, GENERATE_QR_CODE, GET_ROLE_PERMISSIONS, RESET_PASSWORD, RIGISTER_NEW_USER, USER_LOGIN, VERIFY_OTP, VERIFY_TANENT, VERIFY_USER_EMAIL } from "helpers/url_helper";
 import { API_URL } from "./Services";
 
 const baseURL = API_URL.AUTH;
@@ -43,5 +43,10 @@ export const AUTH = {
         method: 'POST',
         url: VERIFY_OTP,
         baseURL
+    },
+    getUserPermission: {
+        method: 'GET',
+        url: GET_ROLE_PERMISSIONS,
+        baseURL: API_URL.ROLE
     }
 }

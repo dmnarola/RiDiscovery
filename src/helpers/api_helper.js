@@ -85,12 +85,12 @@ export const makeAPICall = async (apiData) => {
     ...apiData.config
   }
 
-  const { option: { method, url, baseURL }, data } = apiData;
+  const { option: { method, url, baseURL }, ...rest } = apiData;
   return await axiosApi({
     method,
     url,
     baseURL,
-    data,
+    ...rest,
     ...config
   }).then(response => response.data)
     .catch(err => err.response)

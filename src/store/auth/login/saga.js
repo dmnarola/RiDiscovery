@@ -1,12 +1,13 @@
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 
 // Login Redux States
-import { LOGIN_USER, LOGOUT_USER, SOCIAL_LOGIN, VERIFY_TANENT } from "./actionTypes";
-import { apiError, loginSuccess, loginFail, logoutUserSuccess, verifyTanentSuccess, verifyTanentFail } from "./actions";
+import { GET_PERMISSION, LOGIN_USER, LOGOUT_USER, SOCIAL_LOGIN, VERIFY_TANENT } from "./actionTypes";
+import { apiError, loginSuccess, loginFail, logoutUserSuccess, verifyTanentSuccess, verifyTanentFail, getPermissionSuccess, getPermissionFail } from "./actions";
 
 //Include Both Helper File with needed methods
 import { getFirebaseBackend } from "../../../helpers/firebase_helper";
 import {
+  getAllUserPermission,
   postFakeLogin,
   postJwtLogin,
   postSocialLogin,
@@ -93,6 +94,25 @@ function* logoutUser({ payload: { history } }) {
   }
 }
 
+
+/* Get Login user permission */
+function* getLoginUserPermission({ payload }) {
+  try {
+    const response = yield call(getAllUserPermission, payload);
+    if (response?.status) {
+      const permissions = {}
+      response?.permissions?.map(obj => {
+        permissions[`${obj?.permissionSlug}`] = obj?.isAllowed
+      })
+      yield put(getPermissionSuccess(permissions))
+    }
+  } catch (error) {
+    yield put(getPermissionFail(error))
+  }
+
+}
+
+
 function* socialLogin({ payload: { data, history, type } }) {
   try {
     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
@@ -114,6 +134,7 @@ function* socialLogin({ payload: { data, history, type } }) {
 function* authSaga() {
   yield takeEvery(VERIFY_TANENT, checkTenantExistOrNot);
   yield takeEvery(LOGIN_USER, loginUser);
+  yield takeEvery(GET_PERMISSION, getLoginUserPermission);
   yield takeLatest(SOCIAL_LOGIN, socialLogin);
   yield takeEvery(LOGOUT_USER, logoutUser);
 }
