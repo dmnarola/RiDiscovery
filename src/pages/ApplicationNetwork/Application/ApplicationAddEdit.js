@@ -12,7 +12,7 @@ import RHFTextField from 'components/form-controls/RHFTextField';
 import { applicationType, assessmentType, commonForAppDropDown, tamplateAppData } from 'constants/mokeData';
 
 const ApplicationAddEdit = (props) => {
-    const { setFlag } = props
+    const { setFlag, setApplicationData } = props
     let history = useHistory()
     const location = useLocation()
     const editApplicationData = location?.state?.objData
@@ -85,6 +85,7 @@ const ApplicationAddEdit = (props) => {
     const onSubmit = (data) => {
         console.log('data', data)
         if (data) {
+            setApplicationData(data)
             setFlag(true) 
         }
     };

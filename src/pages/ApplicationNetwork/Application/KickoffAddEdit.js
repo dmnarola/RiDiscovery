@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import Breadcrumb from 'components/Common/Breadcrumb';
-import { Card, CardBody, CardHeader, Col, Container, Label, Row } from 'reactstrap';
+import { Card, CardBody, CardHeader, Col, Container, FormFeedback, Label, Row } from 'reactstrap';
 import RHFAutoCompleteSelect from 'components/form-controls/RHFAutoCompleteSelect';
 import RHFButton from 'components/form-controls/RHFButton';
 import RHFTextField from 'components/form-controls/RHFTextField';
@@ -12,11 +12,11 @@ import { applicationType, assessmentType } from 'constants/mokeData';
 import RHFCheckbox from 'components/form-controls/RHFCheckbox';
 import RHFMultipleValue from 'components/form-controls/RHFMultipleValue';
 
-const KickoffAddEdit = () => {
+const KickoffAddEdit = ({ applicationData }) => {
     let history = useHistory()
     const location = useLocation()
     const editApplicationData = location?.state?.objData
-    const isEditMode = editApplicationData ? true : false;
+    const isEditMode = applicationData ? true : false;
 
     const kickOffDocSchema = yup.object().shape({
         fqdn: yup
@@ -36,54 +36,57 @@ const KickoffAddEdit = () => {
             .shape({ label: yup.string(), value: yup.string() })
             .nullable()
             .required("Select atleast one option"),
+        // checkbox: yup
+        //     .object()
+        //     .shape({
+        //         option1: yup.boolean(),
+        //         option2: yup.boolean(),
+        //         option3: yup.boolean()
+        //     })
+            //     .test(
+            //         "checkbox",
+            //         "At least one of the checkbox is required...",
+            //         (options) => {
+            //             console.log(
+            //                 options.option1,
+            //                 "yup multiCheckbox result"
+            //             );
+            //             return options.option1;
+            //         }
+            //     ),
         checkbox: yup
             .boolean()
-            .oneOf([true], 'Select atleast one option'),
+            .oneOf([true], 'Select atleast one option...'),
         scopeDetails: yup.array().of(
+            yup.object().shape({
+                key: yup.string().required("Required..."),
+                value: yup.string().required("Required..."),
+            })
+        ),
+        appDetails: yup.array().of(
             yup.object().shape({
                 key: yup.string().required("Required"),
                 value: yup.string().required("Required"),
             })
-        )
-        // .compact((v) => { !v.key })
-        // .compact((v) => !v.value)
-        // .min(1, 'You need to enter atleast one value'),
-        // appDetails: yup.array().of(
-        //     yup.object().shape({
-        //         key: yup.string().ensure(),
-        //         value: yup.string().ensure(),
-        //     })
-        // )
-        //     .compact((v) => { !v.key })
-        //     .compact((v) => !v.value)
-        //     .min(1, 'You need to enter atleast one value'),
-        // outOfScope: yup.array().of(
-        //     yup.object().shape({
-        //         key: yup.string().ensure(),
-        //         value: yup.string().ensure(),
-        //     })
-        // )
-        //     .compact((v) => { !v.key })
-        //     .compact((v) => !v.value)
-        //     .min(1, 'You need to enter atleast one value'),
-        // userDetails: yup.array().of(
-        //     yup.object().shape({
-        //         key: yup.string().ensure(),
-        //         value: yup.string().ensure(),
-        //     })
-        // )
-        //     .compact((v) => { !v.key })
-        //     .compact((v) => !v.value)
-        //     .min(1, 'You need to enter atleast one value'),
-        // serverDetails: yup.array().of(
-        //     yup.object().shape({
-        //         key: yup.string().ensure(),
-        //         value: yup.string().ensure(),
-        //     })
-        // )
-        //     .compact((v) => { !v.key })
-        //     .compact((v) => !v.value)
-        //     .min(1, 'You need to enter atleast one value'),
+        ),
+        outOfScope: yup.array().of(
+            yup.object().shape({
+                key: yup.string().required("Required"),
+                value: yup.string().required("Required"),
+            })
+        ),
+        userDetails: yup.array().of(
+            yup.object().shape({
+                key: yup.string().required("Required"),
+                value: yup.string().required("Required"),
+            })
+        ),
+        serverDetails: yup.array().of(
+            yup.object().shape({
+                key: yup.string().required("Required"),
+                value: yup.string().required("Required"),
+            })
+        ),
     });
 
     const {
@@ -115,21 +118,21 @@ const KickoffAddEdit = () => {
 
     useEffect(() => {
         if (isEditMode) {
-            const formFields = Object.keys(editApplicationData);
+            const formFields = Object.keys(applicationData);
             formFields.forEach((field) => {
-                setValue(field, editApplicationData[field]);
+                setValue(field, applicationData[field]);
             });
         }
         else {
             setValue(null)
         }
-    }, [editApplicationData]);
+    }, [applicationData]);
 
-
+    // console.log('errors at kickoff Page', errors)
     return (
         <div className="page-content">
             <Container fluid>
-                <Breadcrumb title="Kick-off Doc" breadcrumbItem="Kick-off Doc:" />
+                <Breadcrumb title="Kick-off Doc" breadcrumbItem="Kick-off Doc" />
                 <Card>
                     <CardBody>
                         <form onSubmit={handleSubmit(onSubmitKickOff)}>
@@ -213,44 +216,54 @@ const KickoffAddEdit = () => {
 
                                 </Col>
                             </Row>
-                            <Row>
+                            <Row className="mb-3">
                                 <Col sm="6">
-                                    <Card className='p-0' style={{ height: "155px", }}>
+                                    <Card className={`${errors?.["checkbox"] ? "border-danger" : null} mb-0`} style={{ height: "155px", }}>
                                         <CardHeader className='d-flex justify-content-between my-1 py-1 border-0'>
                                             <Label htmlFor="example-text-input" className="form-Label">
                                                 Checklist
                                             </Label>
                                         </CardHeader>
-                                        <CardBody className='mx-2 p-0' style={{ height: "110px", overflowY: "auto" }}>
+                                        <CardBody className='mx-2 p-0' style={{ height: "110px" }}>
                                             <div className="form-check">
                                                 <RHFCheckbox
                                                     name="checkbox"
+                                                    value="OWASP"
                                                     label="OWASP"
                                                     control={control}
                                                     isController={true}
-                                                    onChange={handleCheckboxChange}
+                                                    errorobj={errors}
+                                                    // onChange={handleCheckboxChange}
                                                 />
                                             </div>
                                             <div className="form-check">
                                                 <RHFCheckbox
                                                     name="checkbox"
+                                                    value="CVE"
                                                     label="CVE"
                                                     control={control}
                                                     isController={true}
-                                                    onChange={handleCheckboxChange}
+                                                    errorobj={errors}
+                                                    // onChange={handleCheckboxChange}
                                                 />
                                             </div>
-                                            <div className="form-check">
+                                            <div className="form-check ">
                                                 <RHFCheckbox
                                                     name="checkbox"
+                                                    value="CWE"
                                                     label="CWE"
                                                     control={control}
                                                     isController={true}
-                                                    onChange={handleCheckboxChange}
+                                                    errorobj={errors}
+                                                    // onChange={handleCheckboxChange}
                                                 />
                                             </div>
                                         </CardBody>
                                     </Card>
+                                    {console.log("errors", errors)}
+                                    {errors && (
+                                        <FormFeedback type="invalid">{errors?.["checkbox"]?.message}</FormFeedback>
+                                    )}
                                 </Col>
                                 <Col sm="6">
                                     <RHFMultipleValue
@@ -263,7 +276,7 @@ const KickoffAddEdit = () => {
                                     />
                                 </Col>
                             </Row>
-                            <Row>
+                            <Row className="mb-3">
                                 <Col sm="6">
                                     <RHFMultipleValue
                                         label="App Details"
@@ -285,7 +298,7 @@ const KickoffAddEdit = () => {
                                     />
                                 </Col>
                             </Row>
-                            <Row>
+                            <Row className="mb-3">
                                 <Col sm="6">
                                     <RHFMultipleValue
                                         label="User Details"
