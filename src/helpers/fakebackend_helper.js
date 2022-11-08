@@ -295,6 +295,7 @@ export const verifyTanent = (data) => makeAPICall({ option: AUTH.verifyTanent, d
 /* Company */
 export const onBoardCompany = (data) => makeAPICall({ option: COMPANY.onBoardCompany, data });
 export const addCompany = (data) => makeAPICall({ option: COMPANY.addCompany, data });
+export const editCompany = (data) => makeAPICall({ option: COMPANY.editCompany, data });
 export const listAllCompany = (data) => makeAPICall({ option: COMPANY.listAllCompany, data });
 
 /* Role Permission */

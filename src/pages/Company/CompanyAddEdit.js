@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import RHFAutoCompleteSelect from "components/form-controls/RHFAutoCompleteSelect";
@@ -8,37 +8,38 @@ import RHFFileUpload from "components/form-controls/RHFFileUpload";
 import RHFTextField from "components/form-controls/RHFTextField";
 import { Col, Row } from "reactstrap";
 import * as yup from "yup";
-import { addAgency } from 'store/company/agency/actions';
+import { addAgency, updateAgency } from 'store/company/agency/actions';
 import RHFInputTags from 'components/form-controls/RHFInputTags';
 import defaultImage from "../../assets/images/Default-User-Image.jpeg";
 
+
+const CategoryData = [
+  {
+    value: "development_agency_internal",
+    label: "Development Agency - Internal",
+  },
+  {
+    value: "security_agency_internal",
+    label: "Security Agency - Internal",
+  },
+  {
+    value: "development_agency_external",
+    label: "Development Agency - External",
+  },
+  {
+    value: "security_agency_external",
+    label: "Security Agency - External",
+  },
+];
+
 const CompanyAddEdit = (props) => {
-  const { editCompanyData, handleToggle } = props;
+  const { editCompanyData, handleToggle, setRefresh } = props;
+
   const isEditMode = editCompanyData ? true : false;
+  const { isLoading } = useSelector(state => state.Agency)
   const [fileData, setFileData] = useState();
 
-  console.log("fileData ==>", fileData);
-
   const dispatch = useDispatch();
-
-  const CategoryData = [
-    {
-      value: "development_agency_internal",
-      label: "Development Agency - Internal",
-    },
-    {
-      value: "security_agency_internal",
-      label: "Security Agency - Internal",
-    },
-    {
-      value: "development_agency_external",
-      label: "Development Agency - External",
-    },
-    {
-      value: "security_agency_external",
-      label: "Security Agency - External",
-    },
-  ];
 
   const userSchema = yup.object().shape({
     companyLogo: yup.mixed().required("Company logo is required"),
@@ -70,7 +71,14 @@ const CompanyAddEdit = (props) => {
       companyType: data?.companyType?.value,
       companyLogo: fileData?.base64
     };
-    dispatch(addAgency(payload));
+    if (isEditMode) {
+      dispatch(updateAgency({ ...payload, companyId: editCompanyData?.id }));
+    } else {
+      dispatch(addAgency(payload));
+    }
+    setTimeout(() => {
+      setRefresh(prevValue => !prevValue)
+    }, 500)
     reset();
     handleToggle()
   };
@@ -78,9 +86,17 @@ const CompanyAddEdit = (props) => {
   useEffect(() => {
     if (isEditMode) {
       const formFields = Object.keys(editCompanyData);
+
       formFields.forEach((field) => {
         setValue(field, editCompanyData[field]);
       });
+
+      const domain = [];
+      editCompanyData?.domains?.map(o => domain.push(o?.companyDomain))
+
+      setValue('domain', domain)
+      setValue('companyType', CategoryData?.find(o => o.value === editCompanyData?.companyType))
+
     }
     else {
       setValue(null)

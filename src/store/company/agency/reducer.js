@@ -3,6 +3,10 @@ import {
   ADD_AGENCY_SUCCESS,
   ADD_AGENCY_FAIL,
 
+  UPDATE_AGENCY,
+  UPDATE_AGENCY_SUCCESS,
+  UPDATE_AGENCY_FAIL,
+
   GET_ALL_AGENCY,
   GET_ALL_AGENCY_SUCCESS,
   GET_ALL_AGENCY_FAIL,
@@ -41,6 +45,26 @@ const agency = (state = initialState, action) => {
       }
       break
     case ADD_AGENCY_FAIL:
+      state = {
+        ...state,
+        isLoading: false,
+        isError: true
+      }
+      break
+
+    case UPDATE_AGENCY:
+      state = {
+        ...state,
+        isLoading: true,
+      }
+      break
+    case UPDATE_AGENCY_SUCCESS:
+      state = {
+        ...state,
+        isLoading: false,
+      }
+      break
+    case UPDATE_AGENCY_FAIL:
       state = {
         ...state,
         isLoading: false,

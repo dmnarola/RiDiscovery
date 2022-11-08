@@ -2,6 +2,9 @@ import {
   ADD_AGENCY,
   ADD_AGENCY_SUCCESS,
   ADD_AGENCY_FAIL,
+  UPDATE_AGENCY,
+  UPDATE_AGENCY_SUCCESS,
+  UPDATE_AGENCY_FAIL,
   GET_ALL_AGENCY,
   GET_ALL_AGENCY_SUCCESS,
   GET_ALL_AGENCY_FAIL,
@@ -30,6 +33,28 @@ export const addAgencySuccess = (data) => {
 export const addAgencyFail = (data) => {
   return {
     type: ADD_AGENCY_FAIL,
+    payload: data
+  }
+}
+
+
+export const updateAgency = (payload) => {
+  return {
+    type: UPDATE_AGENCY,
+    payload,
+  }
+}
+
+export const updateAgencySuccess = (data) => {
+  return {
+    type: UPDATE_AGENCY_SUCCESS,
+    payload: data
+  }
+}
+
+export const updateAgencyFail = (data) => {
+  return {
+    type: UPDATE_AGENCY_FAIL,
     payload: data
   }
 }

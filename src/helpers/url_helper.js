@@ -126,6 +126,7 @@ export const VERIFY_TANENT = "/auth/verify-tenant";
 /* Company Routes */
 export const COMPANY_ON_BOARDING = "/company/register";
 export const ADD_COMPANY = "/company/add";
+export const EDIT_COMPANY = "/company/edit";
 export const GET_ALL_COMPANY = "/company/list";
 
 

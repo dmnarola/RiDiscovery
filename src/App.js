@@ -41,12 +41,6 @@ const App = props => {
       }
       dispatch(getPermission({ ...params }))
     }
-    else {
-      const params = {
-        slug: 'pentester'
-      }
-      dispatch(getPermission({ ...params }))
-    }
   }, [user?.user?.roleId])
 
 
