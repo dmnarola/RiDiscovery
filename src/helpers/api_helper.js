@@ -1,7 +1,5 @@
 import axios from "axios"
 import { Toast } from "components/Common/Toaster"
-import accessToken from "./jwt-token-access/accessToken"
-
 
 // Front-End Port
 const PORT1 = "3000"; // app.ridiscovery.com // global tenenat
@@ -10,15 +8,8 @@ const DEFAULT_TANANT = 'nisl';
 
 const axiosApi = axios.create();
 
-const token = localStorage.getItem('authUser');
-
-if (token) {
-  axiosApi.defaults.headers.common["x-access-token"] = token
-}
-
-
 const successHandler = (response) => {
-  console.log('API Success ->', response);
+  // console.log('API Success ->', response);
   if (response?.data?.message) {
     Toast.success(response?.data?.message)
   }
@@ -26,13 +17,17 @@ const successHandler = (response) => {
 };
 
 const errorHandler = (error) => {
-  console.log("API Error -> Error", error)
+  // console.log("API Error -> Error", error)
   Toast.error(error?.response?.data?.message)
   // return Promise.reject(error?.response);
   return error?.response
 };
 
-axiosApi.interceptors.request.use(function (config) {
+const requestHandler = (config) => {
+  const token = localStorage.getItem('authUser');
+  if (token) {
+    config.headers["x-access-token"] = token
+  }
 
   const tenantName = location?.host?.split('.')[0];
   const tanant = location?.port === PORT2 ? DEFAULT_TANANT : tenantName
@@ -42,7 +37,13 @@ axiosApi.interceptors.request.use(function (config) {
   }
 
   return config;
-});
+};
+
+
+axiosApi.interceptors.request.use(
+  (config) => requestHandler(config),
+  (error) => Promise.reject(error)
+);
 
 axiosApi.interceptors.response.use(
   (response) => successHandler(response),
