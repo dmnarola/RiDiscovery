@@ -157,13 +157,13 @@ const Network = () => {
                         </Col>
                         <Col xs={6} lg={9}>
                             <div className="col d-flex justify-content-end">
-                                <RHFButton
+                                {isModulePermisssion(ROLE_PERMISSIONS?.ADD_NETWORK) && <RHFButton
                                     btnName="Add"
                                     icon="plus"
                                     onClick={() => {
                                         handleToggle()
                                     }}
-                                />
+                                />}
                                 <DialogBox
                                     isModelOpen={isModelOpen}
                                     handleToggle={handleToggle}

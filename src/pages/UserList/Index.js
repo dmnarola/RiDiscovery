@@ -250,7 +250,6 @@ const UserList = () => {
       },
       isVisible: true,
     },
-    // isModulePermisssion(ROLE_PERMISSIONS?.DEACTIVATE_USER) &&
     {
       name: "Active/Deactive",
       cell: (row) => (
