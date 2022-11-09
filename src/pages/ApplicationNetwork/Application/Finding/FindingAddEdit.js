@@ -206,7 +206,7 @@ const FindingAddEdit = () => {
 
     const onSubmit = async (data) => {
         console.log('Finding data :>> ', data);
-        history.push(`/application/${applicationId}/overview`)
+        // history.push(`/application/${applicationId}/overview`)
     };
 
 
