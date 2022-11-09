@@ -3,7 +3,7 @@ import ApplicationAddEdit from './ApplicationAddEdit'
 import KickoffAddEdit from './KickoffAddEdit'
 
 export const ApplicationAdd = () => {
-    const [flag, setFlag] = useState(true)
+    const [flag, setFlag] = useState(false)
     const [applicationData, setApplicationData] = useState("")
 
     return (<React.Fragment>

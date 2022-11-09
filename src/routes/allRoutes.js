@@ -29,6 +29,8 @@ import SetPassword from 'pages/Authentication/SetPassword';
 import VerifyOTP from 'pages/Authentication/VerifyOTP';
 import RegisterCompany from 'pages/Authentication/RegisterCompany';
 import TanentLogin from 'pages/Authentication/TanentLogin';
+import KickoffAddEdit from 'pages/ApplicationNetwork/Application/KickoffAddEdit';
+import ApplicationAddEdit from 'pages/ApplicationNetwork/Application/ApplicationAddEdit';
 
 const userRoutes = [
   //dashboard
@@ -36,7 +38,8 @@ const userRoutes = [
 
   //application/Network
   { path: "/applications", component: ApplicationNetwork },
-  { path: "/application/add", component: ApplicationAdd },
+  { path: "/application/add", component: ApplicationAddEdit },
+  { path: "/application/add/kickoff", component: KickoffAddEdit },
   { path: "/application/:applicationId/overview", component: Overview },
   { path: "/application/:applicationId/add-finding", component: FindingAddEdit },
 

@@ -11,6 +11,8 @@ import FilterByStatus from 'components/Common/FilterByStatus';
 import RHFButton from 'components/form-controls/RHFButton';
 import DropdownButton from 'components/form-controls/DropdownButton';
 import ManageColumns from 'components/Common/ManageColumns';
+import { isModulePermisssion } from 'helpers/util';
+import { ROLE_PERMISSIONS } from 'constants/RolePermissions';
 
 const usersList = [
     { id: 1, name: 'Dipesh Mali', image: avatar1 },
@@ -33,89 +35,65 @@ const data = [
         id: 1,
         penId: 'AIL-1234',
         name: 'ABC',
-        applicationType: {
-            value: "Web",
-            label: "Web",
-        },
-        assessmentType: {
-            value: "Default1",
-            label: "Default 1",
-        },
-        developmentTeam: {
-            value: "Pratik Shah",
-            label: "Pratik Shah",
-        },
+        applicationType: { value: "Web", label: "Web", },
+        assessmentType: { value: "Default1", label: "Default " },
+        developmentTeam: { value: "Pratik Shah", label: "Pratik Shah", },
         buTag: "tag 1",
         checkList: "OWASP",
-        securityManager: {
-            value: "Pratik Shah",
-            label: "Pratik Shah",
-        },
-        developmentManager: {
-            value: "Pratik Shah",
-            label: "Pratik Shah",
-        },
-        securityTeam: {
-            value: "Pratik Shah",
-            label: "Pratik Shah",
-        },
+        securityManager: { value: "Pratik Shah", label: "Pratik Shah", },
+        developmentManager: { value: "Pratik Shah", label: "Pratik Shah", },
+        securityTeam: { value: "Pratik Shah", label: "Pratik Shah", },
         startDate: "2000-06-12",
         endDate: "2005-03-15",
-        template: {
-            value: "Default Template",
-            label: "Default Template",
-        },
+        template: { value: "Default Template", label: "Default Template", },
         status: 'Active',
         score: '1.1',
         assignePentester: [],
         assigneDeveloper: [],
         projectManager: [],
-        scope: "www.figma.com/1/AIL-1234"
-
+        scope: "www.figma.com/1/AIL-1234",
+        appDetails: [{ key: 1, value: 1 }, { key: 2, value: 2 }],
+        scopeDetails: [{ key: 1, value: 1 }, { key: 2, value: 2 }],
+        outOfScope: [{ key: 1, value: 1 }, { key: 2, value: 2 }],
+        serverDetails: [{ key: 1, value: 1 }, { key: 2, value: 2 }],
+        userDetails: [{ key: 1, value: 1 }, { key: 2, value: 2 }],
+        environment: "environment value",
+        fqdn: { value: "Mobile", label: "Mobile", },
+        ip: "192.168.100.1",
+        url: { value: "Mobile", label: "Mobile", },
+        walkthrough: "Walkthrough value"
     },
     {
         id: 2,
         penId: 'AIL-2365',
-        status: 'Completed',
         name: 'XYZ',
-        applicationType: {
-            value: "Mobile",
-            label: "Mobile",
-        },
-        assessmentType: {
-            value: "Default2",
-            label: "Default 2",
-        },
-        developmentTeam: {
-            value: "Dipesh Mali",
-            label: "Dipesh Mali",
-        },
+        applicationType: { value: "Mobile", label: "Mobile", },
+        assessmentType: { value: "Default2", label: "Default 2", },
+        developmentTeam: { value: "Dipesh Mali", label: "Dipesh Mali", },
         buTag: "tag 3",
         checkList: "CWE",
-        securityManager: {
-            value: "Dipesh Mali",
-            label: "Dipesh Mali",
-        },
-        developmentManager: {
-            value: "Dipesh Mali",
-            label: "Dipesh Mali",
-        },
-        securityTeam: {
-            value: "Dipesh Mali",
-            label: "Dipesh Mali",
-        },
+        securityManager: { value: "Dipesh Mali", label: "Dipesh Mali", },
+        developmentManager: { value: "Dipesh Mali", label: "Dipesh Mali", },
+        securityTeam: { value: "Dipesh Mali", label: "Dipesh Mali", },
         startDate: "2011-01-18",
         endDate: "2019-04-28",
-        template: {
-            value: "ABC Template",
-            label: "ABC Template",
-        },
+        template: { value: "ABC Template", label: "ABC Template", },
         status: 'Deactive',
         score: '1.5',
         assignePentester: [],
         assigneDeveloper: [],
         projectManager: [],
-        scope: "www.figma.com/2/AIL-2365"
+        scope: "www.figma.com/2/AIL-2365",
+        appDetails: [{ key: 1, value: 1 }, { key: 2, value: 2 }],
+        scopeDetails: [{ key: 1, value: 1 }, { key: 2, value: 2 }],
+        outOfScope: [{ key: 1, value: 1 }, { key: 2, value: 2 }],
+        serverDetails: [{ key: 1, value: 1 }, { key: 2, value: 2 }],
+        userDetails: [{ key: 1, value: 1 }, { key: 2, value: 2 }],
+        environment: "environment value",
+        fqdn: { value: "API", label: "API", },
+        ip: "192.168.100.1",
+        url: { value: "API", label: "API", },
+        walkthrough: "Walkthrough value"
     },
 ];
 
@@ -307,7 +285,8 @@ const Application = () => {
             <Breadcrumb title="Application" breadcrumbItem="Application List" />
             <Row>
                 <Col lg={8} xs={12}>
-                    <FilterByStatus
+                    {isModulePermisssion(ROLE_PERMISSIONS?.APPLICATION_FILTER_AND_SEARCH) &&
+                        <FilterByStatus
                         statusList={[
                             { name: 'All', icon: 'disc' },
                             { name: 'Open', icon: 'target' },
@@ -319,7 +298,7 @@ const Application = () => {
                         ]}
                         toggleCustom={toggleCustom}
                         customActiveTab={customActiveTab}
-                    />
+                        />}
                 </Col>
                 <Col lg={4} xs={12}>
                     <div className='d-flex justify-content-end'>
@@ -341,10 +320,11 @@ const Application = () => {
                     </div>
                 </Col>
             </Row>
-            <Card>
+            <Card className='mt-3'>
                 <CardHeader>
                     <Row>
                         <Col xs={6} lg={3}>
+                            {isModulePermisssion(ROLE_PERMISSIONS?.APPLICATION_FILTER_AND_SEARCH) &&
                             <RHFTextField
                                 id="search"
                                 name="search"
@@ -352,10 +332,12 @@ const Application = () => {
                                 isController={false}
                                 handleOnChange={handleOnChange}
                             />
+                            }
                         </Col>
                         <Col xs={6} lg={9}>
+                            {isModulePermisssion(ROLE_PERMISSIONS?.ADD_APPLICATION) &&
                             <div className="d-flex justify-content-end">
-                                <RHFButton
+                                    <RHFButton
                                     btnName="Add"
                                     icon="plus"
                                     onClick={() => {
@@ -376,12 +358,13 @@ const Application = () => {
                                     />
                                 </DialogBox> */ }
                                 {/* @mmp - For separate the add/edit page */}
-                            </div>
+                                </div>}
                         </Col>
                     </Row>
                 </CardHeader>
                 <CardBody>
-                    <Table columns={filterColumns} data={data} handleChange={handleRowChange} />
+                    {isModulePermisssion(ROLE_PERMISSIONS?.APPLICATION_LIST) &&
+                        <Table columns={filterColumns} data={data} handleChange={handleRowChange} />}
                 </CardBody>
             </Card>
         </React.Fragment>

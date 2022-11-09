@@ -10,6 +10,8 @@ import RHFDatePicker from 'components/form-controls/RHFDatePicker';
 import RHFButton from 'components/form-controls/RHFButton';
 import RHFTextField from 'components/form-controls/RHFTextField';
 import { applicationType, assessmentType, commonForAppDropDown, tamplateAppData } from 'constants/mokeData';
+import { isModulePermisssion } from 'helpers/util';
+import { ROLE_PERMISSIONS } from 'constants/RolePermissions';
 
 const ApplicationAddEdit = (props) => {
     const { setFlag, setApplicationData } = props
@@ -82,11 +84,16 @@ const ApplicationAddEdit = (props) => {
         setValue(name, data);
     }
 
+    const addKickOff = isModulePermisssion(ROLE_PERMISSIONS?.ADD_KICK_OFF_DOC)
+
     const onSubmit = (data) => {
         console.log('data', data)
         if (data) {
-            setApplicationData(data)
-            setFlag(true) 
+            if (!isEditMode && addKickOff) {
+                history.push({ pathname: "/application/add/kickoff" })
+            } else {
+                history.push({ pathname: '/applications' })
+            }
         }
     };
 

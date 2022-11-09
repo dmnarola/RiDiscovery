@@ -15,6 +15,8 @@ import { Link, withRouter, useLocation } from "react-router-dom";
 
 //i18n
 import { withTranslation } from "react-i18next";
+import { isModulePermisssion } from "helpers/util";
+import { ROLE_PERMISSIONS } from "constants/RolePermissions";
 
 const SidebarContent = (props) => {
   const ref = useRef();
@@ -107,18 +109,19 @@ const SidebarContent = (props) => {
             </ul>
             :
             <ul className="metismenu list-unstyled" id="side-menu">
-              <li>
+              {isModulePermisssion(ROLE_PERMISSIONS?.MENU_DASHBOARD) && < li >
                 <Link to="/dashboard" className="">
                   <FeatherIcon icon="home" />
                   <span>{props.t("Dashboard")}</span>
                 </Link>
-              </li>
+              </li>}
+              {isModulePermisssion(ROLE_PERMISSIONS?.MENU_ASSESSMENT) && 
               <li>
-                <Link to="/applications" className="">
+                  <Link to="/applications" className="">
                   <FeatherIcon icon="grid" />
                   <span>{props.t("Assessment")}</span>
                 </Link>
-              </li>
+                </li>}
 
               <li>
                 <Link to="/user-list" className="">

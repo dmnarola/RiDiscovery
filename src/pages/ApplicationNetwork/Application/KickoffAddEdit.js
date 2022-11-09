@@ -12,11 +12,11 @@ import { applicationType, assessmentType } from 'constants/mokeData';
 import RHFCheckbox from 'components/form-controls/RHFCheckbox';
 import RHFMultipleValue from 'components/form-controls/RHFMultipleValue';
 
-const KickoffAddEdit = ({ applicationData }) => {
+const KickoffAddEdit = () => {
     let history = useHistory()
     const location = useLocation()
-    const editApplicationData = location?.state?.objData
-    const isEditMode = applicationData ? true : false;
+    const editKickOffdata = location?.state?.data
+    const isEditMode = editKickOffdata ? true : false;
 
     const kickOffDocSchema = yup.object().shape({
         fqdn: yup
@@ -36,24 +36,6 @@ const KickoffAddEdit = ({ applicationData }) => {
             .shape({ label: yup.string(), value: yup.string() })
             .nullable()
             .required("Select atleast one option"),
-        // checkbox: yup
-        //     .object()
-        //     .shape({
-        //         option1: yup.boolean(),
-        //         option2: yup.boolean(),
-        //         option3: yup.boolean()
-        //     })
-            //     .test(
-            //         "checkbox",
-            //         "At least one of the checkbox is required...",
-            //         (options) => {
-            //             console.log(
-            //                 options.option1,
-            //                 "yup multiCheckbox result"
-            //             );
-            //             return options.option1;
-            //         }
-            //     ),
         checkbox: yup
             .boolean()
             .oneOf([true], 'Select atleast one option...'),
@@ -111,22 +93,22 @@ const KickoffAddEdit = ({ applicationData }) => {
 
     const onSubmitKickOff = (data) => {
         console.log('data', data)
-        // if (data) {
-        //     history.push(`/applications`)
-        // }
+        if (data) {
+            history.push(`/applications`)
+        }
     };
 
     useEffect(() => {
         if (isEditMode) {
-            const formFields = Object.keys(applicationData);
+            const formFields = Object.keys(editKickOffdata);
             formFields.forEach((field) => {
-                setValue(field, applicationData[field]);
+                setValue(field, editKickOffdata[field]);
             });
         }
         else {
             setValue(null)
         }
-    }, [applicationData]);
+    }, [editKickOffdata]);
 
     // console.log('errors at kickoff Page', errors)
     return (
@@ -260,7 +242,6 @@ const KickoffAddEdit = ({ applicationData }) => {
                                             </div>
                                         </CardBody>
                                     </Card>
-                                    {console.log("errors", errors)}
                                     {errors && (
                                         <FormFeedback type="invalid">{errors?.["checkbox"]?.message}</FormFeedback>
                                     )}
