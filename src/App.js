@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Switch, BrowserRouter as Router } from "react-router-dom";
 import { connect, useSelector, useDispatch } from "react-redux";
 
+
 // Import Routes all
 import { userRoutes, authRoutes } from "./routes/allRoutes";
 
@@ -23,7 +24,8 @@ import "./assets/scss/preloader.scss";
 // import { initFirebaseBackend } from "./helpers/firebase_helper"
 
 import fakeBackend from "./helpers/AuthType/fakeBackend";
-import { getPermission } from 'store/actions';
+import { getPermission } from "store/actions";
+
 
 // Activating fake backend
 fakeBackend();

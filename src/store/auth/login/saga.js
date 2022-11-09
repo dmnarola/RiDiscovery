@@ -87,7 +87,7 @@ function* loginUser({ payload: { user, history } }) {
 
 function* logoutUser({ payload: { history } }) {
   try {
-    localStorage.removeItem("authUser");
+    localStorage.clear();
     // history.push("/login")
     history.push("/tenant/login") // both route will be execute on condition
   } catch (error) {

@@ -74,9 +74,9 @@ const Finding = ({ editApplicationData }) => {
     const deleteHandler = (obj) => {
         console.log({ obj })
     };
-
     const editHandler = (obj) => {
         console.log({ obj })
+        history.push(`/application/${editApplicationData?.id}/${obj?.id}/edit-finding`)
     };
 
     const handleOnChange = (data, name) => {

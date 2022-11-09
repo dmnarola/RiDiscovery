@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -9,7 +9,8 @@ import RHFButton from 'components/form-controls/RHFButton';
 
 const PocStepsAddEdit = (props) => {
 
-    const { handleToggle, setFormData, setPocStepsImage } = props
+    const { handleToggle, setFormData, editPocData } = props
+    const isEditMode = editPocData ? true : false;
     const PocStepsSchema = yup.object().shape({
         discription: yup.string().required("Discription is required"),
         url: yup.string().required("URL is required"),
@@ -30,13 +31,39 @@ const PocStepsAddEdit = (props) => {
         ),
     });
 
+    // const onSubmitPocSteps = (data) => {
+    //     if (data) {
+    //         console.log('poc data :>> ', data);
+    //         setFormData(data)
+    //         handleToggle()
+    //     }
+    // };
+
+
+
     const onSubmitPocSteps = (data) => {
-        if (data) {
+        if (isEditMode || data) {
+            setFormData(data)
+            handleToggle()
+        }
+        else {
             console.log('poc data :>> ', data);
             setFormData(data)
             handleToggle()
         }
     };
+
+    useEffect(() => {
+        if (isEditMode) {
+            const formFields = Object.keys(editPocData);
+            formFields.forEach((field) => {
+                pocSetvalue(field, editPocData[field]);
+            });
+        }
+        else {
+            pocSetvalue(null)
+        }
+    }, [editPocData]);
 
     return (
         <form onSubmit={handleSubmitpocsteps(onSubmitPocSteps)}>
@@ -100,7 +127,7 @@ const PocStepsAddEdit = (props) => {
                         errorobj={pocErrors}
                         control={pocControl}
                         pocSetvalue={pocSetvalue}
-                        setPocStepsImage={setPocStepsImage}
+                        editPocData={editPocData ? editPocData : null}
                     />
                 </Col>
             </Row>
