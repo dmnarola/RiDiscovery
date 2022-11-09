@@ -9,6 +9,8 @@ import FilterByStatus from 'components/Common/FilterByStatus';
 import RHFButton from 'components/form-controls/RHFButton';
 import DialogBox from 'components/Modals/DialogBox';
 import NetworkAddEdit from './NetworkAddEdit';
+import { isModulePermisssion } from 'helpers/util';
+import { ROLE_PERMISSIONS } from 'constants/RolePermissions';
 
 const usersList = [
     { id: 1, name: 'Dipesh Mali', image: avatar1 },
@@ -178,9 +180,11 @@ const Network = () => {
                         </Col>
                     </Row>
                 </CardHeader>
-                <CardBody>
-                    <Table columns={columns} data={data} />
-                </CardBody>
+                {isModulePermisssion(ROLE_PERMISSIONS?.NETWORK_LIST) &&
+                    <CardBody>
+                        <Table columns={columns} data={data} />
+                    </CardBody>
+                }
             </Card>
         </React.Fragment>
     )

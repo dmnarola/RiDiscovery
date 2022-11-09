@@ -10,6 +10,8 @@ import RHFDatePicker from 'components/form-controls/RHFDatePicker';
 import RHFButton from 'components/form-controls/RHFButton';
 import RHFTextField from 'components/form-controls/RHFTextField';
 import { applicationType, assessmentType, commonForAppDropDown, tamplateAppData } from 'constants/mokeData';
+import { isModulePermisssion } from 'helpers/util';
+import { ROLE_PERMISSIONS } from 'constants/RolePermissions';
 
 const ApplicationAddEdit = (props) => {
     const { setFlag } = props
@@ -85,7 +87,12 @@ const ApplicationAddEdit = (props) => {
     const onSubmit = (data) => {
         console.log('data', data)
         if (data) {
-            setFlag(true) 
+            isModulePermisssion(ROLE_PERMISSIONS?.ADD_KICK_OFF_DOC) &&
+                setFlag(true)
+        }
+        else {
+            setFlag(false)
+            history.push("application")
         }
     };
 
@@ -158,7 +165,7 @@ const ApplicationAddEdit = (props) => {
                                         label="Security Manager"
                                         name="securityManager"
                                         options={commonForAppDropDown}
-                                        isMultiple={false}
+                                        isMultiple={true}
                                         errorobj={errors}
                                         control={control}
                                         isController={true}
@@ -170,7 +177,7 @@ const ApplicationAddEdit = (props) => {
                                         label="Development Manager"
                                         name="developmentManager"
                                         options={commonForAppDropDown}
-                                        isMultiple={false}
+                                        isMultiple={true}
                                         errorobj={errors}
                                         control={control}
                                         isController={true}
@@ -185,7 +192,7 @@ const ApplicationAddEdit = (props) => {
                                         label="Security Team"
                                         name="securityTeam"
                                         options={commonForAppDropDown}
-                                        isMultiple={false}
+                                        isMultiple={true}
                                         errorobj={errors}
                                         control={control}
                                         isController={true}
@@ -197,13 +204,12 @@ const ApplicationAddEdit = (props) => {
                                         label="Development Team"
                                         name="developmentTeam"
                                         options={commonForAppDropDown}
-                                        isMultiple={false}
+                                        isMultiple={true}
                                         errorobj={errors}
                                         control={control}
                                         isController={true}
                                     />
                                 </Col>
-
                             </Row>
 
                             <Row className="mb-3">
@@ -260,7 +266,7 @@ const ApplicationAddEdit = (props) => {
                             </Row>
                         </form>
                     </CardBody>
-                </Card>  
+                </Card>
             </Container>
         </div>
     )

@@ -147,28 +147,32 @@ const Company = () => {
       </Col>
 
 
-      <Row>
-        <Col sm="6">
-          <Card>
-            <CardHeader >
-              <h5 className="m-0">Development Agency </h5>
-            </CardHeader>
-            <CardBody>
-              {/* <Table columns={columns} data={developmentCompany} /> */}
-              <Table columns={columns} data={devAgency?.companies} />
-            </CardBody></Card>
-        </Col>
-        <Col sm="6">
-          <Card>
-            <CardHeader>
-              <h5 className="m-0">Security Agency </h5>
-            </CardHeader>
-            <CardBody>
-              {/* <Table columns={columns} data={securityCompany} /> */}
-              <Table columns={columns} data={securityAgency?.companies} />
-            </CardBody></Card>
-        </Col>
-      </Row>
+      {isModulePermisssion(ROLE_PERMISSIONS?.VIEW_AGENCY_LIST) &&
+        <Row>
+          <Col sm="6">
+            <Card >
+              <CardHeader>
+                <h5 className="m-0">Development Agency </h5>
+              </CardHeader>
+              <CardBody>
+                {/* <Table columns={columns} data={developmentCompany} /> */}
+                <Table columns={columns} data={devAgency?.companies} />
+              </CardBody>
+            </Card>
+          </Col>
+          <Col sm="6">
+            <Card>
+              <CardHeader>
+                <h5 className="m-0">Security Agency </h5>
+              </CardHeader>
+              <CardBody>
+                {/* <Table columns={columns} data={securityCompany} /> */}
+                <Table columns={columns} data={securityAgency?.companies} />
+              </CardBody>
+
+            </Card>
+          </Col>
+        </Row>}
     </div>
 
   );

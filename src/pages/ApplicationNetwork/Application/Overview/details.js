@@ -35,7 +35,7 @@ const ApplicationDetail = () => {
                     <Col lg={4}>
                         <Card>
                             <CardBody style={{ height: "300px" }}>
-                        Pie Chart
+                                Pie Chart
                             </CardBody>
                         </Card>
                     </Col>

@@ -11,6 +11,8 @@ import FilterByStatus from 'components/Common/FilterByStatus';
 import RHFButton from 'components/form-controls/RHFButton';
 import DropdownButton from 'components/form-controls/DropdownButton';
 import ManageColumns from 'components/Common/ManageColumns';
+import { ROLE_PERMISSIONS } from 'constants/RolePermissions';
+import { isModulePermisssion } from 'helpers/util';
 
 const usersList = [
     { id: 1, name: 'Dipesh Mali', image: avatar1 },
@@ -165,6 +167,7 @@ const Application = () => {
     const editHandler = (obj) => {
         history.push({ pathname: `/application/add`, state: { objData: obj } })
     };
+
     const downloadHandler = (obj) => {
         console.log({ obj })
     }
@@ -174,6 +177,7 @@ const Application = () => {
     }
 
     const handleActionClick = (payload, actionType) => {
+        console.log('PSH action type = ', actionType)
         const actionMapper = {
             preview: previewHandler,
             add: addeHandler,
@@ -192,7 +196,6 @@ const Application = () => {
             id: 'penId', //  @DM  - its required when sorting is true @DM
             name: "Pen Id",
             selector: (row) => row?.penId,
-
             isVisible: true,
         },
         {
@@ -277,19 +280,42 @@ const Application = () => {
             selector: (row) => {
                 return (
                     <ActionButtons
+                        actions={{
+                            preview: {
+                                handleClick: () => handleActionClick(row, 'preview'),
+                                isPermission: ROLE_PERMISSIONS?.APPLICATION_OVERVIEW,
+                                icon: 'file-text',
+                                tooltip: 'Preview Tooltip'
+                            },
+                            add: {
+                                tooltip: 'Add Finding',
+                                icon: 'file-plus',
+                                handleClick: () => handleActionClick(row, 'add'),
+                                isPermission: ROLE_PERMISSIONS?.ADD_FINDING
+                            }
+                        }}
                         preview={{
-                            handleClick: () => handleActionClick(row, 'preview'),
+                            handleClick: () => handleActionClick(row, 'preview',),
+                            // isPermission: ROLE_PERMISSIONS?.APPLICATION_OVERVIEW
                         }}
                         add={{
                             tooltip: 'Add Finding',
                             handleClick: () => handleActionClick(row, 'add'),
+                            isPermission: ROLE_PERMISSIONS?.ADD_FINDING
                         }}
+
+                        // isModulePermisssion(ROLE_PERMISSIONS?.UPDATE_APPLICATION) &&
                         edit={{
                             handleClick: () => handleActionClick(row, 'edit'),
+                            isPermission: ROLE_PERMISSIONS?.UPDATE_APPLICATION,
+
                         }}
-                        delete={{
-                            handleClick: () => handleActionClick(row, 'delete'),
-                        }}
+                        delete={
+                            {
+                                handleClick: () => handleActionClick(row, 'delete'),
+                                isPermission: ROLE_PERMISSIONS?.DELETE_APPLICATION,
+                            }
+                        }
                     />
                 );
             },

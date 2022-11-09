@@ -42,10 +42,7 @@ const App = props => {
       dispatch(getPermission({ ...params }))
     }
     else {
-      const params = {
-        slug: 'pentester'
-      }
-      dispatch(getPermission({ ...params }))
+      localStorage.getItem('roleId') && dispatch(getPermission({ slug: localStorage.getItem('roleId') }))
     }
   }, [user?.user?.roleId])
 

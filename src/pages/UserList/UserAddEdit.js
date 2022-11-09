@@ -7,6 +7,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import RHFButton from "components/form-controls/RHFButton";
+import { isModulePermisssion } from "helpers/util";
+import { ROLE_PERMISSIONS } from "constants/RolePermissions";
 
 //constant for dropdown
 const DropDownData = [
@@ -51,31 +53,40 @@ const InternalData = [{
   label: "DA",
 }]
 
-const RoleData = [{
-  value: "OMA-Owner Admin",
-  label: "OMA-Owner Admin",
-}, {
-  value: "CSM-Company Senior Manager",
-  label: "CSM-Company Senior Manager",
-}, {
-  value: "DAPM-DA Project Manager",
-  label: "DAPM-DA Project Manager",
-}, {
-  value: "SAPM-SA Project Manager",
-  label: "SAPM-SA Project Manager",
-}, {
-  value: "DATM-DA Team Member",
-  label: "DATM-DA Team Member",
-}, {
-  value: "SAPM-SA Pentester Member",
-  label: "SAPM-SA Pentester Member",
-}, {
-  value: "SATL-SA Team Lead",
-  label: "SATL-SA Team Lead",
-}, {
-  value: "Executive",
-  label: "Executive",
-}]
+const RoleData = [
+  {
+    value: "OMA-Owner Admin",
+    label: "OMA-Owner Admin",
+  },
+  {
+    value: "CSM-Company Senior Manager",
+    label: "CSM-Company Senior Manager",
+  },
+  {
+    value: "DAPM-DA Project Manager",
+    label: "DAPM-DA Project Manager",
+  },
+  {
+    value: "SAPM-SA Project Manager",
+    label: "SAPM-SA Project Manager",
+  },
+  {
+    value: "DATM-DA Team Member",
+    label: "DATM-DA Team Member",
+  },
+  {
+    value: "SAPM-SA Pentester Member",
+    label: "SAPM-SA Pentester Member",
+  },
+  {
+    value: "SATL-SA Team Lead",
+    label: "SATL-SA Team Lead",
+  },
+  {
+    value: "Executive",
+    label: "Executive",
+  }
+]
 
 const UserAddEdit = (props) => {
   const { editUserData, setFormData, handleToggle } = props;

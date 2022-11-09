@@ -17,8 +17,6 @@ const CompanyAddEdit = (props) => {
   const isEditMode = editCompanyData ? true : false;
   const [fileData, setFileData] = useState();
 
-  console.log("fileData ==>", fileData);
-
   const dispatch = useDispatch();
 
   const CategoryData = [

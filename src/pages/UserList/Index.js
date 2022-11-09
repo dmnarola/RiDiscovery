@@ -12,6 +12,8 @@ import DialogBox from "../../components/Modals/DialogBox";
 import Table from "../../components/Tables/Table";
 import UserAddEdit from "./UserAddEdit";
 import ActionButtons from "components/form-controls/ActionButtons";
+import { isModulePermisssion } from "helpers/util";
+import { ROLE_PERMISSIONS } from "constants/RolePermissions";
 
 // constant for dropdown
 const StatusData = [
@@ -132,7 +134,17 @@ const UserList = () => {
   const [formData, setFormData] = useState(null);
   const [isFilterModelOpen, setIsFilterModelOpen] = useState(false);
   const [dropdownData, setDropdownData] = useState();
-  let history = useHistory();
+  const [filterColumns, setFilterColumns] = useState([]);
+  const [columnOptions, setColumnOption] = useState([]);
+  const history = useHistory();
+
+  useEffect(() => {
+    const columnFilter = [...columns];
+    setColumnOption([...columns]);
+    setFilterColumns(columnFilter.filter(o => o.isVisible && o));
+  }, [])
+
+
   const {
     handleSubmit,
     control,
@@ -142,6 +154,8 @@ const UserList = () => {
   } = useForm({
     mode: "onBlur",
   });
+
+
 
   const handleToggle = () => {
     setIsModelOpen(!isModelOpen);
@@ -201,22 +215,25 @@ const UserList = () => {
           </span>
         </div>
       ),
-
+      isVisible: true,
 
     },
     {
       name: "Email",
       selector: (row) => row?.email,
+      isVisible: true,
+
     },
     {
       name: "Start Date",
       selector: (row) => row?.startDate,
+      isVisible: true,
 
     },
     {
       name: "End Date",
       selector: (row) => row?.endDate,
-
+      isVisible: true,
     },
     {
       name: "Actions",
@@ -231,7 +248,9 @@ const UserList = () => {
           />
         );
       },
+      isVisible: true,
     },
+    // isModulePermisssion(ROLE_PERMISSIONS?.DEACTIVATE_USER) &&
     {
       name: "Active/Deactive",
       cell: (row) => (
@@ -244,6 +263,7 @@ const UserList = () => {
           onChange={handleSwitchChange}
         />
       ),
+      isVisible: isModulePermisssion(ROLE_PERMISSIONS?.DEACTIVATE_USER),
     },
   ];
 
@@ -350,7 +370,7 @@ const UserList = () => {
               </Row>
             </CardHeader>
             <CardBody className="table-responsive">
-              <Table columns={columns} data={tabledata} className="table mb-0" />
+              <Table columns={filterColumns} data={tabledata} className="table mb-0" />
             </CardBody>
           </Card>
         </Container>

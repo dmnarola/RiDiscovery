@@ -19,7 +19,7 @@ import CompanyHierarchy from "pages/Company";
 import UserDetails from "pages/UserList/UserDetails";
 import userProfile from "../pages/Authentication/user-profile";
 import dmControls from "../pages/Dashboard/dm-controls-usecases";
-import ProjectList from "../pages/ProjectList/Index";
+import ProjectList from "../pages/Certificate/Index";
 import TemplatesList from "../pages/TemplatesList/Index";
 import EmailVerification from "pages/Authentication/EmailVerification";
 import ResetPassword from "pages/Authentication/ResetPassword";

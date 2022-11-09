@@ -11,6 +11,8 @@ import RHFButton from 'components/form-controls/RHFButton';
 import ManageColumns from 'components/Common/ManageColumns';
 import TextChip from 'components/Common/TextChip';
 import { useHistory } from 'react-router-dom';
+import { isModulePermisssion } from 'helpers/util';
+import { ROLE_PERMISSIONS } from 'constants/RolePermissions';
 
 
 const usersList = [
@@ -153,9 +155,11 @@ const Finding = ({ editApplicationData }) => {
                     <ActionButtons
                         edit={{
                             handleClick: () => handleActionClick(row, 'edit'),
+                            isPermission: ROLE_PERMISSIONS?.UPDATE_FINDING,
                         }}
                         delete={{
                             handleClick: () => handleActionClick(row, 'delete'),
+                            isPermission: ROLE_PERMISSIONS?.DELETE_FINDING,
                         }}
                     />
                 );
@@ -187,20 +191,24 @@ const Finding = ({ editApplicationData }) => {
                                         getFilteredValues={getFilteredValues}
                                     />
                                 </div>
-                                <RHFButton
-                                    btnName="Add Finding"
-                                    icon="plus"
-                                    onClick={() => {
-                                        history.push(`/application/${editApplicationData?.id}/add-finding`)
-                                    }}
-                                />
+                                {isModulePermisssion(ROLE_PERMISSIONS?.ADD_FINDING) &&
+                                    <RHFButton
+                                        btnName="Add Finding"
+                                        icon="plus"
+                                        onClick={() => {
+                                            history.push(`/application/${editApplicationData?.id}/add-finding`)
+                                        }}
+                                    />
+                                }
                             </div>
                         </Col>
                     </Row>
                 </CardHeader>
-                <CardBody>
-                    <Table columns={filterColumns} data={data} />
-                </CardBody>
+                {isModulePermisssion(ROLE_PERMISSIONS?.VIEW_FINDING) &&
+                    <CardBody>
+                        <Table columns={filterColumns} data={data} />
+                    </CardBody>
+                }
             </Card>
         </React.Fragment>
     )
