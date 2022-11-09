@@ -9,6 +9,8 @@ import RHFDatePicker from 'components/form-controls/RHFDatePicker';
 import RHFButton from 'components/form-controls/RHFButton';
 import { assessmentType } from 'constants/mokeData';
 import RHFUpload from 'components/form-controls/RHFUpload';
+import { isModulePermisssion } from 'helpers/util';
+import { ROLE_PERMISSIONS } from 'constants/RolePermissions';
 
 const NetworkAddEdit = (props) => {
     const { setFormData, handleToggle } = props
@@ -27,8 +29,12 @@ const NetworkAddEdit = (props) => {
         buTag: yup
             .string()
             .required("BU Tag is required"),
-        nmapResult: yup.mixed().required('File is required'),
-        nessuesResult: yup.mixed().required('File is required'),
+        nmapResult:
+            isModulePermisssion(ROLE_PERMISSIONS?.IMPORT_NMAP_RESULTS) &&
+            yup.mixed().required('File is required'),
+        nessuesResult:
+            isModulePermisssion(ROLE_PERMISSIONS?.IMPORT_NESSUS_RESULTS) &&
+            yup.mixed().required('File is required'),
     });
 
     const {
@@ -113,36 +119,36 @@ const NetworkAddEdit = (props) => {
                     />
                 </Col>
             </Row>
-            <Row className="mb-3">
-                <Col sm="12" >
+            {isModulePermisssion(ROLE_PERMISSIONS?.IMPORT_NMAP_RESULTS) &&
+                <Row className="mb-3">
+                    <Col sm="12" >
+                        <RHFUpload
+                            inputRef={fileRef}
+                            name="nmapResult"
+                            id="nmapResult"
+                            label="Import Nmap Results"
+                            getFileData={getFileData}
+                            setValue={setValue}
+                            errorobj={errors}
+                            isValidate={true} />
 
-                    <RHFUpload
-                        inputRef={fileRef}
-                        name="nmapResult"
-                        id="nmapResult"
-                        label="Import Nmap Results"
-                        getFileData={getFileData}
-                        setValue={setValue}
-                        errorobj={errors}
-                        isValidate={true} />
-
-                </Col>
-            </Row>
-            <Row className="mb-3">
-                <Col sm="12" >
-
-                    <RHFUpload
-                        inputRef={fileRef2}
-                        name="nessuesResult"
-                        id="nessuesResult"
-                        label="Import Nessus Results"
-                        getFileData={getFileData}
-                        setValue={setValue}
-                        errorobj={errors}
-                        isValidate={true} />
-                </Col>
-            </Row>
-
+                    </Col>
+                </Row>
+            }
+            {isModulePermisssion(ROLE_PERMISSIONS?.IMPORT_NESSUS_RESULTS) &&
+                <Row className="mb-3">
+                    <Col sm="12" >
+                        <RHFUpload
+                            inputRef={fileRef2}
+                            name="nessuesResult"
+                            id="nessuesResult"
+                            label="Import Nessus Results"
+                            getFileData={getFileData}
+                            setValue={setValue}
+                            errorobj={errors}
+                            isValidate={true} />
+                    </Col>
+                </Row>}
             <Row>
                 <div className="modal-footer">
                     <RHFButton

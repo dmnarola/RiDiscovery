@@ -64,6 +64,7 @@ function* loginUser({ payload: { user, history } }) {
         if (response?.user?.tenantName) {
           // redirect user to his tenant  // nisl.ridiscovery.com/login
           localStorage.setItem('authUser', response?.user?.token);
+          localStorage.setItem('roleId', response?.user?.roleId)
           // window.open(`${nislTanent}/dashboard`, '_self');
           history.push("/dashboard")
         }
@@ -86,7 +87,7 @@ function* loginUser({ payload: { user, history } }) {
 
 function* logoutUser({ payload: { history } }) {
   try {
-    localStorage.removeItem("authUser");
+    localStorage.clear();
     // history.push("/login")
     history.push("/tenant/login") // both route will be execute on condition
   } catch (error) {

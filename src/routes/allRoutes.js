@@ -19,7 +19,7 @@ import CompanyHierarchy from "pages/Company";
 import UserDetails from "pages/UserList/UserDetails";
 import userProfile from "../pages/Authentication/user-profile";
 import dmControls from "../pages/Dashboard/dm-controls-usecases";
-import ProjectList from "../pages/ProjectList/Index";
+import ProjectList from "../pages/Certificate/Index";
 import TemplatesList from "../pages/TemplatesList/Index";
 import EmailVerification from "pages/Authentication/EmailVerification";
 import ResetPassword from "pages/Authentication/ResetPassword";
@@ -29,6 +29,8 @@ import SetPassword from 'pages/Authentication/SetPassword';
 import VerifyOTP from 'pages/Authentication/VerifyOTP';
 import RegisterCompany from 'pages/Authentication/RegisterCompany';
 import TanentLogin from 'pages/Authentication/TanentLogin';
+import KickoffAddEdit from 'pages/ApplicationNetwork/Application/KickoffAddEdit';
+import ApplicationAddEdit from 'pages/ApplicationNetwork/Application/ApplicationAddEdit';
 
 const userRoutes = [
   //dashboard
@@ -36,9 +38,11 @@ const userRoutes = [
 
   //application/Network
   { path: "/applications", component: ApplicationNetwork },
-  { path: "/application/add", component: ApplicationAdd },
+  { path: "/application/add", component: ApplicationAddEdit },
+  { path: "/application/add/kickoff", component: KickoffAddEdit },
   { path: "/application/:applicationId/overview", component: Overview },
   { path: "/application/:applicationId/add-finding", component: FindingAddEdit },
+  { path: "/application/:applicationId/:findingid/edit-finding", component: FindingAddEdit },
 
   //user
   { path: "/user-list", component: UserList },

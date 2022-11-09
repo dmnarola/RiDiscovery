@@ -17,6 +17,8 @@ import { makeAPICall } from "helpers/api_helper";
 import { ROLE } from "helpers/services/Role";
 import { useDispatch } from "react-redux";
 import { updateUser } from "store/user/actions";
+import { isModulePermisssion } from "helpers/util";
+import { ROLE_PERMISSIONS } from "constants/RolePermissions";
 
 // constant for dropdown
 const StatusData = [
@@ -110,6 +112,15 @@ const UserList = () => {
 
   let history = useHistory();
   const dispatch = useDispatch();
+  const [filterColumns, setFilterColumns] = useState([]);
+
+
+  useEffect(() => {
+    const columnFilter = [...columns];
+    setFilterColumns(columnFilter.filter(o => o.isVisible && o));
+  }, [])
+
+
   const {
     handleSubmit,
     control,
@@ -119,6 +130,8 @@ const UserList = () => {
   } = useForm({
     mode: "onBlur",
   });
+
+
 
   const handleToggle = () => {
     setIsModelOpen(!isModelOpen);
@@ -210,7 +223,6 @@ const UserList = () => {
             style={{ cursor: "pointer" }}
             onClick={(e) => {
               e.preventDefault();
-              // history.push(`/user-list/user/${id}`);
               history.push({ pathname: `/user-list/user/${row?.id}`, state: { userDetails: row } });
             }}
           >
@@ -218,20 +230,25 @@ const UserList = () => {
           </span>
         </div>
       ),
+      isVisible: true,
+
     },
     {
       name: "Email",
       selector: (row) => row?.email,
+      isVisible: true,
+
     },
     {
       name: "Start Date",
       selector: (row) => row?.startDate,
+      isVisible: true,
 
     },
     {
       name: "End Date",
       selector: (row) => row?.endDate,
-
+      isVisible: true,
     },
     {
       name: "Actions",
@@ -246,6 +263,7 @@ const UserList = () => {
           />
         );
       },
+      isVisible: true,
     },
     {
       name: "Active/Deactive",
@@ -258,6 +276,7 @@ const UserList = () => {
           onChange={(val, row) => handleSwitchChange(val, row)}
         />
       ),
+      isVisible: isModulePermisssion(ROLE_PERMISSIONS?.DEACTIVATE_USER),
     },
   ];
 
@@ -351,16 +370,16 @@ const UserList = () => {
             </CardHeader>
             <CardBody className="table-responsive">
               <Table
-                columns={columns}
+                columns={filterColumns}
                 dataURL={USER.listAllUser}
                 isRefresh={isRefresh}
                 filter={filterFields}
               />
-            </CardBody>
-          </Card>
-        </Container>
-      </div>
-    </React.Fragment>
+            </CardBody >
+          </Card >
+        </Container >
+      </div >
+    </React.Fragment >
   );
 };
 

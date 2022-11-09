@@ -1,25 +1,45 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Card } from 'reactstrap';
 import Application from './Application';
 import Network from './Network';
 import Tabs from 'components/Tab/Tabs';
+import { isModulePermisssion } from 'helpers/util';
+import { ROLE_PERMISSIONS } from 'constants/RolePermissions';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const navLinkData = [
   {
-    tabNo: "1",
-    tabName: "Application"
-  }, {
-    tabNo: "2",
-    tabName: "Network"
-  }]
-
-
+    tabNo: "application",
+    tabName: "Application",
+    isVisible: true,
+  },
+  {
+    tabNo: "network",
+    tabName: "Network",
+    isVisible: true,
+  }
+]
 const ApplicationNetwork = () => {
-  let location = useLocation()
-  let tabValue = location.state?.activeTab
-  const [activeTab, setactiveTab] = useState(tabValue || "1");
 
+  const { permissions } = useSelector(state => state.Login);
+
+  let location = useLocation()
+  let tabValue = location.state?.activeTab //@fas - initialstate for tab
+
+  const [filterColumns, setFilterColumns] = useState([]);
+  const [activeTab, setactiveTab] = useState('');
+
+  let columnFilter = [...navLinkData];
+
+  // let columnFilter = [...navLinkData];
+
+  useEffect(() => {
+    const filteredTabs = columnFilter.filter(o => o.isVisible && o);
+    setFilterColumns(filteredTabs);
+    setactiveTab(filteredTabs.length > 0 ? filteredTabs[0]?.tabNo : '')
+  }, [permissions])
 
   const toggle = (tab) => {
     if (activeTab !== tab) {
@@ -29,19 +49,18 @@ const ApplicationNetwork = () => {
 
   return (
     <div className="page-content1">
-      <Card>
-        <div className='page-title-box'>
-          <Tabs
-            navLinkData={navLinkData}
-            activeTab={activeTab}
-            toggle={toggle}
-          >
-            {activeTab === "1" ? <Application /> : <Network />}
-          </Tabs>
-        </div>
-      </Card>
-    </div>
+      <div className='page-title-box'>
+        <Tabs
+          navLinkData={filterColumns}
+          activeTab={activeTab}
+          toggle={toggle}
+        >
+          {activeTab === "application" && <Application />}
+          {activeTab === "network" && <Network />}
 
+        </Tabs>
+      </div>
+    </div>
   )
 }
 

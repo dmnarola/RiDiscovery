@@ -29,6 +29,8 @@ import ChangePasswordForm from "./Profile/ChangePasswordForm";
 import Switch from "react-switch";
 import TwoFactorVerification from "./Profile/TwoFactorVerification";
 import AuthenticationVerified from "./Profile/AuthenticationVerified";
+import { isModulePermisssion } from "helpers/util";
+import { ROLE_PERMISSIONS } from "constants/RolePermissions";
 
 const UserProfile = props => {
   //meta title
@@ -150,10 +152,11 @@ const UserProfile = props => {
                       </div>
                     </div>
                     <div>
-                      <RHFButton btnName="Change Password" onClick={() => {
-                        handleToggle()
-                        setIsMode({ isChangePasswordMode: true })
-                      }} />
+                      {isModulePermisssion(ROLE_PERMISSIONS?.CHANGE_PASSWORD) &&
+                        <RHFButton btnName="Change Password" onClick={() => {
+                          handleToggle()
+                          setIsMode({ isChangePasswordMode: true })
+                        }} />}
 
                       <DialogBox
                         isModelOpen={isModelOpen}
@@ -198,74 +201,89 @@ const UserProfile = props => {
                 className="form-horizontal"
                 onSubmit={handleSubmit(onSubmit)}
               >
-                <div className="form-group">
-                  <RHFTextField
-                    id="firstName"
-                    label="First Name"
-                    name="firstName"
-                    // value="Kishan"
-                    errorobj={errors}
-                    control={control}
-                    isController={true}
-                  // readOnly
-                  />
-                  <RHFTextField
-                    id="lastName"
-                    label="Last Name"
-                    name="lastName"
-                    // value="Jotangiya"
-                    errorobj={errors}
-                    control={control}
-                    isController={true}
-                  // readOnly
-                  />
-                  <RHFTextField
-                    id="position"
-                    label="Position"
-                    name="position"
-                    // value="Admin"
-                    errorobj={errors}
-                    control={control}
-                    isController={true}
-                  // readOnly
-                  />
-
-                  <label htmlFor="small-radius-switch" className="form-Label me-2">Two Step-Verification</label>
-                  {checked === true &&
-                    <FeatherIcon icon="settings" size={15}
-                      onClick={() => {
-                        handleToggle()
-                        setIsMode({ isTwoFactorVerificationMode: true })
-                      }} />
-                  }
-                  <Switch
-                    className="react-switch d-flex"
-                    checked={checked}
-                    onChange={handleChange}
-                    handleDiameter={28}
-                    id="small-radius-switch"
-                    onColor="#5156be"
-                    offColor="#a2a1ff"
-                    onHandleColor="#fff"
-                    height={40}
-                    width={100}
-                    borderRadius={6}
-                    activeBoxShadow="0px 0px 1px 2px white"
-                    uncheckedIcon={
-                      <div
-                        className="d-flex justify-content-center align-items-center p-2"
-                        style={{ color: "white" }}
-                      >Disable</div>
-                    }
-                    checkedIcon={
-                      <div
-                        className="d-flex justify-content-center align-items-center p-2"
-                        style={{ color: "white" }}
-                      >Enble</div>
-                    }
-                  />
-                </div>
-
+                <Row className="mb-3">
+                  <Col sm="12">
+                    <RHFTextField
+                      id="firstName"
+                      label="First Name"
+                      name="firstName"
+                      // value="Kishan"
+                      errorobj={errors}
+                      control={control}
+                      isController={true}
+                    // readOnly
+                    />
+                  </Col></Row>
+                <Row className="mb-3">
+                  <Col sm="12">
+                    <RHFTextField
+                      id="lastName"
+                      label="Last Name"
+                      name="lastName"
+                      // value="Jotangiya"
+                      errorobj={errors}
+                      control={control}
+                      isController={true}
+                    // readOnly
+                    />
+                  </Col>
+                </Row>
+                <Row className="mb-3">
+                  <Col sm="12">
+                    <RHFTextField
+                      id="position"
+                      label="Position"
+                      name="position"
+                      // value="Admin"
+                      errorobj={errors}
+                      control={control}
+                      isController={true}
+                    // readOnly
+                    />
+                  </Col>
+                </Row>
+                {isModulePermisssion(ROLE_PERMISSIONS?.UPDATE_2FA_MECHANISM) &&
+                  <Row className="mb-3">
+                    <Col sm="12">
+                      <label htmlFor="small-radius-switch" className="form-Label me-2">
+                        Two Step-Verification
+                      </label>
+                      {checked === true &&
+                        <FeatherIcon icon="settings" size={15}
+                          onClick={() => {
+                            handleToggle()
+                            setIsMode({ isTwoFactorVerificationMode: true })
+                          }} />
+                      }
+                      <Switch
+                        className="react-switch d-flex"
+                        checked={checked}
+                        onChange={handleChange}
+                        handleDiameter={28}
+                        id="small-radius-switch"
+                        onColor="#5156be"
+                        offColor="#a2a1ff"
+                        onHandleColor="#fff"
+                        height={40}
+                        width={100}
+                        borderRadius={6}
+                        activeBoxShadow="0px 0px 1px 2px white"
+                        uncheckedIcon={
+                          <div
+                            className="d-flex justify-content-center align-items-center p-2"
+                            style={{ color: "white" }}
+                          >Disable</div>
+                        }
+                        checkedIcon={
+                          <div
+                            className="d-flex justify-content-center align-items-center p-2"
+                            style={{ color: "white" }}
+                          >Enble</div>
+                        }
+                      />
+                    </Col>
+                  </Row>
+                }
                 <Row className="me-1">
                   <div className="modal-footer m-auto">
                     <RHFButton

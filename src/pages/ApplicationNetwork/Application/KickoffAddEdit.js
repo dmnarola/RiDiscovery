@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import Breadcrumb from 'components/Common/Breadcrumb';
-import { Card, CardBody, CardHeader, Col, Container, Label, Row } from 'reactstrap';
+import { Card, CardBody, CardHeader, Col, Container, FormFeedback, Label, Row } from 'reactstrap';
 import RHFAutoCompleteSelect from 'components/form-controls/RHFAutoCompleteSelect';
 import RHFButton from 'components/form-controls/RHFButton';
 import RHFTextField from 'components/form-controls/RHFTextField';
@@ -15,8 +15,8 @@ import RHFMultipleValue from 'components/form-controls/RHFMultipleValue';
 const KickoffAddEdit = () => {
     let history = useHistory()
     const location = useLocation()
-    const editApplicationData = location?.state?.objData
-    const isEditMode = editApplicationData ? true : false;
+    const editKickOffdata = location?.state?.data
+    const isEditMode = editKickOffdata ? true : false;
 
     const kickOffDocSchema = yup.object().shape({
         fqdn: yup
@@ -38,52 +38,37 @@ const KickoffAddEdit = () => {
             .required("Select atleast one option"),
         checkbox: yup
             .boolean()
-            .oneOf([true], 'Select atleast one option'),
+            .oneOf([true], 'Select atleast one option...'),
         scopeDetails: yup.array().of(
+            yup.object().shape({
+                key: yup.string().required("Required..."),
+                value: yup.string().required("Required..."),
+            })
+        ),
+        appDetails: yup.array().of(
             yup.object().shape({
                 key: yup.string().required("Required"),
                 value: yup.string().required("Required"),
             })
-        )
-        // .compact((v) => { !v.key })
-        // .compact((v) => !v.value)
-        // .min(1, 'You need to enter atleast one value'),
-        // appDetails: yup.array().of(
-        //     yup.object().shape({
-        //         key: yup.string().ensure(),
-        //         value: yup.string().ensure(),
-        //     })
-        // )
-        //     .compact((v) => { !v.key })
-        //     .compact((v) => !v.value)
-        //     .min(1, 'You need to enter atleast one value'),
-        // outOfScope: yup.array().of(
-        //     yup.object().shape({
-        //         key: yup.string().ensure(),
-        //         value: yup.string().ensure(),
-        //     })
-        // )
-        //     .compact((v) => { !v.key })
-        //     .compact((v) => !v.value)
-        //     .min(1, 'You need to enter atleast one value'),
-        // userDetails: yup.array().of(
-        //     yup.object().shape({
-        //         key: yup.string().ensure(),
-        //         value: yup.string().ensure(),
-        //     })
-        // )
-        //     .compact((v) => { !v.key })
-        //     .compact((v) => !v.value)
-        //     .min(1, 'You need to enter atleast one value'),
-        // serverDetails: yup.array().of(
-        //     yup.object().shape({
-        //         key: yup.string().ensure(),
-        //         value: yup.string().ensure(),
-        //     })
-        // )
-        //     .compact((v) => { !v.key })
-        //     .compact((v) => !v.value)
-        //     .min(1, 'You need to enter atleast one value'),
+        ),
+        outOfScope: yup.array().of(
+            yup.object().shape({
+                key: yup.string().required("Required"),
+                value: yup.string().required("Required"),
+            })
+        ),
+        userDetails: yup.array().of(
+            yup.object().shape({
+                key: yup.string().required("Required"),
+                value: yup.string().required("Required"),
+            })
+        ),
+        serverDetails: yup.array().of(
+            yup.object().shape({
+                key: yup.string().required("Required"),
+                value: yup.string().required("Required"),
+            })
+        ),
     });
 
     const {
@@ -108,28 +93,28 @@ const KickoffAddEdit = () => {
 
     const onSubmitKickOff = (data) => {
         console.log('data', data)
-        // if (data) {
-        //     history.push(`/applications`)
-        // }
+        if (data) {
+            history.push(`/applications`)
+        }
     };
 
     useEffect(() => {
         if (isEditMode) {
-            const formFields = Object.keys(editApplicationData);
+            const formFields = Object.keys(editKickOffdata);
             formFields.forEach((field) => {
-                setValue(field, editApplicationData[field]);
+                setValue(field, editKickOffdata[field]);
             });
         }
         else {
             setValue(null)
         }
-    }, [editApplicationData]);
+    }, [editKickOffdata]);
 
-
+    // console.log('errors at kickoff Page', errors)
     return (
         <div className="page-content">
             <Container fluid>
-                <Breadcrumb title="Kick-off Doc" breadcrumbItem="Kick-off Doc:" />
+                <Breadcrumb title="Kick-off Doc" breadcrumbItem="Kick-off Doc" />
                 <Card>
                     <CardBody>
                         <form onSubmit={handleSubmit(onSubmitKickOff)}>
@@ -213,44 +198,53 @@ const KickoffAddEdit = () => {
 
                                 </Col>
                             </Row>
-                            <Row>
+                            <Row className="mb-3">
                                 <Col sm="6">
-                                    <Card className='p-0' style={{ height: "155px", }}>
+                                    <Card className={`${errors?.["checkbox"] ? "border-danger" : null} mb-0`} style={{ height: "155px", }}>
                                         <CardHeader className='d-flex justify-content-between my-1 py-1 border-0'>
                                             <Label htmlFor="example-text-input" className="form-Label">
                                                 Checklist
                                             </Label>
                                         </CardHeader>
-                                        <CardBody className='mx-2 p-0' style={{ height: "110px", overflowY: "auto" }}>
+                                        <CardBody className='mx-2 p-0' style={{ height: "110px" }}>
                                             <div className="form-check">
                                                 <RHFCheckbox
                                                     name="checkbox"
+                                                    value="OWASP"
                                                     label="OWASP"
                                                     control={control}
                                                     isController={true}
-                                                    onChange={handleCheckboxChange}
+                                                    errorobj={errors}
+                                                    // onChange={handleCheckboxChange}
                                                 />
                                             </div>
                                             <div className="form-check">
                                                 <RHFCheckbox
                                                     name="checkbox"
+                                                    value="CVE"
                                                     label="CVE"
                                                     control={control}
                                                     isController={true}
-                                                    onChange={handleCheckboxChange}
+                                                    errorobj={errors}
+                                                    // onChange={handleCheckboxChange}
                                                 />
                                             </div>
-                                            <div className="form-check">
+                                            <div className="form-check ">
                                                 <RHFCheckbox
                                                     name="checkbox"
+                                                    value="CWE"
                                                     label="CWE"
                                                     control={control}
                                                     isController={true}
-                                                    onChange={handleCheckboxChange}
+                                                    errorobj={errors}
+                                                    // onChange={handleCheckboxChange}
                                                 />
                                             </div>
                                         </CardBody>
                                     </Card>
+                                    {errors && (
+                                        <FormFeedback type="invalid">{errors?.["checkbox"]?.message}</FormFeedback>
+                                    )}
                                 </Col>
                                 <Col sm="6">
                                     <RHFMultipleValue
@@ -263,7 +257,7 @@ const KickoffAddEdit = () => {
                                     />
                                 </Col>
                             </Row>
-                            <Row>
+                            <Row className="mb-3">
                                 <Col sm="6">
                                     <RHFMultipleValue
                                         label="App Details"
@@ -285,7 +279,7 @@ const KickoffAddEdit = () => {
                                     />
                                 </Col>
                             </Row>
-                            <Row>
+                            <Row className="mb-3">
                                 <Col sm="6">
                                     <RHFMultipleValue
                                         label="User Details"

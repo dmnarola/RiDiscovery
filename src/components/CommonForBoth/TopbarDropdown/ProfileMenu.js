@@ -15,6 +15,8 @@ import { Link } from "react-router-dom";
 
 // users
 import user1 from "../../../assets/images/users/avatar-1.jpg";
+import { isModulePermisssion } from "helpers/util";
+import { ROLE_PERMISSIONS } from "constants/RolePermissions";
 
 const ProfileMenu = (props) => {
   // Declare a new state variable, which we'll call "menu"
@@ -57,7 +59,7 @@ const ProfileMenu = (props) => {
           <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-end">
-          <Link to="/profile">
+          <Link Link to="/profile">
             <DropdownItem>
               <i className="bx bx-user font-size-16 align-middle me-1" />
               {props.t("Profile")}

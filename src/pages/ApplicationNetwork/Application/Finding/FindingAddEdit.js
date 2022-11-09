@@ -21,10 +21,86 @@ import RHFButton from 'components/form-controls/RHFButton';
 import DialogBox from 'components/Modals/DialogBox';
 import PocStepsAddEdit from './PocStepsAddEdit';
 import { useEffect } from 'react';
+import FeatherIcon from "feather-icons-react";
+
 
 const FindingAddEdit = () => {
     let history = useHistory()
     const { applicationId } = useParams()
+    const { findingid } = useParams()
+    // console.log('findingid :>> ', findingid);
+
+    // const editFindingData = {
+    //     id: 1256,
+    //     status: {
+    //         value: "Open",
+    //         label: "Open",
+    //     },
+    //     title: 'FIND !',
+    //     cwe: {
+    //         value: "Close",
+    //         label: "Close",
+    //     },
+
+    //     cve: {
+    //         value: "Open",
+    //         label: "Open",
+    //     },
+    //     owasp: {
+    //         value: "Close",
+    //         label: "Close",
+    //     },
+    //     severity: {
+    //         value: "Open",
+    //         label: "Open",
+    //     },
+    //     description: "<p>description</p>",
+    //     impact: "<p>impact</p>",
+    //     remediation: "<p>remediation</p>",
+    //     reference: "<p>reference</p>",
+    //     comment: "<p>comment</p>",
+    // }
+
+    const editFindingData = {
+        comment: "<p>fgdfg</p>",
+        cve: { value: 'Open', label: 'Open' },
+        cwe: { value: 'Open', label: 'Open' },
+        description: "<p>eteter</p>",
+        impact: "<p>sdfds</p>",
+        owasp: { value: 'Open', label: 'Open' },
+        poc: [{
+            discription:
+                "df",
+            images: [{
+                path: '0d550647711b50fb15a2720e3935e106.jpeg',
+                preview: 'blob:http://192.168.100.8:3001/0d982b44-efd1-4d1f-a897-3e5aa8d878fe',
+                name: '0d550647711b50fb15a2720e3935e106.jpeg', lastModified: 1659509398901,
+            }],
+
+            parameter: "dfd",
+            payload: "fdf",
+            url: "fdf"
+        }, {
+            discription:
+                "df",
+            images: [{
+                path: '0d550647711b50fb15a2720e3935e106.jpeg',
+                preview: 'blob:http://192.168.100.8:3001/0d982b44-efd1-4d1f-a897-3e5aa8d878fe',
+                name: '0d550647711b50fb15a2720e3935e106.jpeg', lastModified: 1659509398901,
+            }],
+
+            parameter: "dfd",
+            payload: "fdf",
+            url: "fdf"
+        }],
+        reference: "<p>dfgdf</p>",
+        remediation: "<p>dfgdgd</p>",
+        severity: { value: 'Open', label: 'Open' },
+        status: { value: 'Open', label: 'Open' },
+        title: "adsfsefgs",
+    }
+
+    const isEditMode = findingid
 
     const findingSchema = yup.object().shape({
         status: yup
@@ -88,6 +164,9 @@ const FindingAddEdit = () => {
         remediation: yup
             .string()
             .required("Remediation is required"),
+        reference: yup
+            .string()
+            .required("Reference is required"),
         comment: yup
             .string()
             .required("Comment is required"),
@@ -109,6 +188,7 @@ const FindingAddEdit = () => {
     const [formData, setFormData] = useState(null);
     const [pocStepData, setPocStepData] = useState([])
     const [pocStepsImage, setPocStepsImage] = useState([])
+    const [editPocData, setEditPocData] = useState(null);
 
     const handleToggle = () => {
         setIsModelOpen(!isModelOpen);
@@ -126,8 +206,34 @@ const FindingAddEdit = () => {
 
     const onSubmit = async (data) => {
         console.log('Finding data :>> ', data);
-        history.push(`/application/${applicationId}/overview`)
+        // history.push(`/application/${applicationId}/overview`)
     };
+
+
+    const deleteFile = (e) => {
+        const deleted = pocStepData.filter((item, index) => index !== e);
+        setPocStepData(deleted);
+    }
+
+    const uploadFile = (pocdata) => {
+        setEditPocData(pocdata)
+        handleToggle()
+    }
+    // console.log('editPocData :>> ', editPocData);
+
+
+
+    useEffect(() => {
+        if (isEditMode) {
+            const formFields = Object.keys(editFindingData);
+            formFields.forEach((field) => {
+                setValue(field, editFindingData[field]);
+            });
+        }
+        else {
+            setValue(null)
+        }
+    }, [editFindingData]);
 
     return (
         <div className="page-content">
@@ -344,18 +450,30 @@ const FindingAddEdit = () => {
                                             <PocStepsAddEdit
                                                 handleToggle={handleToggle}
                                                 setFormData={setFormData}
-                                                setPocStepsImage={setPocStepsImage}
+                                                // setPocStepsImage={setPocStepsImage}
+                                                editPocData={editPocData}
                                             />
                                         </DialogBox>
                                     </div>
 
-                                    {pocStepsImage?.map((file, index) => (
+                                    {/* {pocStepsImage?.map((file, index) => ( */}
+                                    {pocStepData?.map((pocdata, index) => (
                                         <div className='file-preview' key={index} >
                                             <img
-                                                src={file.preview}
+                                                src={pocdata?.images[0]?.preview}
                                                 alt="image"
                                                 style={{ width: "200px", height: "200px" }}
                                             />
+                                            <div>
+                                                <FeatherIcon
+                                                    className="delete-preview-image" size="25" icon="trash-2"
+                                                    onClick={() => { deleteFile(index) }}
+                                                />
+                                                <FeatherIcon
+                                                    className="delete-preview-image" size="25" icon="edit"
+                                                    onClick={() => { uploadFile(pocdata) }}
+                                                />
+                                            </div>
                                         </div>
                                     ))}
 

@@ -1,13 +1,27 @@
 import FeatherIcon from "feather-icons-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 import RHFTextField from "../../components/form-controls/RHFTextField";
 import Table from "../../components/Tables/Table";
 import ActionButtons from "components/form-controls/ActionButtons";
+import { isModulePermisssion } from "helpers/util";
+import { ROLE_PERMISSIONS } from "constants/RolePermissions";
+import { useHistory } from "react-router-dom";
 
 const ProjectList = () => {
   document.title = "Certificate| RiDiscovery";
+
+  const [filterColumns, setFilterColumns] = useState([]);
+  const [columnOptions, setColumnOption] = useState([]);
+  const history = useHistory();
+
+  useEffect(() => {
+    const columnFilter = [...columns];
+    setColumnOption([...columns]);
+    setFilterColumns(columnFilter.filter(o => o.isVisible && o));
+  }, [])
+
 
   const downloadHandler = (obj) => {
     console.log({ obj })
@@ -27,12 +41,12 @@ const ProjectList = () => {
     {
       name: "Project Name",
       selector: (row) => row?.projectname,
-
+      isVisible: true,
     },
     {
       name: "Pen ID",
       selector: (row) => row?.penid,
-
+      isVisible: true,
     },
     {
       name: "Action",
@@ -46,6 +60,7 @@ const ProjectList = () => {
           />
         );
       },
+      isVisible: isModulePermisssion(ROLE_PERMISSIONS?.DOWNLOAD_CERTIFICATE),
     }
 
   ];
@@ -74,20 +89,24 @@ const ProjectList = () => {
           <Card>
             <CardHeader>
               <Row>
-                <Col md="3">
-                  <RHFTextField
-                    id="search"
-                    name="search"
-                    placeholder="Search here"
-                    isController={false}
-                    handleOnChange={handleOnChange}
-                  />
-                </Col>
+                {isModulePermisssion(ROLE_PERMISSIONS?.CERTIFICATE_LIST) &&
+                  <Col md="3">
+                    <RHFTextField
+                      id="search"
+                      name="search"
+                      placeholder="Search here"
+                      isController={false}
+                      handleOnChange={handleOnChange}
+                    />
+                  </Col>
+                }
               </Row>
             </CardHeader>
-            <CardBody>
-              <Table columns={columns} data={data} />
-            </CardBody>
+            {isModulePermisssion(ROLE_PERMISSIONS?.CERTIFICATE_LIST) &&
+              <CardBody CardBody >
+                <Table columns={filterColumns} data={data} />
+              </CardBody>
+            }
           </Card>
         </Container>
       </div>

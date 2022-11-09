@@ -9,6 +9,8 @@ import FilterByStatus from 'components/Common/FilterByStatus';
 import RHFButton from 'components/form-controls/RHFButton';
 import DialogBox from 'components/Modals/DialogBox';
 import NetworkAddEdit from './NetworkAddEdit';
+import { isModulePermisssion } from 'helpers/util';
+import { ROLE_PERMISSIONS } from 'constants/RolePermissions';
 
 const usersList = [
     { id: 1, name: 'Dipesh Mali', image: avatar1 },
@@ -155,13 +157,13 @@ const Network = () => {
                         </Col>
                         <Col xs={6} lg={9}>
                             <div className="col d-flex justify-content-end">
-                                <RHFButton
+                                {isModulePermisssion(ROLE_PERMISSIONS?.ADD_NETWORK) && <RHFButton
                                     btnName="Add"
                                     icon="plus"
                                     onClick={() => {
                                         handleToggle()
                                     }}
-                                />
+                                />}
                                 <DialogBox
                                     isModelOpen={isModelOpen}
                                     handleToggle={handleToggle}
@@ -178,9 +180,11 @@ const Network = () => {
                         </Col>
                     </Row>
                 </CardHeader>
-                <CardBody>
-                    <Table columns={columns} data={data} />
-                </CardBody>
+                {isModulePermisssion(ROLE_PERMISSIONS?.NETWORK_LIST) &&
+                    <CardBody>
+                        <Table columns={columns} data={data} />
+                    </CardBody>
+                }
             </Card>
         </React.Fragment>
     )

@@ -112,37 +112,38 @@ const Company = () => {
         </div>
       </Col>
 
-
-      <Row>
-        <Col sm="6">
-          <Card>
-            <CardHeader >
-              <h5 className="m-0">Development Agency </h5>
-            </CardHeader>
-            <CardBody>
-              <Table
-                columns={columns}
-                dataURL={COMPANY.listAllCompany}
-                extra={{ type: ["development_agency_internal", "development_agency_external"] }}
-                isRefresh={isRefresh}
-              />
-            </CardBody></Card>
-        </Col>
-        <Col sm="6">
-          <Card>
-            <CardHeader>
-              <h5 className="m-0">Security Agency </h5>
-            </CardHeader>
-            <CardBody>
-              <Table
-                columns={columns}
-                dataURL={COMPANY.listAllCompany}
-                extra={{ type: ["security_agency_internal", "security_agency_external"] }}
-                isRefresh={isRefresh}
-              />
-            </CardBody></Card>
-        </Col>
-      </Row>
+      {isModulePermisssion(ROLE_PERMISSIONS?.VIEW_AGENCY_LIST) &&
+        <Row>
+          <Col sm="6">
+            <Card>
+              <CardHeader >
+                <h5 className="m-0">Development Agency </h5>
+              </CardHeader>
+              <CardBody>
+                <Table
+                  columns={columns}
+                  dataURL={COMPANY.listAllCompany}
+                  extra={{ type: ["development_agency_internal", "development_agency_external"] }}
+                  isRefresh={isRefresh}
+                />
+              </CardBody></Card>
+          </Col>
+          <Col sm="6">
+            <Card>
+              <CardHeader>
+                <h5 className="m-0">Security Agency </h5>
+              </CardHeader>
+              <CardBody>
+                <Table
+                  columns={columns}
+                  dataURL={COMPANY.listAllCompany}
+                  extra={{ type: ["security_agency_internal", "security_agency_external"] }}
+                  isRefresh={isRefresh}
+                />
+              </CardBody></Card>
+          </Col>
+        </Row>
+      }
     </div>
 
   );
