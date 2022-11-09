@@ -14,7 +14,7 @@ import { isModulePermisssion } from 'helpers/util';
 import { ROLE_PERMISSIONS } from 'constants/RolePermissions';
 
 const ApplicationAddEdit = (props) => {
-    const { setFlag } = props
+    const { setFlag, setApplicationData } = props
     let history = useHistory()
     const location = useLocation()
     const editApplicationData = location?.state?.objData
@@ -84,15 +84,16 @@ const ApplicationAddEdit = (props) => {
         setValue(name, data);
     }
 
+    const addKickOff = isModulePermisssion(ROLE_PERMISSIONS?.ADD_KICK_OFF_DOC)
+
     const onSubmit = (data) => {
         console.log('data', data)
         if (data) {
-            isModulePermisssion(ROLE_PERMISSIONS?.ADD_KICK_OFF_DOC) &&
-                setFlag(true)
-        }
-        else {
-            setFlag(false)
-            history.push("application")
+            if (!isEditMode && addKickOff) {
+                history.push({ pathname: "/application/add/kickoff" })
+            } else {
+                history.push({ pathname: '/applications' })
+            }
         }
     };
 

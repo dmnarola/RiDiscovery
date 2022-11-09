@@ -48,7 +48,12 @@ const RHFCheckbox = ({ isController = false, ...props }) => {
             return !onChange ? field.onChange(_.target.checked) : onChange(_.target.checked);
           }}
         />
-        {isError && <FormFeedback type="invalid">{errorMessage}</FormFeedback>}
+        {/* {isError && <FormFeedback type="invalid">{errorMessage}</FormFeedback>} */}
+        {/* @mmp error msg display in every checkbox */}
+
+        {isError && <FormFeedback type="invalid"></FormFeedback>}
+
+
       </Fragment>
     )}
   />

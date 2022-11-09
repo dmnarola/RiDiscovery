@@ -5,15 +5,18 @@ import FeatherIcon from 'feather-icons-react';
 import RHFDatePicker from 'components/form-controls/RHFDatePicker';
 import AvtarGroup from 'components/form-controls/AvtarGroup';
 import { avtarUsers } from 'constants/mokeData';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useHistory, useLocation } from 'react-router-dom';
 import Finding from '../Finding'
 import { useForm } from 'react-hook-form';
+import { isModulePermisssion } from 'helpers/util';
+import { ROLE_PERMISSIONS } from 'constants/RolePermissions';
 
 
 const testLink = "https://www.figma.com/proto/fqwZm1SZRGMif2r46lMHxn/29-08-22-Admin-Panel?node-id=6%3A4&starting-point-node-id=6%3A4&scaling=scale-down";
 
 const ApplicationDetail = () => {
     const location = useLocation()
+    const history = useHistory()
     const editApplicationData = location?.state?.objData
 
     const handleCheckboxChange = (val) => {
@@ -27,6 +30,8 @@ const ApplicationDetail = () => {
         getValues,
         formState: { errors },
     } = useForm({});
+
+    const updateKickOff = isModulePermisssion(ROLE_PERMISSIONS?.UPDATE_KICK_OFF_DOC)
 
     return (
         <Row>
@@ -54,11 +59,14 @@ const ApplicationDetail = () => {
                     <CardHeader>
                         <div className='d-flex justify-content-between'>
                             <span className="fs-5">Details</span>
-                            <FeatherIcon
+                            {updateKickOff && <FeatherIcon
                                 icon="edit-3"
                                 size="22"
                                 className="actionBtn"
-                            />
+                                onClick={() => {
+                                    history.push({ pathname: "/application/add/kickoff", state: { data: editApplicationData } })
+                                }}
+                            />}
                         </div>
                     </CardHeader>
                     <CardBody>
