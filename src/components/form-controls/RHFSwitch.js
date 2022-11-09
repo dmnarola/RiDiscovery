@@ -5,7 +5,7 @@ import { FormFeedback } from 'reactstrap';
 
 
 const RHFSwitch = (props) => {
-    const { isController = false, name, label, checked = false, errorobj, control, defaultValue, onChange, ...extraProps } = props;
+    const { isController = false, name, label, checked = false, errorobj, control, defaultValue, onChange, rowData, ...extraProps } = props;
 
     let isError = false;
     let errorMessage = '';
@@ -21,7 +21,7 @@ const RHFSwitch = (props) => {
                         name={name}
                         checked={checked}
                         disabled={disabled}
-                        onChange={onChange}
+                        onChange={(val) => onChange(val, rowData)}
                         uncheckedIcon={false}
                         checkedIcon={false}
                         onColor="#5156be"

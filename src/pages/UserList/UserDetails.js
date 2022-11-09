@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import {
     Card,
     CardBody,
@@ -30,15 +30,18 @@ const navLinkData = [
 ] // @Foram >> We can add other tabs in future
 
 const UserDetails = () => {
-    const { userId } = useParams()
+    const { userId } = useParams();
+    const location = useLocation();
 
-    const [userDetails, setUserDetails] = useState([])
+    console.log('location=>', location)
 
-    useState(() => {
-        setUserDetails(tabledata.find(obj => {
-            return obj._id == userId;
-        }))
-    }, [])
+    const [userDetails, setUserDetails] = useState(location?.state?.userDetails);
+
+    // useState(() => {
+    //     setUserDetails(userDetails.find(obj => {
+    //         return obj.id == userId;
+    //     }))
+    // }, [])
 
     const [activeTab, setactiveTab] = useState("1");
 
@@ -47,22 +50,23 @@ const UserDetails = () => {
             setactiveTab(tab);
         }
     };
+
     const columns = [
         {
             name: "Mobile Number",
-            selector: (row) => row?.mobileNumber,
+            selector: (row) => row?.phone,
         },
         {
             name: "Role",
-            selector: (row) => row?.role,
+            selector: (row) => row?.roleId,
         },
-        {
-            name: "Category",
-            selector: (row) => row?.category,
-        },
+        // {
+        //     name: "Category",
+        //     selector: (row) => row?.category,
+        // },
         {
             name: "Comapany",
-            selector: (row) => row?.companyName,
+            selector: (row) => row?.companyName ? row?.companyName : '-',
         },
         {
             name: "Start Date",
@@ -76,7 +80,7 @@ const UserDetails = () => {
         },
         {
             name: "Status",
-            selector: (row) => row?.isActive ? "Active" : "Deactive",
+            selector: (row) => row?.activated ? "Active" : "Deactive",
         },
     ];
 

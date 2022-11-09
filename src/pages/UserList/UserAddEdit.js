@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Row } from "reactstrap";
 import RHFAutoCompleteSelect from "../../components/form-controls/RHFAutoCompleteSelect";
 import RHFDatePicker from "../../components/form-controls/RHFDatePicker";
@@ -7,88 +7,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import RHFButton from "components/form-controls/RHFButton";
-
-//constant for dropdown
-const DropDownData = [
-  {
-    value: "red",
-    label: "Red",
-    color: "#FF5630",
-    isFixed: true,
-  },
-  {
-    value: "orange",
-    label: "Orange",
-    color: "#FF8B00",
-  },
-  {
-    value: "yellow",
-    label: "Yellow",
-    color: "#FFC400",
-  },
-  {
-    value: "green",
-    label: "Green",
-    color: "#36B37E",
-  },
-  {
-    value: "forest",
-    label: "Forest",
-    color: "#00875A",
-  },
-  {
-    value: "slate",
-    label: "Slate",
-    color: "#253858",
-  },
-];
-
-const InternalData = [{
-  value: "SA",
-  label: "SA",
-}, {
-  value: "DA",
-  label: "DA",
-}]
-
-const RoleData = [{
-  value: "OMA-Owner Admin",
-  label: "OMA-Owner Admin",
-}, {
-  value: "CSM-Company Senior Manager",
-  label: "CSM-Company Senior Manager",
-}, {
-  value: "DAPM-DA Project Manager",
-  label: "DAPM-DA Project Manager",
-}, {
-  value: "SAPM-SA Project Manager",
-  label: "SAPM-SA Project Manager",
-}, {
-  value: "DATM-DA Team Member",
-  label: "DATM-DA Team Member",
-}, {
-  value: "SAPM-SA Pentester Member",
-  label: "SAPM-SA Pentester Member",
-}, {
-  value: "SATL-SA Team Lead",
-  label: "SATL-SA Team Lead",
-}, {
-  value: "Executive",
-  label: "Executive",
-}]
+import { useDispatch } from "react-redux";
+import { addUser, updateUser } from "store/user/actions";
 
 const UserAddEdit = (props) => {
-  const { editUserData, setFormData, handleToggle } = props;
-
+  const { editUserData, companyList, roleList, setRefresh, handleToggle } = props;
   const isEditMode = editUserData ? true : false;
 
-  const userSchema = yup.object().shape({
-    internal: !isEditMode && yup
-      .object()
-      .shape({ label: yup.string(), value: yup.string() })
-      .nullable()
-      .required("Select atleast one option"),
+  const dispatch = useDispatch();
 
+  const userSchema = yup.object().shape({
     firstName: yup.string().required("First Name is required"),
     lastName: yup.string().required("Last Name is required"),
     companyName: !isEditMode && yup
@@ -97,7 +25,7 @@ const UserAddEdit = (props) => {
       .nullable()
       .required("Select atleast one option"),
 
-    mobileNumber: !isEditMode && yup
+    phone: !isEditMode && yup
       .string()
       .matches(
         /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
@@ -117,6 +45,7 @@ const UserAddEdit = (props) => {
     handleSubmit,
     control,
     setValue,
+    reset,
     formState: { errors },
   } = useForm({
     mode: "onBlur",
@@ -136,29 +65,26 @@ const UserAddEdit = (props) => {
   }, [editUserData]);
 
   const onSubmit = (data) => {
-    setFormData(data);
+    const payload = {
+      ...data,
+      companyId: data?.companyName?.value,
+      roleId: data?.role?.value
+    }
+
+    if (isEditMode) {
+      dispatch(updateUser({ ...payload, userId: editUserData?.id }));
+    } else {
+      dispatch(addUser(payload))
+    }
+    setTimeout(() => {
+      setRefresh(prevValue => !prevValue)
+    }, 500)
+    reset();
+    handleToggle();
   };
 
   return (
-
     <form onSubmit={handleSubmit(onSubmit)}>
-      {/* {!isEditMode && <Row className="mb-3 col d-flex justify-content-end align-items-end">
-        <Col sm="4">
-          <RHFAutoCompleteSelect
-            id="internal"
-            label="Internal"
-            name="internal"
-            options={InternalData}
-            setValue={setValue}
-            isMultiple={false}
-            errorobj={errors}
-            control={control}
-            isController={true}
-          />
-        </Col>
-      </Row>
-      } */}
-
       <Row className="mb-3">
         <Col sm="6">
           <RHFTextField
@@ -199,9 +125,9 @@ const UserAddEdit = (props) => {
         {!isEditMode &&
           <Col sm="6">
             <RHFTextField
-              id="mobileNumber"
+              id="phone"
               label="Mobile Number"
-              name="mobileNumber"
+              name="phone"
               placeholder="Enter Valid Mobile Number"
               errorobj={errors}
               control={control}
@@ -217,7 +143,7 @@ const UserAddEdit = (props) => {
             id="companyName"
             label="Company Name"
             name="companyName"
-            options={DropDownData}
+            options={companyList && companyList}
             isMultiple={false}
             errorobj={errors}
             control={control}
@@ -229,7 +155,7 @@ const UserAddEdit = (props) => {
             id="role"
             label="Role"
             name="role"
-            options={RoleData}
+            options={roleList}
             isMultiple={false}
             errorobj={errors}
             control={control}

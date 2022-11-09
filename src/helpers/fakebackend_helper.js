@@ -2,6 +2,7 @@ import axios from "axios"
 import { del, get, makeAPICall, post, put } from "./api_helper"
 import { AUTH } from "./services/Auth"
 import { COMPANY } from "./services/Company"
+import { USER } from "./services/User"
 import * as url from "./url_helper"
 
 // Gets the logged in user data from local session
@@ -300,6 +301,11 @@ export const listAllCompany = (data) => makeAPICall({ option: COMPANY.listAllCom
 
 /* Role Permission */
 export const getAllUserPermission = (params) => makeAPICall({ option: AUTH.getUserPermission, params });
+
+/* Users */
+export const addUser = (data) => makeAPICall({ option: USER.addUser, data });
+export const editUser = (data) => makeAPICall({ option: USER.editUser, data });
+export const listAllUser = (data) => makeAPICall({ option: USER.listAllUser, data });
 
 
 export {

@@ -90,7 +90,6 @@ export const GET_TASKS = "/tasks"
 export const GET_USERS = "/users"
 export const GET_USER_PROFILE = "/user"
 export const ADD_NEW_USER = "/add/user"
-export const UPDATE_USER = "/update/user"
 export const DELETE_USER = "/delete/user"
 
 //dashboard charts data
@@ -132,5 +131,14 @@ export const GET_ALL_COMPANY = "/company/list";
 
 /* Role Permission Routes */
 export const GET_ROLE_PERMISSIONS = '/getUserPermissions'
+export const GET_ROLE = '/roles'
+
+
+/* Users Routes */
+export const ADD_USER = '/user/create'
+export const UPDATE_USER = '/user/update'
+export const GET_ALL_USER = '/user/list'
+
+
 
 

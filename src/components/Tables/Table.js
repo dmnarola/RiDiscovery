@@ -36,16 +36,16 @@ const Table = (props) => {
   const defaultSort = sorting ? Object.keys(sorting)[0] : null;
 
 
+
+  const initialState = {
+    limit: pageSize,
+    page: currentPage,
+  }
+
   const [obj, setObj] = useState({
-    // query: filter ? filter.query : query ? query : {},
-    options: {
-      limit: pageSize,
-      page: currentPage, // page // offset logic need to create  (offset === page)
-      // sort: sorting,
-      ...extra
-      // pagination: true,
-    },
-    // search: filter ? filter.search : search ? search : undefined,
+    ...initialState,
+    ...extra,
+    ...filter
   });
 
 
@@ -104,7 +104,7 @@ const Table = (props) => {
   useEffect(() => {
     if (obj) {
       setLoading(true);
-      makeAPICall({ option: dataURL, data: obj?.options }).then(resp => {
+      makeAPICall({ option: dataURL, data: obj }).then(resp => {
         setTableData(resp?.data);
         setResPaginator(resp?.data === null ? 0 : resp?.totalRecords);
       }).finally(() => {
@@ -114,13 +114,25 @@ const Table = (props) => {
   }, [dataURL, obj, isRefresh]);
 
 
+  useEffect(() => {
+    if (filter) {
+      if (Object.keys(filter)?.length) {
+        setObj({
+          ...initialState,
+          ...filter
+        })
+      }
+      else {
+        setObj(initialState)
+      }
+    }
+  }, [filter]);
+
+
   const handlePageChange = (pgNo) => {
     let options = {
       ...obj,
-      options: {
-        ...obj.options,
-        page: pgNo,
-      },
+      page: pgNo,
     };
     setObj(options);
     setCurrentPage(pgNo);
@@ -129,11 +141,8 @@ const Table = (props) => {
   const handlePerRowsChange = (pgSize) => {
     let options = {
       ...obj,
-      options: {
-        ...obj.options,
-        limit: pgSize,
-        page: 1,
-      },
+      limit: pgSize,
+      page: 1,
     };
     setCurrentPage(1);
     setObj(options);
@@ -148,13 +157,12 @@ const Table = (props) => {
       progressPending={loading}
       progressComponent={
         <div className='d-flex justify-content-center my-4 gap-1'>
-          <span className=''>
-            loading...
-          </span>
+          <div className="spinner-grow text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
         </div>
       }
       theme={layoutMode === 'light' ? "solarized" : "dark"}
-      fixedHeaderScrollHeight="400px"
       customStyles={layoutMode === 'light' ? lightCustomStyles : darkCustomStyles}
       sortServer
       fixedHeader
@@ -169,13 +177,6 @@ const Table = (props) => {
       onChangeRowsPerPage={handlePerRowsChange}
       paginationPerPage={pageSize}
       paginationTotalRows={resPaginator ? resPaginator : 0}
-
-
-    // onSort={(column, sortDirection) => {
-    //   handleSort(column, sortDirection);
-    // }}
-
-
 
 
     />

@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import RHFAutoCompleteSelect from "components/form-controls/RHFAutoCompleteSelect";
 import RHFDatePicker from "components/form-controls/RHFDatePicker";
-import FeatherIcon from "feather-icons-react";
 import { Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 import RHFButton from "../../components/form-controls/RHFButton";
@@ -12,6 +11,12 @@ import DialogBox from "../../components/Modals/DialogBox";
 import Table from "../../components/Tables/Table";
 import UserAddEdit from "./UserAddEdit";
 import ActionButtons from "components/form-controls/ActionButtons";
+import { USER } from "helpers/services/User";
+import { COMPANY } from "helpers/services/Company";
+import { makeAPICall } from "helpers/api_helper";
+import { ROLE } from "helpers/services/Role";
+import { useDispatch } from "react-redux";
+import { updateUser } from "store/user/actions";
 
 // constant for dropdown
 const StatusData = [
@@ -19,42 +24,9 @@ const StatusData = [
     value: true,
     label: "Active",
   },
-  { value: false, label: "Deactive" },
+  { value: false, label: "De-Active" },
 ];
-const RoleData = [
-  {
-    value: "OMA-Owner Admin",
-    label: "OMA-Owner Admin",
-  },
-  {
-    value: "CSM-Company Senior Manager",
-    label: "CSM-Company Senior Manager",
-  },
-  {
-    value: "DAPM-DA Project Manager",
-    label: "DAPM-DA Project Manager",
-  },
-  {
-    value: "SAPM-SA Project Manager",
-    label: "SAPM-SA Project Manager",
-  },
-  {
-    value: "DATM-DA Team Member",
-    label: "DATM-DA Team Member",
-  },
-  {
-    value: "SAPM-SA Pentester Member",
-    label: "SAPM-SA Pentester Member",
-  },
-  {
-    value: "SATL-SA Team Lead",
-    label: "SATL-SA Team Lead",
-  },
-  {
-    value: "Executive",
-    label: "Executive",
-  },
-];
+
 
 export const tabledata = [
   {
@@ -127,12 +99,17 @@ const UserList = () => {
   document.title = "Role Management | RiDiscovery";
 
   const [isModelOpen, setIsModelOpen] = useState(false);
-  const [isActive, setIsActive] = useState(false);
   const [editUserData, setEditUserData] = useState(null);
-  const [formData, setFormData] = useState(null);
+  const [companyList, setCompanyList] = useState([]);
+  const [userRoleList, setUserRoleList] = useState([]);
+  const [allRoleList, setAllRoleList] = useState([]);
   const [isFilterModelOpen, setIsFilterModelOpen] = useState(false);
-  const [dropdownData, setDropdownData] = useState();
+  const [filterFields, setFilterData] = useState();
+  const [isRefresh, setRefresh] = useState(false);
+
+
   let history = useHistory();
+  const dispatch = useDispatch();
   const {
     handleSubmit,
     control,
@@ -151,8 +128,16 @@ const UserList = () => {
     setIsFilterModelOpen(!isFilterModelOpen);
   };
 
-  const handleSwitchChange = (value) => {
-    setValue("isActive", value);
+  const handleSwitchChange = (value, row) => {
+    const payload = {
+      userId: row?.id,
+      activated: !row?.activated
+    }
+
+    dispatch(updateUser({ ...payload }));
+    setTimeout(() => {
+      setRefresh(prevValue => !prevValue)
+    }, 500)
   };
 
   const editHandler = (obj) => {
@@ -171,10 +156,42 @@ const UserList = () => {
   };
 
   useEffect(() => {
-    if (formData) {
-      console.log("formData :>> ", formData);
+    const payload = {
+      "limit": 10,
+      "page": 1,
+      "type": [
+        "development_agency_external",
+        "security_agency_external",
+        "security_agency_internal",
+        "development_agency_internal"
+      ]
     }
-  }, [formData]);
+    Promise.all([
+      makeAPICall({ option: COMPANY.listAllCompany, data: payload }),
+      makeAPICall({ option: ROLE.getRoles })
+    ]).then(([companies, roles]) => {
+      setCompanyList(companies?.data?.map(cmp => ({ value: cmp?.id, label: cmp?.companyName })));
+      setUserRoleList(roles?.data?.userRoles?.map(role => ({ value: role?.roleSlug, label: role?.roleName })));
+      setAllRoleList(roles?.data?.allRoles?.map(role => ({ value: role?.roleSlug, label: role?.roleName })));
+    })
+  }, []);
+
+
+  const handleOnChange = (data, name) => {
+    const value = data;
+    setFilterData((prevValue) => {
+      const prev = {
+        ...prevValue,
+      };
+      if (value === undefined || value === "") {
+        delete prev[name];
+      } else {
+        prev[name] = value;
+      }
+      return prev;
+    });
+  };
+
 
   const columns = [
     {
@@ -193,16 +210,14 @@ const UserList = () => {
             style={{ cursor: "pointer" }}
             onClick={(e) => {
               e.preventDefault();
-              const _id = row["_id"];
-              history.push(`/user-list/user/${_id}`);
+              // history.push(`/user-list/user/${id}`);
+              history.push({ pathname: `/user-list/user/${row?.id}`, state: { userDetails: row } });
             }}
           >
             {row?.firstName} {row?.lastName}
           </span>
         </div>
       ),
-
-
     },
     {
       name: "Email",
@@ -236,31 +251,15 @@ const UserList = () => {
       name: "Active/Deactive",
       cell: (row) => (
         <RHFSwitch
-          name="isActive"
-          isController={true}
-          checked={isActive}
-          errorobj={errors}
-          control={control}
-          onChange={handleSwitchChange}
+          name="activated" // isActive
+          isController={false}
+          checked={row?.activated}
+          rowData={row}
+          onChange={(val, row) => handleSwitchChange(val, row)}
         />
       ),
     },
   ];
-
-  const handleOnChange = (data, name) => {
-    const value = data;
-    setDropdownData((prevValue) => {
-      const prev = {
-        ...prevValue,
-      };
-      if (value === undefined || value === "") {
-        delete prev[name];
-      } else {
-        prev[name] = value;
-      }
-      return prev;
-    });
-  };
 
   return (
     <React.Fragment>
@@ -274,10 +273,10 @@ const UserList = () => {
                   <>
                     <Col md="2">
                       <RHFAutoCompleteSelect
-                        id="role"
+                        id="roleId"
                         label="Role"
-                        name="role"
-                        options={RoleData}
+                        name="roleId"
+                        options={allRoleList}
                         isMultiple={false}
                         isController={false}
                         handleOnChange={handleOnChange}
@@ -285,9 +284,9 @@ const UserList = () => {
                     </Col>
                     <Col md="2">
                       <RHFAutoCompleteSelect
-                        id="status"
+                        id="activated"
                         label="Status"
-                        name="status"
+                        name="activated"
                         options={StatusData}
                         isMultiple={false}
                         isController={false}
@@ -329,7 +328,6 @@ const UserList = () => {
                       onClick={() => {
                         handleToggle();
                         setEditUserData(null);
-                        setFormData(null);
                       }}
                     />
                     <DialogBox
@@ -341,8 +339,10 @@ const UserList = () => {
                     >
                       <UserAddEdit
                         editUserData={editUserData}
-                        setFormData={setFormData}
                         handleToggle={handleToggle}
+                        setRefresh={setRefresh}
+                        companyList={companyList}
+                        roleList={userRoleList}
                       />
                     </DialogBox>
                   </div>
@@ -350,7 +350,12 @@ const UserList = () => {
               </Row>
             </CardHeader>
             <CardBody className="table-responsive">
-              <Table columns={columns} data={tabledata} className="table mb-0" />
+              <Table
+                columns={columns}
+                dataURL={USER.listAllUser}
+                isRefresh={isRefresh}
+                filter={filterFields}
+              />
             </CardBody>
           </Card>
         </Container>

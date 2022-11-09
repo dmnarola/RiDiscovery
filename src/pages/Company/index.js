@@ -41,6 +41,19 @@ const Company = () => {
       ),
     },
     {
+      id: "type",
+      name: "Type",
+      selector: (row) => (
+        <span>
+          {
+            ["development_agency_internal", "security_agency_internal"].includes(row?.companyType) ? 'Internal' :
+              ["development_agency_external", "security_agency_external"].includes(row?.companyType) ? 'External' : '-'
+          }
+        </span>
+      ),
+      isVisible: true,
+    },
+    {
       id: "score",
       name: "Score",
       selector: (row) => (
@@ -77,6 +90,7 @@ const Company = () => {
               icon="plus"
               onClick={() => {
                 handleToggle();
+                setEditCompanyData(null);
               }}
             />
           }
