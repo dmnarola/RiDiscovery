@@ -17,27 +17,8 @@ const navLinkData = [
   }]
 
 const ApplicationNetwork = () => {
-  let tabData = []
-  let initialTabValue
 
-  const appData = !isModulePermisssion(ROLE_PERMISSIONS?.APPLICATION)
-  const networkData = isModulePermisssion(ROLE_PERMISSIONS?.NETWORK)
-
-  const filteredNetworkData = navLinkData.filter(data => data.tabName === "Network")
-  const filteredAppData = navLinkData.filter(data => data.tabName === "Application")
-
-  if (appData === false && networkData) {
-    tabData = filteredNetworkData
-    initialTabValue = "2"
-  } else if (appData && networkData === false) {
-    tabData = filteredAppData
-    initialTabValue = "1"
-  } else {
-    tabData = navLinkData
-    initialTabValue = "1"
-  }
-
-  const [activeTab, setactiveTab] = useState(initialTabValue);
+  const [activeTab, setactiveTab] = useState("1");
 
   const toggle = (tab) => {
     if (activeTab !== tab) {
@@ -50,7 +31,7 @@ const ApplicationNetwork = () => {
       <Card>
         <div className='page-title-box'>
           <Tabs
-            navLinkData={tabData}
+            navLinkData={activeTab}
             activeTab={activeTab}
             toggle={toggle}
           >
