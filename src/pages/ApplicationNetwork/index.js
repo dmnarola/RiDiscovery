@@ -29,7 +29,6 @@ const ApplicationNetwork = () => {
   let tabValue = location.state?.activeTab //@fas - initialstate for tab
 
   const [filterColumns, setFilterColumns] = useState([]);
-  const [activeTabNo, setActiveTabNo] = useState([])
   const [activeTab, setactiveTab] = useState('');
 
   let columnFilter = [...navLinkData];

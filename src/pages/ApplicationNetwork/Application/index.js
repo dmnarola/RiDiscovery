@@ -256,23 +256,23 @@ const Application = () => {
             selector: (row) => {
                 return (
                     <ActionButtons
-                        actions={{
-                            preview: {
-                                handleClick: () => handleActionClick(row, 'preview'),
-                                isPermission: ROLE_PERMISSIONS?.APPLICATION_OVERVIEW,
-                                icon: 'file-text',
-                                tooltip: 'Preview Tooltip'
-                            },
-                            add: {
-                                tooltip: 'Add Finding',
-                                icon: 'file-plus',
-                                handleClick: () => handleActionClick(row, 'add'),
-                                isPermission: ROLE_PERMISSIONS?.ADD_FINDING
-                            }
-                        }}
+                        // actions={{
+                        //     preview: {
+                        //         handleClick: () => handleActionClick(row, 'preview'),
+                        //         isPermission: ROLE_PERMISSIONS?.APPLICATION_OVERVIEW,
+                        //         icon: 'file-text',
+                        //         tooltip: 'Preview Tooltip'
+                        //     },
+                        //     add: {
+                        //         tooltip: 'Add Finding',
+                        //         icon: 'file-plus',
+                        //         handleClick: () => handleActionClick(row, 'add'),
+                        //         isPermission: ROLE_PERMISSIONS?.ADD_FINDING
+                        //     }
+                        // }}  @fas - psh coding
                         preview={{
                             handleClick: () => handleActionClick(row, 'preview',),
-                            // isPermission: ROLE_PERMISSIONS?.APPLICATION_OVERVIEW
+                            isPermission: ROLE_PERMISSIONS?.APPLICATION_OVERVIEW
                         }}
                         add={{
                             tooltip: 'Add Finding',
@@ -280,7 +280,7 @@ const Application = () => {
                             isPermission: ROLE_PERMISSIONS?.ADD_FINDING
                         }}
 
-                        // isModulePermisssion(ROLE_PERMISSIONS?.UPDATE_APPLICATION) &&
+
                         edit={{
                             handleClick: () => handleActionClick(row, 'edit'),
                             isPermission: ROLE_PERMISSIONS?.UPDATE_APPLICATION,

@@ -16,9 +16,7 @@ const ActionButtons = (props) => {
     } = props;
 
 
-    console.log('object :>> ', actions);
-
-    const sd = editPermission
+    // console.log('object :>> ', actions);
 
     const loadPreviewAction = (index) => {
         return (
@@ -105,6 +103,7 @@ const ActionButtons = (props) => {
                     })
                 }
             </div> */}
+            {/* @fas - psh coding */}
         </>
     )
 };
